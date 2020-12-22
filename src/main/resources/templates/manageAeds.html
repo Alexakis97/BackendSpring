@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>[[#{aeds.title}]]</title>
+
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+
+
+<style>
+#map {
+	width: 100%;
+	height: 400px;
+	background-color: grey;
+}
+</style>
+
+
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin="" />
+
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+	integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+	crossorigin=""></script>
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+
+<script
+	src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+
+
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+
+		<!-- Sidebar -->
+		<ul
+			class="navbar-nav  sidebar sidebar-dark accordion"
+			id="accordionSidebar" style="background-color: #c13b4d;">
+
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="/dashboard ">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-hands-helping"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">
+					[[#{dashboard.left_side_menu_title1}]] <br> <sup
+						th:text="${loggedinUser.roles}"></sup>
+
+				</div>
+			</a>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item "><a class="nav-link"
+					href="/dashboard "> <i class="fas fa-fw fa-tachometer-alt"></i>
+						<span>[[#{dashboard.left_side_menu_item1}]]</span></a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Heading -->
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title2}]]</div>
+
+				<li class="nav-item"><a class="nav-link" href="/charts "> <i
+						class="fas fa-fw fa-chart-area"></i> <span>[[#{dashboard.left_side_menu_item2}]]</span></a></li>
+
+			</div>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+
+			<div class="sidebar-heading">[[#{dashboard.left_side_menu_title3}]]</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+				<!-- Nav Item - Tables -->
+				<li class="nav-item active"><a class="nav-link" href="/manageAeds">
+					<i class="fas fa-heartbeat"></i> <span>
+							[[#{dashboard.left_side_menu_item3}]]</span>
+				</a></li>
+
+			</div>
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider d-none d-md-block">
+
+				<li class="nav-item"><a class="nav-link" href="/manageEvents">
+					<i class="fas fa-bell"></i> <span>
+							[[#{dashboard.left_side_menu_item4}]]</span>
+				</a></li>
+
+			</div>
+
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link" href="/manageReports">
+					<i class="fas fa-exclamation-triangle"></i></i> <span>
+							[[#{dashboard.left_side_menu_item5}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageAmbulance"> <i class="fas fa-ambulance"></i></i> <span>
+							[[#{dashboard.left_side_menu_item6}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageEmployees"> <i class="fas fa-user-tie"></i> <span>
+							[[#{dashboard.left_side_menu_item7}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title4}]]</div>
+				<li class="nav-item"><a class="nav-link"
+					href="/communications"> <i class="fas fa-mail-bulk"></i> <span>
+							[[#{dashboard.left_side_menu_item8}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+
+
+				<li class="nav-item"><a class="nav-link"
+					href="/employeeChatList"> <i class="fas fa-comment-dots"></i> <span>
+							[[#{dashboard.left_side_menu_item9}]]</span>
+				</a></li>
+
+            </div>
+
+            <div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+
+
+				<li class="nav-item "><a class="nav-link"
+					href="/clientChatList"> <i class="far fa-comments"></i> <span>
+							[[#{dashboard.left_side_menu_item10}]]</span>
+				</a></li>
+
+            </div>
+
+			<!-- Sidebar Toggler (Sidebar) -->
+			<div class="text-center d-none d-md-inline">
+				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+			</div>
+
+		</ul>
+		<!-- End of Sidebar -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop"
+						class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+
+					<!-- Topbar Search -->
+					<form
+						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+						<div class="input-group">
+							<input type="text" class="form-control bg-light border-0 small"
+								th:placeholder="#{topBar.search}"  aria-label="Search"
+								aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-primary" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+
+						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+						<li class="nav-item dropdown no-arrow d-sm-none">
+							<a class="nav-link dropdown-toggle" href="/#" id="searchDropdown"
+								role="button" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								
+								<i class="fas fa-search fa-fw"></i>
+								
+							</a> 
+						
+						
+						<!-- Dropdown - Messages -->
+							<div
+								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text"
+											class="form-control bg-light border-0 small"
+											th:placeholder="#{topBar.search}"  aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</li>
+
+						<!-- Nav Item - Alerts -->
+						<li class="nav-item dropdown no-arrow mx-1">
+						
+							<a  class="nav-link dropdown-toggle"
+							    href="/#"
+							    id="alertsDropdown"
+								role="button"
+								data-toggle="dropdown" 
+								aria-haspopup="true"
+								aria-expanded="false">
+								
+								 <i class="fas fa-bell fa-fw" onclick="restartNotif();"></i>
+								 
+								  <!-- Counter - Alerts -->
+								<span class="badge badge-danger badge-counter">3+</span>
+							</a>
+							
+							 <!-- Dropdown - Alerts -->
+							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								 aria-labelledby="alertsDropdown">
+								 
+								<h6 class="dropdown-header">[[#{dashboard.notifications_title}]]</h6>
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+											
+											<div class="mr-3">
+												<div class="icon-circle bg-primary">
+													<i class="fas fa-file-alt text-white"></i>
+												</div>
+											</div>
+											
+											<div>
+												<div class="small text-gray-500">December 12, 2019</div>
+												<span class="font-weight-bold">A new monthly report is
+													ready to download!</span>
+											</div>
+											
+								</a>
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+											
+											<div class="mr-3">
+												<div class="icon-circle bg-success">
+													<i class="fas fa-donate text-white"></i>
+												</div>
+											</div>
+											
+											<div>
+												<div class="small text-gray-500">December 7, 2019</div>
+												$290.29 has been deposited into your account!
+											</div>
+								</a> 
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+											<div class="mr-3">
+												<div class="icon-circle bg-warning">
+													<i class="fas fa-exclamation-triangle text-white"></i>
+												</div>
+											</div>
+											<div>
+												<div class="small text-gray-500">December 2, 2019</div>
+												Spending Alert: We've noticed unusually high spending for your
+												account.
+											</div>
+								</a>
+								
+								<a class="dropdown-item text-center small text-gray-500"
+								   href="/manageEvents">
+								   
+								   [[#{dashboard.notifications_details}]]
+								   
+								</a>
+							</div>
+							
+						</li>
+
+						<!-- Nav Item - Messages -->
+						<li class="nav-item dropdown no-arrow mx-1"><a
+							class="nav-link dropdown-toggle" href="/#" id="messagesDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">
+							
+							 <i class="fas fa-envelope fa-fw"></i>
+								
+								<!-- Counter - Messages -->
+								 <span class="badge badge-danger badge-counter">7</span>
+						</a>
+						
+						 <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="messagesDropdown">
+								
+								<h6 class="dropdown-header">[[#{dashboard.chat}]]</h6>
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+								
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+									
+									<div class="font-weight-bold">
+									
+										<div class="text-truncate">Hi there! I am wondering if
+											you can help me with a problem I've been having.</div>
+											
+										<div class="small text-gray-500">Emily Fowler · 58m</div>
+										
+									</div>
+									
+								</a> 
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+								
+									<div class="dropdown-list-image mr-3">
+									
+										<img class="rounded-circle"
+											 src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+											 
+										<div class="status-indicator"></div>
+									</div>
+									
+									<div>
+									
+										<div class="text-truncate">I have the photos that you
+											ordered last month, how would you like them sent to you?</div>
+										<div class="small text-gray-500">Jae Chun · 1d</div>
+										
+									</div>
+									
+								</a>
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+									<div class="dropdown-list-image mr-3">
+									
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+											
+										<div class="status-indicator bg-warning"></div>
+										
+									</div>
+									
+									<div>
+									
+										<div class="text-truncate">Last month's report looks
+											great, I am very happy with the progress so far, keep up the
+											good work!</div>
+											
+										<div class="small text-gray-500">Morgan Alvarez · 2d</div>
+										
+									</div>
+									
+								</a> 
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+								
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+									
+									<div>
+									
+										<div class="text-truncate">Am I a good boy? The reason I
+											ask is because someone told me that people say this to all
+											dogs, even if they aren't good...</div>
+											
+										<div class="small text-gray-500">Chicken the Dog · 2w</div>
+										
+									</div>
+									
+								</a> 
+								
+								<a class="dropdown-item text-center small text-gray-500"
+									href="/#">[[#{dashboard.chat_details}]]</a>
+									
+							</div>
+							
+						</li>
+
+						<div class="topbar-divider d-none d-sm-block"></div>
+
+						<!-- Nav Item - User Information -->
+						<li class="nav-item dropdown no-arrow" role="presentation">
+							<div class="nav-item dropdown no-arrow">
+								<a class="dropdown-toggle nav-link" data-toggle="dropdown"
+									aria-expanded="false" href="#"><span
+									class="d-none d-lg-inline mr-2 text-gray-600 small"
+									th:text="${loggedinUser.name} + ' '+${loggedinUser.surname} ">
+								</span><img id="roundedImageProfile" th:src="@{'/profileImages/'+${loggedinUser.photo}}"
+									class="border rounded-circle img-profile"></a>
+								<div
+									class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+									role="menu">
+									<a class="dropdown-item" role="presentation" href="/profile"><i
+										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item1}]]</a>
+									<div class="dropdown-divider"></div>
+									<a href="/logout" class="dropdown-item" role="/logout"><i
+										class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item2}]]</a>
+								</div>
+							</div>
+						</li>
+						
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=en}"> <img
+								th:src="@{/img/en.png}">
+						</a></li>
+
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=el}"> <img
+								th:src="@{/img/el.png}">
+						</a></li>
+					</ul>
+
+				</nav>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<h1 class="h3 mb-4 text-gray-800">[[#{aeds.main_title}]]</h1>
+
+					<div class="row">
+
+
+
+						<!-- Area Chart -->
+						<div class="col-xl-8 col-lg-7">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">
+									
+									[[#{aeds.section1_title}]]
+									
+
+									
+									</h6>
+									<div class="dropdown no-arrow">
+										<a class="dropdown-toggle" href="/#" role="button"
+											id="dropdownMenuLink" data-toggle="dropdown"
+											aria-haspopup="true" aria-expanded="false"> <i
+											class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+										</a>
+										<div
+											class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+											aria-labelledby="dropdownMenuLink">
+											<div class="dropdown-header">[[#{aeds.section1_dropdown}]]</div>
+											<a class="dropdown-item" href="/#">[[#{aeds.section1_dropdown_item1}]]</a> <a
+												class="dropdown-item" href="/#">[[#{aeds.section1_dropdown_item2}]]</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="/#">[[#{aeds.section1_dropdown_item3}]]</a>
+										</div>
+									</div>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-area" id="map"></div>
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+
+						<div class="col-xl-4 col-lg-5">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{aeds.section2_title}]]</h6>
+
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4 pb-2">
+										<div id="curve_chart"></div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+
+
+
+						<div class="container-fluid">
+
+							<div class="card o-hidden border-0 shadow-lg my-5">
+								<div class="card-body p-0">
+									<!-- Nested Row within Card Body -->
+									<div class="row">
+
+										<div class="col-lg-5 d-none d-lg-block">
+											<img width="100%" height="110%"
+												src="https://res.cloudinary.com/little-league/image/upload/c_limit,dpr_auto,w_1536,q_auto,c_fill,g_face/v1520560456/aed-saves-lives.png" />
+										</div>
+										<div class="col-lg-7">
+											<div class="p-5">
+												<div class="text-center">
+													<h1 class="h4 text-gray-900 mb-4">[[#{aeds.section3_title}]]</h1>
+												</div>
+
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<input type="text" class="form-control form-control-user"
+															id="name" th:placeholder="#{aeds.section3_placeholder1}">
+													</div>
+													<div class="col-sm-6">
+														<input type="text" class="form-control form-control-user"
+															id="description" th:placeholder="#{aeds.section3_placeholder2}">
+													</div>
+												</div>
+
+
+
+
+
+
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<input type="text" class="form-control form-control-user"
+															id="brand" th:placeholder="#{aeds.section3_placeholder3}">
+													</div>
+													<div class="col-sm-6">
+														<input type="text" class="form-control form-control-user"
+															id="phone" th:placeholder="#{aeds.section3_placeholder4}">
+													</div>
+												</div>
+
+
+
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<select class="form-control form-control-user" id="type"
+															placeholder="Τύπος Απινιδωτή">
+															<option value="Αυτόματος">[[#{aeds.section3_option1}]]</option>
+															<option value="Αυτόματος">[[#{aeds.section3_option2}]]</option>
+															<option value="Ημιαυτόματος">[[#{aeds.section3_option3}]]</option>
+
+														</select>
+
+													</div>
+													<div class="col-sm-6">
+														<input type="text" class="form-control form-control-user"
+															id="available" th:placeholder="#{aeds.section3_placeholder5}">
+													</div>
+												</div>
+
+												<div class="form-group row">
+
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<div class="form-group">
+
+															<select class="form-control form-control-user" id="floor"
+																placeholder="Όροφος">
+																<option value="0">[[#{aeds.section3_option4}]]</option>
+																<option value="1">1</option>
+																<option value="2">2</option>
+																<option value="3">3</option>
+																<option value="4">4</option>
+															</select>
+
+														</div>
+
+													</div>
+
+
+
+													<div class="col-sm-6">
+														<div class="form-group">
+
+															<select class="form-control form-control-user"
+																id="building" placeholder="Κτήριο">
+																<option value="Κτήριο">[[#{aeds.section3_option5}]]</option>
+																<option value="Πολυκατοικία">[[#{aeds.section3_option6}]]</option>
+																<option value="Αυλή">[[#{aeds.section3_option7}]]</option>
+																<option value="Μονοκατοικία">[[#{aeds.section3_option8}]]</option>
+
+															</select>
+
+														</div>
+													</div>
+
+
+												</div>
+
+
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<div class="form-group">
+
+
+															<select class="form-control form-control-user" id="city"
+																placeholder="Πόλη">
+																<option value="Πόλη">[[#{aeds.section3_option9}]]</option>
+																<option value="Πολυκατοικία">[[#{aeds.section3_option10}]]</option>
+																<option value="Αυλή">[[#{aeds.section3_option11}]]</option>
+																<option value="Μονοκατοικία">[[#{aeds.section3_option12}]]</option>
+															</select>
+
+
+
+														</div>
+													</div>
+
+
+
+													<div class="col-sm-6">
+														<div class="form-group">
+															<input type="text" class="form-control form-control-user"
+																id="address" th:placeholder="#{aeds.section3_placeholder6}">
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<div class="form-group">
+															<input type="hidden"
+																class="form-control form-control-user" id="Latitude"
+																placeholder="Latitude"></input>
+														</div>
+													</div>
+
+
+
+													<div class="col-sm-6">
+														<div class="form-group">
+															<input type="hidden"
+																class="form-control form-control-user" id="Longtitude"
+																placeholder="Longtitude"> </input>
+														</div>
+													</div>
+												</div>
+
+
+												<button onclick="postAed()"
+													class="btn btn-primary btn-user btn-block">
+													[[#{aeds.section3_button}]]</button>
+
+												<div class="alert alert-success" role="alert"
+													id="success-alert">[[#{aeds.section3_successMessage}]]</div>
+
+												<div class="alert alert-danger" role="alert"
+													id="error-alert">[[#{aeds.section3_errorMessage}]]</div>
+
+												<hr>
+
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<!-- Begin Page Content -->
+						<div class="container-fluid">
+
+							<!-- Page Heading -->
+							<h1 class="h3 mb-2 text-gray-800">[[#{aeds.section4_main}]]</h1>
+							<p class="mb-4">
+							[[#{aeds.section4_description}]]
+							
+							</p>
+
+							<!-- DataTales Example -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{aeds.section4_title}]]</h6>
+								</div>
+								<div class="card-body">
+									<div class="table-responsive">
+
+										<table class="table table-bordered" id="dataTable"
+											width="100%" cellspacing="0">
+											<thead>
+												<tr>
+													<th>[[#{aeds.section4_th1}]]</th>
+													<th>[[#{aeds.section4_th2}]]</th>
+													<th>[[#{aeds.section4_th3}]]</th>
+													<th>[[#{aeds.section4_th4}]]</th>
+													<th>[[#{aeds.section4_th5}]]</th>
+													<th>[[#{aeds.section4_th6}]]</th>
+													<th>[[#{aeds.section4_th7}]]</th>
+													<th>[[#{aeds.section4_th8}]]</th>
+													<th>[[#{aeds.section4_th9}]]</th>
+													<th>[[#{aeds.section4_th10}]]</th>
+													<th>[[#{aeds.section4_th11}]]</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th>[[#{aeds.section4_th1}]]</th>
+													<th>[[#{aeds.section4_th2}]]</th>
+													<th>[[#{aeds.section4_th3}]]</th>
+													<th>[[#{aeds.section4_th4}]]</th>
+													<th>[[#{aeds.section4_th5}]]</th>
+													<th>[[#{aeds.section4_th6}]]</th>
+													<th>[[#{aeds.section4_th7}]]</th>
+													<th>[[#{aeds.section4_th8}]]</th>
+													<th>[[#{aeds.section4_th9}]]</th>
+													<th>[[#{aeds.section4_th10}]]</th>
+													<th>[[#{aeds.section4_th11}]]</th>
+												</tr>
+											</tfoot>
+											<tbody>
+
+												<tr th:each="aed : ${aedsByCluster}"
+													th:if="${loggedinUser.roles !='EKAB_ADMIN'}">
+													<td th:text="${aed.name}"></td>
+													<td th:text="${aed.description}"></td>
+													<td th:text="${aed.available}"></td>
+													<td th:text="${aed.city}"></td>
+													<td th:text="${aed.building}"></td>
+													<td th:text="${aed.floor}"></td>
+													<td th:text="${aed.country}"></td>
+													<td th:text="${aed.address}"></td>
+													<td th:text="${aed.phone}"></td>
+													<td><a th:href="@{/deleteAed(reqIdAed=${aed.Aed_id})}"
+														class="btn btn-outline-danger">[[#{aeds.section4_deleteButton}]]</a></td>
+													<td><a
+														th:href="@{/userProfile(reqIdUser=${aed.user.userId})}"
+														class="btn btn btn-primary">[[#{aeds.section4_userButton}]]</a></td>
+												</tr>
+
+
+
+
+
+											</tbody>
+										</table>
+
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- /.container-fluid -->
+
+					</div>
+				</div>
+
+
+			</div>
+
+
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; LifeTime 2020</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="/login">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<script>
+	
+	var aedIcon = new L.Icon({
+		  iconUrl: '/img/myaed.png',
+		  iconAnchor: [12, 41],
+		  popupAnchor: [1, -34]
+
+		});
+		
+	var cluster = L.markerClusterGroup();
+
+
+var mylat;
+var mylon;
+
+if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(successFunction);
+	} else {
+	    alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
+	}
+function successFunction(position) {
+	    mylat = position.coords.latitude;
+	    mylon = position.coords.longitude;
+	    console.log('Your latitude is :'+mylat+' and longitude is '+mylon);
+	    initMap();
+	}
+
+</script>
+
+
+	<script type="text/javascript"
+		src="https://www.gstatic.com/charts/loader.js"></script>
+
+	<script th:inline="javascript">
+   
+
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      
+      var chartTitle = [[#{aeds.chart_title}]];
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        	 
+          ['Year',  [[${loggedinUser.country}]],
+        	  
+        	 
+        	
+        	 /*<![CDATA[*/
+
+		       		   /*[# th:each="i : ${#numbers.sequence( 0, clusterSize-1)}"]*/
+	            	
+	            	[# th:if="${i<clusterSize-1}"]
+	            	[[${cluster[i]}]] ,
+		        	[/]
+		      	  [# th:unless="${i<clusterSize-1}"]
+		      	[[${cluster[i]}]] 
+		      	  
+		      	  [/]
+	            	/*[/]*/     
+	                
+	                 /*]]>*/
+        	
+        	
+      		
+        	
+        	 
+        	
+        	 /*]]>*/
+        	 
+        	 ], //me parapanw apo 1 city px, Xanthi,Kifisia den exoume thema
+        	 
+        	
+          ['2016',   [[${aeds}]],    
+        	  
+        	  /*[# th:each="i: ${#numbers.sequence(0, clusterSize-1)}"]*/
+        	  
+        	  
+        	  [# th:if="${i<clusterSize-1}"]
+          [[${clusterCounter[i]}]],
+	        	[/]
+	      	  [# th:unless="${i<clusterSize-1}"]
+	      	[[${clusterCounter[i]}]]
+	      	  
+	      	  [/]
+        	  
+        	  /*[/]*/
+        	  
+        	  ],
+          
+         
+          ['2017',   6,     3 ,5],
+          ['2018',   10,     8 ,5],
+          ['2019',   12,     10,5],
+          ['2020',   56,     13,5]
+        	 
+         
+          
+        ]);
+
+        var options = {
+          title: chartTitle,
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
+
+	<script th:inline="javascript">
+		// Initialize and add the map
+		var aedMarkers = new Map();
+		var addingMarker=0;
+		var currentAddedMarker;
+		var map;
+		document.getElementById("success-alert").style.visibility="hidden";
+    	document.getElementById("error-alert").style.visibility="hidden";
+    	
+    	
+			 var markers = [];
+			
+			function initMap() {
+				
+						 
+				console.log(mylat + " , "+mylon);
+		         
+		        
+				 map = L.map('map').setView([mylat, mylon], 13);
+				 
+				 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+						maxZoom: 18,
+						attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+							'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+							'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+						id: 'mapbox/streets-v11',
+						tileSize: 512,
+						zoomOffset: -1
+					}).addTo(map);
+							  
+						
+				var aedLocation;
+				var aedItem;
+			
+
+				 /*<![CDATA[*/
+				/*[# th:each="aed : ${aedsByCluster}"]*/
+				
+				console.log([[${aed}]]);
+				aedLocation = L.marker([parseFloat(/*[[${aed.lat}]]*/), parseFloat(/*[[${aed.lon}]]*/)],{icon: aedIcon}).addTo(map);
+				 //aedLocation = new google.maps.LatLng({lat: parseFloat(/*[[${aed.lat}]]*/), lng: parseFloat(/*[[${aed.lon}]]*/)});
+				
+				 aedItem = {aed_id:/*[[${aed.aed_id}]]*/,name:/*[[${aed.name}]]*/, description:/*[[${aed.description}]]*/, 
+						available:/*[[${aed.available}]]*/,address:/*[[${aed.address}]]*/,building:/*[[${aed.building}]]*/,floor:/*[[${aed.floor}]]*/,phone:/*[[${aed.phone}]]*/ };
+				
+		        
+				addMarker(aedLocation,map,aedItem,"aed",'img/aedIcon.png');
+				
+				/*[/]*/
+					/*]]>*/
+					
+			map.addLayer(cluster);
+			
+			map.on('click', function(e) {
+				if(addingMarker==0){
+				if (confirm("Είσαι σίγουρος οτι θες να γίνει η προσθήκη?")) {
+					currentAddedMarker = placeMarker(e.latlng, map);
+				
+					
+					 addingMarker=1;
+					 
+					 var message='<div class="container"><h6 style="text-align:center">Αφαίρεση Απινιδωτή</h6><hr><p style="text-align:center">Έγινε η τοποθέτηση σε λάθος θέση?<br><br><button type="button" class="btn btn-outline-danger btn-sm" style="text-align:center" onclick="removeMarker(currentAddedMarker)">Αφαίρεση</button></p></div>';
+						
+					 
+					 addInfoWindow(currentAddedMarker,message);
+					
+					
+			
+				   
+				  } else {
+					  addingMarker=0;
+				  }
+				}else
+					{
+					confirm("Κάνεις ήδη εισαγωγή!")
+					}
+				
+			});
+			
+			}
+			
+		
+
+			function placeMarker(position, map) {
+				var marker =  L.marker([parseFloat(position.lat), parseFloat(position.lng)],{icon: aedIcon}).addTo(map);
+				
+				return marker;
+			}
+			
+		
+		
+
+		 function removeMarker(mymarker)
+		 {
+		 	
+			map.removeLayer(mymarker);
+		 	addingMarker=0;
+		 	
+		 }
+		
+		function getMap() {
+			return map;
+		}
+		
+		
+		function addInfoWindow(marker, message) {
+			/*
+		    var infoWindow = new google.maps.InfoWindow({
+		        content: message
+		    });
+
+		    google.maps.event.addListener(marker, 'click', function () {
+		        infoWindow.open(map, marker);
+		    });*/
+		    marker.bindPopup(message);
+		    marker.on('mouseover',function(ev) {
+		    	  ev.target.openPopup();
+		    	});
+		}
+		
+		  
+		//Adds a marker to the map.
+		function addMarker(marker, map, item,kind,image) {
+		  // Add the marker at the clicked location, and add the next-available label
+		  // from the array of alphabetical characters.
+		
+
+		 cluster.addLayer(marker);
+		  var contentString ;
+	
+		  
+		  if(kind=="aed")
+			  {
+			  console.log("Item: "+item.aed_id);
+			  aedMarkers.set(item.aed_id,marker);
+
+			   contentString = '<div id="content">'
+				  +'<h4 id="firstHeading" class="firstHeading">Ονομασία :'+item.name+'</h4>'
+				  +'<div id="bodyContent">'
+				  +'<img src=\"img/aed.jpg\" style=\"width:50px;height:50px;\"'
+				  +'<p><br> <b>Περιγραφή '+item.description+'</b><br>' 
+				  +'<b>Διαθεσιμότητα: '+ item.available +'</b> <br>' 
+				  +'<b>Διεύθυνση:'+ item.address +'</b> <br>'
+				  +'<b>Κτήριο:'+item.building+'</b> <br>' 
+				  +'<b>Όροφος:'+item.floor+'</b> <br>'
+				  +'<b>Τηλέφωνο:'+item.phone+'</b> </p> </div>'
+				  +'</div>';
+				  addInfoWindow(marker,contentString);
+
+			  }
+
+		  
+
+		}
+
+
+		
+	</script>
+
+
+
+
+
+
+
+
+
+	<script>
+  
+  function postAed() {
+	 alert("post");
+	 
+	 lat =  document.getElementById("Latitude").value;
+	 lon =  document.getElementById("Longtitude").value;
+	 if(lat==null || lat==""||lon==null||lon=="")
+	 {
+	 document.getElementById("error-alert").style.visibility="visible";
+	 }else
+		 {
+		 document.getElementById("error-alert").style.visibility="invisible";
+		 }
+	 
+	 
+	  var myname =  document.getElementById("name").value;
+	  var mydescription =  document.getElementById("description").value;
+	  var mylat =  document.getElementById("Latitude").value;
+	  var mylon =  document.getElementById("Longtitude").value;
+	  var myphoto = "web";
+	  var myavailable =  document.getElementById("available").value;
+	  var mycity =  document.getElementById("city").value;
+	  var mycountry =  "Greece";
+	  var myaddress =  document.getElementById("address").value;
+	  var myisActive =  0;
+	  var mybuilding =  document.getElementById("building").value;
+	  var myfloor =  document.getElementById("floor").value;
+	  var mybrand =  document.getElementById("brand").value;
+	  var mytype =  document.getElementById("type").value;
+	  var myphone =  document.getElementById("phone").value;
+	  
+	  
+	  var obj = { name: myname, 
+			  description: mydescription, 
+			  lat: mylat,
+			  lon: mylon,
+			  photo: myphoto,
+			  available : myavailable,
+			  city : mycity,
+			  country : mycountry,
+			  address : myaddress,
+			  isActive : myisActive,
+		  	  building : mybuilding,
+		  	  floor : myfloor,
+		  	  brand : mybrand,
+		  	  type : mytype,
+		  	  phone : myphone,
+		  	  
+		  	/*<![CDATA[*/
+			  user : { 
+				"userId":[[${loggedinUser.userId}]],
+		         "name": "[[${loggedinUser.name}]]",
+		         "surname": "[[${loggedinUser.surname}]]",
+		         "email": "[[${loggedinUser.email}]]",
+		         "password": "[[${loggedinUser.password}]]", 
+		         "city": "[[${loggedinUser.city}]]",
+		         "country": "[[${loggedinUser.country}]]",
+		         "phone": "[[${loggedinUser.phone}]]",
+		         "roles":"[[${loggedinUser.roles}]]",
+		         "username": "[[${loggedinUser.username}]]",
+		         "isActive": [[${loggedinUser.isActive}]],
+		         "registrationDate": "[[${loggedinUser.registrationDate}]]",
+		         "firebaseToken": "[[${loggedinUser.firebaseToken}]]",
+		         "bloodType": "[[${loggedinUser.bloodType}]]",
+		         "disease": "[[${loggedinUser.disease}]]",
+		         "alergies": "[[${loggedinUser.alergies}]]",
+		         "medicines": "[[${loggedinUser.medicines}]]",
+		         "counterContacts":[[${loggedinUser.counterContacts}]],
+		         "counterIncidents": [[${loggedinUser.counterIncidents}]],
+				 "counterDirections": [[${loggedinUser.counterDirections}]],
+				"photo":"[[${loggedinUser.photo}]]",
+				"phoneNumber":"[[${loggedinUser.phoneNumber}]]",
+				"periphery":"[[${loggedinUser.periphery}]]",
+				"department":"[[${loggedinUser.department}]]",
+				"municipality":"[[${loggedinUser.municipality}]]",
+				"lat":[[${loggedinUser.lat}]],
+				"lon":[[${loggedinUser.lon}]],
+				"age":[[${loggedinUser.age}]],
+				"gender":"[[${loggedinUser.gender}]]",
+				 "clusterMunicipality":"[[${loggedinUser.clusterMunicipality}]]",
+				 "dateOfBirth":"[[${loggedinUser.dateOfBirth}]]",
+				 
+				 hospital : { 
+				   "hospital_id":[[${loggedinUser.hospital.hospital_id}]],
+				   "name":"[[${loggedinUser.hospital.name}]]",
+				   "lat":[[${loggedinUser.hospital.lat}]],
+				   "lon":[[${loggedinUser.hospital.lon}]],
+				   "address":"[[${loggedinUser.hospital.address}]]",
+				   "phone":"[[${loggedinUser.hospital.phone}]]",
+				   "clusterMunicipality":"[[${loggedinUser.hospital.clusterMunicipality}]]",
+				   "eventProcessor":"[[${loggedinUser.hospital.eventProcessor}]]"
+				}
+
+				}
+				
+	  };
+	  /*]]>*/
+	  var myJSON = JSON.stringify(obj);
+	  
+		console.log(myJSON);
+		
+		var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+		xmlhttp.open("POST", "/api/aeds/add");
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+
+		
+		xmlhttp.send(myJSON);
+		xmlhttp.onreadystatechange = function() {
+	        if (this.status == 200) {
+	        	document.getElementById("success-alert").style.visibility="visible";
+	       }
+	        else
+	        	{
+	        	document.getElementById("error-alert").style.visibility="visible";
+	        	}
+	    };
+  }
+  </script>
+
+
+</body>
+
+</html>

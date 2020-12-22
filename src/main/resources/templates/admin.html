@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Profile - Brand</title>
+<link rel="stylesheet"
+	href="/css/bootstrap.min.css?h=baece89ac3ac458f3d4dc1530b7d2425">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+</head>
+
+<body id="page-top">
+	<div id="wrapper">
+
+		<ul
+			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+			id="accordionSidebar">
+
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="/dashboard ">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-hands-helping"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">
+					[[#{dashboard.left_side_menu_title1}]] <sup> ADMIN</sup>
+				</div>
+			</a>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+
+			<!-- Nav Item - Dashboard -->
+			<li class="nav-item active"><a class="nav-link" href="/admin ">
+					<i class="fas fa-fw fa-tachometer-alt"></i> <span>[[#{dashboard.left_side_menu_item1}]]</span>
+			</a></li>
+
+		</ul>
+
+
+
+
+		<div class="d-flex flex-column" id="content-wrapper">
+			<div id="content">
+
+				<!-- Topbar -->
+
+				<nav
+					class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+
+					<div class="container-fluid">
+
+						<!-- Sidebar Toggle (Topbar) -->
+
+						<button class="btn btn-link d-md-none rounded-circle mr-3"
+							id="sidebarToggleTop" type="button">
+							<i class="fas fa-bars"></i>
+						</button>
+
+						<!-- Topbar Search -->
+						<form
+							class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+							<div class="input-group">
+								<input class="bg-light form-control border-0 small" type="text"
+									th:placeholder="#{topBar.search}">
+								<div class="input-group-append">
+									<button class="btn btn-primary py-0" type="button">
+										<i class="fas fa-search"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+						<!-- Topbar Navbar -->
+						<ul class="nav navbar-nav flex-nowrap ml-auto">
+
+							<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+
+							<li class="nav-item dropdown d-sm-none no-arrow"><a
+								class="dropdown-toggle nav-link" data-toggle="dropdown"
+								aria-expanded="false" href="#"> <i class="fas fa-search"></i>
+
+							</a> <!-- Dropdown - Messages -->
+								<div
+									class="dropdown-menu dropdown-menu-right p-3 animated--grow-in"
+									role="menu" aria-labelledby="searchDropdown">
+									<form class="form-inline mr-auto navbar-search w-100">
+										<div class="input-group">
+											<input class="bg-light form-control border-0 small"
+												type="text" th:placeholder="#{topBar.search}">
+											<div class="input-group-append">
+												<button class="btn btn-primary py-0" type="button">
+													<i class="fas fa-search"></i>
+												</button>
+											</div>
+										</div>
+									</form>
+								</div></li>
+
+							<!-- Nav Item - Alerts -->
+
+
+
+
+
+							<li class="nav-item dropdown no-arrow mx-1" role="presentation">
+
+								<div class="nav-item dropdown no-arrow">
+
+									<a class="dropdown-toggle nav-link" data-toggle="dropdown"
+										aria-expanded="false" href="#"> <span
+										class="badge badge-danger badge-counter">3+</span> <i
+										class="fas fa-bell fa-fw" onclick="restartNotif();"></i>
+									</a>
+									<div
+										class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+										role="menu">
+										<h6 class="dropdown-header">[[#{dashboard.notifications_title}]]</h6>
+										<a class="d-flex align-items-center dropdown-item" href="#">
+											<div class="mr-3">
+												<div class="bg-primary icon-circle">
+													<i class="fas fa-file-alt text-white"></i>
+												</div>
+											</div>
+											<div>
+												<span class="small text-gray-500">December 12, 2019</span>
+												<p>A new monthly report is ready to download!</p>
+											</div>
+										</a> <a class="d-flex align-items-center dropdown-item" href="#">
+											<div class="mr-3">
+												<div class="bg-success icon-circle">
+													<i class="fas fa-donate text-white"></i>
+												</div>
+											</div>
+											<div>
+												<span class="small text-gray-500">December 7, 2019</span>
+												<p>$290.29 has been deposited into your account!</p>
+											</div>
+										</a> <a class="d-flex align-items-center dropdown-item" href="#">
+											<div class="mr-3">
+												<div class="bg-warning icon-circle">
+													<i class="fas fa-exclamation-triangle text-white"></i>
+												</div>
+											</div>
+											<div>
+												<span class="small text-gray-500">December 2, 2019</span>
+												<p>Spending Alert: We've noticed unusually high spending
+													for your account.</p>
+											</div>
+										</a> <a class="text-center dropdown-item small text-gray-500"
+											href="/manageEvents">
+
+											[[#{dashboard.notifications_details}]] </a>
+									</div>
+
+								</div>
+
+							</li>
+
+							<!-- Nav Item - Messages -->
+
+							<li class="nav-item dropdown no-arrow mx-1" role="presentation">
+								<div class="nav-item dropdown no-arrow">
+
+									<a class="dropdown-toggle nav-link" data-toggle="dropdown"
+										aria-expanded="false" href="#"> <i
+										class="fas fa-envelope fa-fw"></i> <span
+										class="badge badge-danger badge-counter">7</span>
+									</a>
+
+									<!-- Dropdown - Messages -->
+
+									<div
+										class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+										role="menu">
+										<h6 class="dropdown-header">[[#{dashboard.chat}]]</h6>
+										<a class="d-flex align-items-center dropdown-item" href="#">
+
+											<div class="dropdown-list-image mr-3">
+
+												<img class="rounded-circle"
+													src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+
+												<div class="bg-success status-indicator"></div>
+
+											</div>
+
+											<div class="font-weight-bold">
+												<div class="text-truncate">
+													<span>Hi there! I am wondering if you can help me
+														with a problem I've been having.</span>
+												</div>
+												<p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
+											</div>
+										</a> <a class="d-flex align-items-center dropdown-item" href="#">
+											<div class="dropdown-list-image mr-3">
+
+												<img class="rounded-circle"
+													src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+
+												<div class="status-indicator"></div>
+											</div>
+											<div class="font-weight-bold">
+												<div class="text-truncate">
+													<span>I have the photos that you ordered last month!</span>
+												</div>
+												<p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
+											</div>
+										</a> <a class="d-flex align-items-center dropdown-item" href="#">
+
+											<div class="dropdown-list-image mr-3">
+
+												<img class="rounded-circle"
+													src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+
+												<div class="bg-warning status-indicator"></div>
+
+											</div>
+
+											<div class="font-weight-bold">
+												<div class="text-truncate">
+													<span>Last month's report looks great, I am very
+														happy with the progress so far, keep up the good work!</span>
+												</div>
+												<p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
+											</div>
+										</a> <a class="d-flex align-items-center dropdown-item" href="#">
+											<div class="dropdown-list-image mr-3">
+
+												<img class="rounded-circle"
+													src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+												<div class="bg-success status-indicator"></div>
+											</div>
+											<div class="font-weight-bold">
+												<div class="text-truncate">
+													<span>Am I a good boy? The reason I ask is because
+														someone told me that people say this to all dogs, even if
+														they aren't good...</span>
+												</div>
+												<p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
+											</div>
+										</a><a class="text-center dropdown-item small text-gray-500"
+											href="#">[[#{dashboard.chat_details}]]</a>
+									</div>
+								</div>
+								<div
+									class="shadow dropdown-list dropdown-menu dropdown-menu-right"
+									aria-labelledby="alertsDropdown"></div>
+							</li>
+							<div class="d-none d-sm-block topbar-divider"></div>
+							<li class="nav-item dropdown no-arrow" role="presentation">
+								<div class="nav-item dropdown no-arrow">
+									<a class="dropdown-toggle nav-link" data-toggle="dropdown"
+										aria-expanded="false" href="#"><span
+										class="d-none d-lg-inline mr-2 text-gray-600 small"
+										th:text="${loggedIn.name} + ' '+${loggedIn.surname} ">
+									</span><img id="roundedImageProfile" th:src="@{'/profileImages/'+${loggedIn.photo}}"
+										class="border rounded-circle img-profile"></a>
+									<div
+										class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+										role="menu">
+										<a class="dropdown-item" role="presentation" href="/profile"><i
+											class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item1}]]</a>
+										<div class="dropdown-divider"></div>
+										<a href="/logoutUser" class="dropdown-item"><i
+											class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item2}]]</a>
+									</div>
+								</div>
+							</li>
+
+							<li class="nav-item" style="width: auto; display: inline-block;"><a
+								class="nav-link" th:href="@{?lang=en}"> <img
+									th:src="@{/img/en.png}">
+							</a></li>
+
+							<li class="nav-item" style="width: auto; display: inline-block;"><a
+								class="nav-link" th:href="@{?lang=el}"> <img
+									th:src="@{/img/el.png}">
+							</a></li>
+						</ul>
+					</div>
+				</nav>
+
+
+				<div class="container-fluid">
+
+					<div class="row mb-3">
+						<div class="col-lg-2"></div>
+						<div class="col-lg-8">
+							<div class="row mb-3 d-none">
+								<div class="col">
+									<div class="card text-white bg-primary shadow">
+										<div class="card-body">
+											<div class="row mb-2">
+												<div class="col">
+													<p class="m-0">Peformance</p>
+													<p class="m-0">
+														<strong>65.2%</strong>
+													</p>
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-rocket fa-2x"></i>
+												</div>
+											</div>
+											<p class="text-white-50 small m-0">
+												<i class="fas fa-arrow-up"></i>&nbsp;5% since last month
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="card text-white bg-success shadow">
+										<div class="card-body">
+											<div class="row mb-2">
+												<div class="col">
+													<p class="m-0">Peformance</p>
+													<p class="m-0">
+														<strong>65.2%</strong>
+													</p>
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-rocket fa-2x"></i>
+												</div>
+											</div>
+											<p class="text-white-50 small m-0">
+												<i class="fas fa-arrow-up"></i>&nbsp;5% since last month
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div claprss="row">
+
+								<div class="col">
+									<h3 class="text-dark mb-4">Admin Panel</h3>
+									<div class="card mb-4">
+										<div class="card-header py-3">
+											<p class="text-primary m-0 font-weight-bold">Στελέχη</p>
+										</div>
+										<div class="card-body text-center shadow"
+											th:each="uservip : ${vip}">
+											<div class="card" style="width: 18rem;">
+												<img class="card-img-top" src="img/tickets.png"
+													alt="Card image cap">
+												<div class="card-body">
+													<h5 class="card-title"
+														th:text="${uservip.name}+' '+${uservip.surname}"></h5>
+													<p class="card-text" th:text="${uservip.roles}"></p>
+													<p class="card-text"
+														th:text="${uservip.country}+' '+${uservip.city}"></p>
+													<p class="card-text" th:text="${uservip.email}"></p>
+													<div class="card-text">
+
+
+														Is Active <input type="checkbox" name="my-checkbox"
+															onclick="false;" th:checked="${uservip.isActive}" />
+													</div>
+
+													<hr>
+													<button type="button" th:if="${uservip.isActive==1}"
+														class="btn btn-secondary">Black List</button>
+
+													<button type="button" class="btn btn-danger">Remove</button>
+
+												</div>
+												<div class="card-footer text-muted"
+													th:text="${uservip.registrationDate}"></div>
+											</div>
+										</div>
+									</div>
+
+
+
+
+
+
+									<div class="card-body">
+
+										<div class="card mb-3">
+											<div class="card-header py-3">
+												<p class="text-primary m-0 font-weight-bold">Ασυρματιστές</p>
+											</div>
+											<div class="card-body text-center shadow"
+												th:each="userAsim : ${userAsim}">
+												<div class="card" style="width: 18rem;">
+													<img class="card-img-top" src="img/radio.svg"
+														alt="Card image cap">
+													<div class="card-body">
+														<h5 class="card-title"
+															th:text="${userAsim.name}+' '+${userAsim.surname}"></h5>
+														<p class="card-text" th:text="${userAsim.roles}"></p>
+														<p class="card-text"
+															th:text="${userAsim.country}+' '+${userAsim.city}"></p>
+														<p class="card-text" th:text="${userAsim.email}"></p>
+														<div class="card-text">
+
+
+															Is Active <input type="checkbox" name="my-checkbox"
+																onclick="false;" th:checked="${userAsim.isActive}" />
+														</div>
+
+														<hr>
+														<button type="button" th:if="${userAsim.isActive==1}"
+															class="btn btn-secondary">Black List</button>
+
+														<button type="button" class="btn btn-danger">Remove</button>
+
+													</div>
+													<div class="card-footer text-muted"
+														th:text="${userAsim.registrationDate}"></div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- </div> -->
+
+
+									<div class="card-body">
+
+										<div class="card mb-3">
+
+											<div class="card-header py-3">
+												<p class="text-primary m-0 font-weight-bold">Τηλεφωνητές</p>
+											</div>
+
+											<div class="card-body text-center shadow"
+												th:each="userTil : ${userTil}">
+
+												<div class="card" style="width: 18rem;">
+													<img class="card-img-top" src="img/phone.png"
+														alt="Card image cap">
+
+													<div class="card-body">
+														<h5 class="card-title"
+															th:text="${userTil.name}+' '+${userTil.surname}"></h5>
+														<p class="card-text" th:text="${userTil.roles}"></p>
+														<p class="card-text"
+															th:text="${userTil.country}+' '+${userTil.city}"></p>
+														<p class="card-text" th:text="${userTil.email}"></p>
+
+														<div class="card-text">
+
+
+															Is Active <input type="checkbox" name="my-checkbox"
+																onclick="false;" th:checked="${userTil.isActive}" />
+														</div>
+
+														<hr>
+														<button type="button" th:if="${userTil.isActive==1}"
+															class="btn btn-secondary">Black List</button>
+
+														<button type="button" class="btn btn-danger">Remove</button>
+
+													</div>
+
+													<div class="card-footer text-muted"
+														th:text="${userTil.registrationDate}"></div>
+
+												</div>
+
+											</div>
+
+										</div>
+
+									</div>
+
+
+
+
+
+									<br>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+			<footer class="bg-white sticky-footer">
+				<div class="container my-auto">
+					<div class="text-center my-auto copyright">
+						<span>Copyright © LifeTime 2020</span>
+					</div>
+				</div>
+			</footer>
+		</div>
+		<a class="border rounded d-inline scroll-to-top" href="#page-top"><i
+			class="fas fa-angle-up"></i></a>
+	</div>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+	<script
+		src="/assets/js/script.min.js?h=9af5f655239f5ce4fa692ca1c1513d50"></script>
+
+
+		</body>
+		</html>
+	

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" type="text/css" href="loadingcss/styles.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+
+<title th:text="#{app.title}"></title>
+
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+	crossorigin="anonymous">
+<link
+	href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css"
+	rel="stylesheet" crossorigin="anonymous" />
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+<style type="text/css">
+.loader {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	position: relative;
+	border: 4px solid #242F3F;
+	top: 50%;
+	left: 45%;
+	animation: loader 2s infinite ease;
+}
+
+.loader-inner {
+	vertical-align: top;
+	display: inline-block;
+	width: 100%;
+	background-color: #f96400;
+	animation: loader-inner 2s infinite ease-in;
+}
+
+@
+keyframes loader { 0% {
+	transform: rotate(0deg);
+}
+
+25
+
+
+
+
+%
+{
+transform
+
+
+
+
+:
+
+
+
+
+rotate
+
+
+
+
+(
+
+
+
+
+180deg
+
+
+
+
+)
+
+
+;
+}
+50
+
+
+
+
+%
+{
+transform
+
+
+
+
+:
+
+
+
+
+rotate
+
+
+
+
+(
+
+
+
+
+180deg
+
+
+
+
+)
+
+
+;
+}
+75
+
+
+
+
+%
+{
+transform
+
+
+
+
+:
+
+
+
+
+rotate
+
+
+
+
+(
+
+
+
+
+360deg
+
+
+
+
+)
+
+
+;
+}
+100
+
+
+
+
+%
+{
+transform
+
+
+
+
+:
+
+
+
+
+rotate
+
+
+
+
+(
+
+
+
+
+360deg
+
+
+
+
+)
+
+
+;
+}
+}
+@
+keyframes loader-inner { 0% {
+	height: 0%;
+}
+25
+
+
+
+
+%
+{
+height
+
+
+
+
+:
+
+
+
+
+0
+
+
+%;
+}
+50
+
+
+
+
+%
+{
+height
+
+
+
+
+:
+
+
+
+
+100
+
+
+%;
+}
+75
+
+
+
+
+%
+{
+height
+
+
+
+
+:
+
+
+
+
+100
+
+
+%;
+}
+100
+
+
+
+
+%
+{
+height
+
+
+
+
+:
+
+
+
+
+0
+
+
+%;
+}
+}
+</style>
+
+
+
+</head>
+
+<body class="bg-gradient-primary">
+
+	<div class="container">
+
+
+		<!-- Outer Row -->
+		<div class="row justify-content-center">
+
+			<div class="col-xl-10 col-lg-12 col-md-9">
+
+				<div class="card o-hidden border-0 shadow-lg my-5">
+					<div class="card-body p-0">
+						<!-- Nested Row within Card Body -->
+						<div class="row">
+
+							<div class="col-lg-6 d-none d-lg-block"
+								style="background-color: #c13b4d;">
+
+
+								<img src="img/LifeTimeGif.gif" class="img-fluid"
+									alt="Responsive image" id="animated-img1">
+
+							</div>
+							<div class="col-lg-6" ng-app="">
+								<div class="p-5">
+									<div class="text-center">
+										<h1 class="h4 text-gray-900 mb-4" th:text="#{login.header}">
+
+											<br> {{name}}
+										</h1>
+									</div>
+									<form class="user" action="/login" method="post">
+										<div class="form-group">
+											<input type="text" class="form-control form-control-user"
+												aria-describedby="emailHelp" placeholder="Your username"
+												id="username" ng-model="name" name="username">
+										</div>
+										<div class="form-group">
+											<input type="password" class="form-control form-control-user"
+												placeholder="Password" id="password" name="password">
+										</div>
+
+										<button type="submit"
+											class="btn btn-primary btn-user btn-block"
+											th:text="#{login.button}"></button>
+
+									</form>
+									<hr>
+									<div class="alert alert-danger" id="alertDanger">
+										<strong>[[#{login.danger_alert1}]]</strong>
+										<br>[[#{login.danger_alert2}]]
+									</div>
+									<div class="alert alert-warning" id="expired">
+										<strong>
+											[[#{login.warning_alert1}]]
+										</strong>
+										<br>
+											[[#{login.warning_alert2}]]
+										<br>
+										<strong>
+											[[#{login.warning_alert3}]]
+										</strong>
+									</div>
+
+									<div class="" style="color: black; background: white;">
+
+										<ul style="list-style-type: none;">
+
+											<li class="nav-item"
+												style="width: auto; display: inline-block;"><a
+												class="nav-link" th:href="@{?lang=en}"> <img
+													th:src="@{/img/en.png}"> English
+											</a></li>
+
+											<li class="nav-item"
+												style="width: auto; display: inline-block;"><a
+												class="nav-link" th:href="@{?lang=el}"> <img
+													th:src="@{/img/el.png}"> Ελληνικά
+											</a></li>
+
+										</ul>
+
+									</div>
+
+									<div class="loader-wrapper" id="loader-wrapper">
+										<span class="loader"><span class="loader-inner"></span></span>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- <div class="jumbotron" style="color:black;background:white;">
+		
+			<ul style="list-style-type: none;">
+			
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+				<li class="nav-item" style="width: auto;display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}">
+						<img th:src="@{/img/en.png}"> English
+					</a>
+				</li>
+				
+			</ul>
+			
+		</div> -->
+	</div>
+
+
+
+	<script>
+		document.getElementById("loader-wrapper").style.display = "none";
+		document.getElementById("alertDanger").style.display = "none";
+		document.getElementById("expired").style.display = "none";
+
+		var domain = window.location.href;
+		var url = new URL(domain);
+		var token = url.searchParams.get("token");
+		var wrongCredentials = url.searchParams.get("error");
+
+		if (token == "expired") {
+			document.getElementById("expired").style.display = "block";
+		} else {
+			document.getElementById("expired").style.display = "none";
+		}
+
+		if (wrongCredentials != null) {
+			document.getElementById("alertDanger").style.display = "block";
+		} else {
+			document.getElementById("alertDanger").style.display = "none";
+
+		}
+	</script>
+
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+
+
+
+
+
+</body>
+
+</html>

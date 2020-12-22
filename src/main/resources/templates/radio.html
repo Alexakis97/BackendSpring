@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>LifeTime</title>
+
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<!-- Custom styles for this page -->
+<link href="vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+
+
+
+
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin="" />
+
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+	integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+	crossorigin=""></script>
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+
+<script
+	src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+
+	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+
+
+
+
+<style>
+#map {
+	width: 100%;
+	height: 400px;
+	background-color: grey;
+}
+
+.w3-modal {
+	z-index: 3;
+	display: none;
+	padding-top: 100px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4)
+}
+
+.w3-modal-content {
+	margin: auto;
+	background-color: #fff;
+	position: relative;
+	padding: 0;
+	outline: 0;
+	width: 600px
+}
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+
+
+
+</head>
+
+<body id="page-top" onload="getfulldate();">
+
+
+
+	<div id="wrapper">
+
+
+		<!-- Sidebar -->
+		<ul
+			class="navbar-nav sidebar sidebar-dark accordion"
+			id="accordionSidebar" style="background-color: #c13b4d;">
+
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="/dashboard ">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-hands-helping"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">
+					[[#{dashboard.left_side_menu_title1}]] <br> <sup
+						th:text="${loggedinUser.roles}"></sup>
+
+				</div>
+			</a>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item"><a class="nav-link"
+					href="/dashboard "> <i class="fas fa-fw fa-tachometer-alt"></i>
+						<span>[[#{dashboard.left_side_menu_item1}]]</span></a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Heading -->
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title2}]]</div>
+
+				<li class="nav-item"><a class="nav-link" href="/charts "> <i
+						class="fas fa-fw fa-chart-area"></i> <span>[[#{dashboard.left_side_menu_item2}]]</span></a></li>
+
+			</div>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+
+			<div class="sidebar-heading">[[#{dashboard.left_side_menu_title3}]]</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+				<!-- Nav Item - Tables -->
+				<li class="nav-item"><a class="nav-link" href="/manageAeds">
+					<i class="fas fa-heartbeat"></i> <span>
+							[[#{dashboard.left_side_menu_item3}]]</span>
+				</a></li>
+
+			</div>
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider d-none d-md-block">
+
+				<li class="nav-item"><a class="nav-link" href="/manageEvents">
+					<i class="fas fa-bell"></i> <span>
+							[[#{dashboard.left_side_menu_item4}]]</span>
+				</a></li>
+
+			</div>
+
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link" href="/manageReports">
+					<i class="fas fa-exclamation-triangle"></i></i> <span>
+							[[#{dashboard.left_side_menu_item5}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageAmbulance"> <i class="fas fa-ambulance"></i></i> <span>
+							[[#{dashboard.left_side_menu_item6}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageEmployees"> <i class="fas fa-user-tie"></i> <span>
+							[[#{dashboard.left_side_menu_item7}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title4}]]</div>
+				<li class="nav-item"><a class="nav-link"
+					href="/communications"> <i class="fas fa-mail-bulk"></i> <span>
+							[[#{dashboard.left_side_menu_item8}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+
+
+				<li class="nav-item"><a class="nav-link"
+					href="/employeeChatList"> <i class="fas fa-comment-dots"></i> <span>
+							[[#{dashboard.left_side_menu_item9}]]</span>
+				</a></li>
+
+            </div>
+
+            <div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+
+
+				<li class="nav-item "><a class="nav-link"
+					href="/clientChatList"> <i class="far fa-comments"></i> <span>
+							[[#{dashboard.left_side_menu_item10}]]</span>
+				</a></li>
+
+            </div>
+
+			<!-- Sidebar Toggler (Sidebar) -->
+			<div class="text-center d-none d-md-inline">
+				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+			</div>
+
+		</ul>
+		<!-- End of Sidebar -->
+
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<nav
+					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop"
+						class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+
+					<!-- Topbar Search -->
+					<form
+						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+						<div class="input-group">
+							<input type="text" class="form-control bg-light border-0 small"
+								th:placeholder="#{topBar.search}" aria-label="Search"
+								aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-primary" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+
+						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+						<li class="nav-item dropdown no-arrow d-sm-none"><a
+							class="nav-link dropdown-toggle" href="/#" id="searchDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text"
+											class="form-control bg-light border-0 small"
+											th:placeholder="#{topBar.search}" aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div></li>
+
+						<!-- Nav Item - Alerts -->
+						<li class="nav-item dropdown no-arrow mx-1"><a
+							class="nav-link dropdown-toggle" href="/#" id="alertsDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-bell fa-fw"
+								onclick="restartNotif();"></i> <!-- Counter - Alerts --> <span
+								class="badge badge-danger badge-counter">3+</span>
+						</a> <!-- Dropdown - Alerts -->
+							<div
+								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="alertsDropdown">
+
+								<h6 class="dropdown-header">[[#{dashboard.notifications_title}]]</h6>
+
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="mr-3">
+										<div class="icon-circle bg-primary">
+											<i class="fas fa-file-alt text-white"></i>
+										</div>
+									</div>
+
+									<div>
+										<div class="small text-gray-500">December 12, 2019</div>
+										<span class="font-weight-bold">A new monthly report is
+											ready to download!</span>
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="mr-3">
+										<div class="icon-circle bg-success">
+											<i class="fas fa-donate text-white"></i>
+										</div>
+									</div>
+
+									<div>
+										<div class="small text-gray-500">December 7, 2019</div>
+										$290.29 has been deposited into your account!
+									</div>
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+									<div class="mr-3">
+										<div class="icon-circle bg-warning">
+											<i class="fas fa-exclamation-triangle text-white"></i>
+										</div>
+									</div>
+									<div>
+										<div class="small text-gray-500">December 2, 2019</div>
+										Spending Alert: We've noticed unusually high spending for your
+										account.
+									</div>
+								</a> <a class="dropdown-item text-center small text-gray-500"
+									href="/manageEvents">
+
+									[[#{dashboard.notifications_details}]] </a>
+							</div></li>
+
+						<!-- Nav Item - Messages -->
+						<li class="nav-item dropdown no-arrow mx-1"><a
+							class="nav-link dropdown-toggle" href="/#" id="messagesDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i>
+
+								<!-- Counter - Messages --> <span
+								class="badge badge-danger badge-counter">7</span>
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="messagesDropdown">
+
+								<h6 class="dropdown-header">[[#{dashboard.chat}]]</h6>
+
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+
+									<div class="font-weight-bold">
+
+										<div class="text-truncate">Hi there! I am wondering if
+											you can help me with a problem I've been having.</div>
+
+										<div class="small text-gray-500">Emily Fowler · 58m</div>
+
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="dropdown-list-image mr-3">
+
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+
+										<div class="status-indicator"></div>
+									</div>
+
+									<div>
+
+										<div class="text-truncate">I have the photos that you
+											ordered last month, how would you like them sent to you?</div>
+										<div class="small text-gray-500">Jae Chun · 1d</div>
+
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+									<div class="dropdown-list-image mr-3">
+
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+
+										<div class="status-indicator bg-warning"></div>
+
+									</div>
+
+									<div>
+
+										<div class="text-truncate">Last month's report looks
+											great, I am very happy with the progress so far, keep up the
+											good work!</div>
+
+										<div class="small text-gray-500">Morgan Alvarez · 2d</div>
+
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+
+									<div>
+
+										<div class="text-truncate">Am I a good boy? The reason I
+											ask is because someone told me that people say this to all
+											dogs, even if they aren't good...</div>
+
+										<div class="small text-gray-500">Chicken the Dog · 2w</div>
+
+									</div>
+
+								</a> <a class="dropdown-item text-center small text-gray-500"
+									href="/#">[[#{dashboard.chat_details}]]</a>
+
+							</div></li>
+
+						<div class="topbar-divider d-none d-sm-block"></div>
+
+						<!-- Nav Item - User Information -->
+						<li class="nav-item dropdown no-arrow" role="presentation">
+							<div class="nav-item dropdown no-arrow">
+								<a class="dropdown-toggle nav-link" data-toggle="dropdown"
+									aria-expanded="false" href="#"><span
+									class="d-none d-lg-inline mr-2 text-gray-600 small"
+									th:text="${loggedinUser.name} + ' '+${loggedinUser.surname} ">
+								</span><img id="roundedImageProfile"
+									th:src="@{'/profileImages/'+${loggedinUser.photo}}"
+									class="border rounded-circle img-profile"></a>
+								<div
+									class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+									role="menu">
+									<a class="dropdown-item" role="presentation" href="/profile"><i
+										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item1}]]</a>
+									<div class="dropdown-divider"></div>
+									<a href="/logout" class="dropdown-item" role="/logout"><i
+										class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item2}]]</a>
+								</div>
+							</div>
+						</li>
+
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=en}"> <img
+								th:src="@{/img/en.png}">
+						</a></li>
+
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=el}"> <img
+								th:src="@{/img/el.png}">
+						</a></li>
+					</ul>
+
+				</nav>
+				<!-- End of Topbar -->
+
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+
+
+
+						<h1 class="h3 mb-0 text-gray-800">[[#{radio.main_title}]]</h1>
+						<a href="/#"
+							class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+							class="fas fa-download fa-sm text-white-50"></i> [[#{radio.report_button}]]</a>
+					</div>
+
+					<!-- Content Row -->
+					<div class="row">
+						<div class="w3-modal" id="id01"></div>
+						<!-- Earnings (Monthly) Card Example -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+												th:text="#{radio.card1}  + ': ' + ${loggedinUser.clusterMunicipality}"></div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800"
+												th:text="${aedsByClusterLength}"></div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-heartbeat fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Earnings (Monthly) Card Example -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-success shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-success text-uppercase mb-1"
+												th:text="#{radio.card2}  + ': ' + ${loggedinUser.clusterMunicipality} "></div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800"
+												th:text=" ${usersByClusterLength}"></div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-users fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Earnings (Monthly) Card Example -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-info shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-info text-uppercase mb-1"
+												th:text="#{radio.card3}  + ': ' + ${loggedinUser.clusterMunicipality}"></div>
+											<div class="row no-gutters align-items-center">
+												<div class="col-auto">
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
+														th:text="${eventsByClusterDateSize}"></div>
+												</div>
+
+											</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-check fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Pending Requests Card Example -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-warning shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutte rs align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+												th:text="#{radio.card4}  + ': ' + ${loggedinUser.clusterMunicipality}"></div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800"
+												th:text="${notFixed}"></div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-times fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Content Row -->
+					<div class="row">
+
+						<!-- Area Chart -->
+						<div class="col-xl-12 col-lg-8">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{radio.section1_title}]]</h6>
+									<div class="dropdown no-arrow">
+
+
+										<div class="dropdown" id="dropdown">
+											<button class="btn btn-secondary dropdown-toggle"
+												type="button" id="dropdownMenuButton" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">[[#{radio.section1_button}]]
+												</button>
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton">
+
+												<div class="dropdown-item">
+													&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox"
+														onclick="showFilters();" class="form-check-input"
+														id="exampleCheck1"> &nbsp;<label
+														class="form-check-label" for="exampleCheck1">[[#{radio.section1_item1}]]</label>
+												</div>
+												<div class="dropdown-item">
+													&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox"
+														onclick="showFilters();" class="form-check-input"
+														id="exampleCheck2"> &nbsp;<label
+														class="form-check-label" for="exampleCheck2">[[#{radio.section1_item2}]]</label>
+												</div>
+												<div class="dropdown-item">
+													&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox"
+														onclick="showFilters();" class="form-check-input"
+														id="exampleCheck3"> &nbsp;<label
+														class="form-check-label" for="exampleCheck3">[[#{radio.section1_item3}]]</label>
+												</div>
+
+
+											</div>
+										</div>
+
+
+
+									</div>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-area" id="map"></div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Pie Chart -->
+
+
+					</div>
+
+					<div class="row">
+						
+							<div class="col-xl-6 col-lg-5">
+								<div class="card shadow mb-4">
+									
+									<div
+										class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+										<h6 class="m-0 font-weight-bold text-primary">Περιστατικά</h6>
+										<div class="dropdown no-arrow">
+											<a class="dropdown-toggle" href="#" role="button"
+												id="dropdownMenuLink" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false"> <i
+												class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+											</a>
+											<div
+												class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+												aria-labelledby="dropdownMenuLink">
+												<div class="dropdown-header">Dropdown Header:</div>
+												<a class="dropdown-item" href="#">Action</a> <a
+													class="dropdown-item" href="#">Another action</a>
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item" href="#">Something else here</a>
+											</div>
+										</div>
+									</div>
+									
+
+									
+									<div class="card-body">
+										<div class="chart-pie pt-4 pb-2">
+											<canvas id="myPieChart"></canvas>
+										</div>
+										<div class="mt-4 text-center small">
+											<span class="mr-2"> <i
+												class="fas fa-circle text-primary"></i> Δήμος
+											</span> <span class="mr-2"> <i
+												class="fas fa-circle text-info"></i> Χώρα
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+<!-- 
+						<div class="col-xl-6 col-lg-5">
+
+							
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{radio.section2_title}]]
+										</h6>
+								</div>
+								<div class="card-body" style="margin: 0 auto;"
+									th:each="ambulance: ${ambulanceByClinic}">
+									<div id="waiting" class="btn btn-light" >
+										<p>[[#{radio.section2_paragraph1}]]</p>
+										 <div class="loader" style="margin: 0 auto;height:50px;width:50px"></div> 
+										
+									</div>
+									<div th:id="'green'+${ambulance.username}" class="btn btn-success" >
+										<b style="background-color:black;"
+											th:text="${ambulance.username}"></b> <p>[[#{radio.section2_paragraph2}]]</p>
+										
+									</div>
+									
+									
+									<div th:id="'yellow'+${ambulance.username}" class="btn btn-warning">
+										<b style="background-color:black;"
+											th:text="${ambulance.username}"></b> <p>[[#{radio.section2_paragraph3}]]</p>
+										
+									</div>
+
+									<div th:id="'red'+${ambulance.username}" class="btn btn-danger">
+										<b style="background-color:black;"
+											th:text="${ambulance.username}"></b> <p>[[#{radio.section2_paragraph4}]]</p>
+										
+									</div>
+								</div>
+
+
+							</div>
+
+
+
+							
+
+						</div>
+
+Topbar Navbar -->
+
+
+						 
+					</div>
+
+					<div class="col-lg-15 mb-3">
+
+						<!-- Illustrations -->
+						<div class="card shadow mb-3">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary " id="incident">[[#{radio.section3_title}]]</h6>
+							</div>
+							<div class="card shadow mb-3">
+								<div class="card-body" id="table">
+									<div class="table-responsive">
+										<table class="table table-bordered" id="dataTable"
+											width="100%" cellspacing="0">
+											<thead>
+												<tr>
+													<th>[[#{radio.section3_th1}]]</th>
+													<th>[[#{radio.section3_th2}]]</th>
+													<th>[[#{radio.section3_th3}]]</th>
+													<th>[[#{radio.section3_th4}]]</th>
+													<th>[[#{radio.section3_th5}]]</th>
+													<th>[[#{radio.section3_th6}]]</th>
+													<th>[[#{radio.section3_th7}]]</th>
+													<th>[[#{radio.section3_th8}]]</th>
+													<th>[[#{radio.section3_th9}]]</th>
+													<th>[[#{radio.section3_th10}]]</th>
+													<th>[[#{radio.section3_th11}]]</th>
+													<th>[[#{radio.section3_th12}]]</th>
+													<th>[[#{radio.section3_th13}]]</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th>[[#{radio.section3_th1}]]</th>
+													<th>[[#{radio.section3_th2}]]</th>
+													<th>[[#{radio.section3_th3}]]</th>
+													<th>[[#{radio.section3_th4}]]</th>
+													<th>[[#{radio.section3_th5}]]</th>
+													<th>[[#{radio.section3_th6}]]</th>
+													<th>[[#{radio.section3_th7}]]</th>
+													<th>[[#{radio.section3_th8}]]</th>
+													<th>[[#{radio.section3_th9}]]</th>
+													<th>[[#{radio.section3_th10}]]</th>
+													<th>[[#{radio.section3_th11}]]</th>
+													<th>[[#{radio.section3_th12}]]</th>
+													<th>[[#{radio.section3_th13}]]</th>
+												</tr>
+											</tfoot>
+											<tbody id="eventsadd">
+
+												<tr th:each="event : ${eventsByClusterDate}"
+													th:onclick="showMarkerOnEvent([[${event.event_id}]])"
+													th:onmouseover="doSmth([[${event.event_id+'row'}]],[[${event.type}]])"
+													th:id="${event.event_id+'row'}"
+													th:onmouseout="leave([[${event.event_id+'row'}]],[[${event.type}]])"
+													th:onloadeddata="initThym([[${event.event_id+'row'}]],[[${event.type}]])"
+													th:if="${event.assignmentDate == null && event.type!=null}">
+
+													<td th:text="${event.status}"></td>
+													<td th:text="${event.persons}"></td>
+													<td th:text="${event.creationDate}"></td>
+													<td th:text="${event.address}"></td>
+													<td th:text="${event.city}"></td>
+													<td th:text="${event.postalCode}"></td>
+													<td th:text="${event.doorbell}"></td>
+													<td th:text="${event.floor}"></td>
+
+													<td th:text="${event.ageVictim}"></td>
+
+													<td><input type="checkbox" name="my-checkbox"
+														onclick="false;" th:checked="${event.theSameUser}"></td>
+
+													<td th:text="${event.type}"></td>
+
+													<td><select class="form-control form-control-user"
+														th:id="${event.event_id} + 'select'"
+														placeholder="Ασθενοφόρο">
+
+															<option th:each="ambulance : ${ambulanceByClinic}"
+																th:value="${ambulance}" th:text="${ambulance.username}">
+															</option>
+
+													</select></td>
+
+													<td>
+														<button class='btn btn-outline-dark btn-lg'
+															th:onclick="sendAmbulance([[${event}]]);">[[#{radio.section3_button}]]</button>
+													</td>
+
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+
+				</div>
+				<!-- End of Main Content -->
+
+				<!-- Footer -->
+				<footer class="sticky-footer bg-white">
+					<div class="container my-auto">
+						<div class="copyright text-center my-auto">
+							<span>Copyright &copy; LifeTime 2020</span>
+						</div>
+					</div>
+				</footer>
+				<!-- End of Footer -->
+
+			</div>
+			<!-- End of Content Wrapper -->
+
+		</div>
+		<!-- End of Page Wrapper -->
+
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="/#page-top"> <i
+			class="fas fa-angle-up"></i>
+		</a>
+
+		<!-- Logout Modal-->
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to
+							Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Select "Logout" below if you are
+						ready to end your current session.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button"
+							data-dismiss="modal">Cancel</button>
+						<a class="btn btn-primary" href="/login ">Logout</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+var cluster = L.markerClusterGroup();
+
+var eventIcon = new L.Icon({
+	  iconUrl: '/img/sos.png',
+	  iconAnchor: [12, 31],
+	  popupAnchor: [1, -34]
+	});
+
+	var aedIcon = new L.Icon({
+		  iconUrl: '/img/myaed.png',
+		  iconAnchor: [15, 31],
+		  popupAnchor: [1, -34]
+
+		});
+		
+		
+	var ambulanceIcon = new L.Icon({
+		  iconUrl: '/img/ambu.png',
+		  iconAnchor: [15, 20],
+		  popupAnchor: [1, -34]
+		  
+		});
+	
+var mylat;
+var mylon;
+
+if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(successFunction);
+	} else {
+	    alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
+	}
+function successFunction(position) {
+	    mylat = position.coords.latitude;
+	    mylon = position.coords.longitude;
+	    console.log('Your latitude is :'+mylat+' and longitude is '+mylon);
+	    initMap();
+
+	   
+	}
+</script>
+
+		<script th:inline="javascript">
+
+function sendAmbulance(item)
+{
+	
+	console.log(item.event_id);
+	var selectAmbulance = document.getElementById(item.event_id+"select");
+	var strAmbulance = selectAmbulance.options[selectAmbulance.selectedIndex].text;
+	
+var ambulanceUsername = strAmbulance.toString();
+
+
+	console.log("ambulanceUsername : "+ambulanceUsername);
+	 
+    /*<![CDATA[*/
+    /*[# th:each="ambulance : ${ambulanceByClinic}"]*/
+		if([[${ambulance.username}]]==ambulanceUsername)
+			{
+			
+			item.ambulance=[[${ambulance}]];
+			console.log("myJSONAmbulance "+item.ambulance);
+			
+
+			}
+    
+    	 /*[/]*/
+	     /*]]>*/ 
+	
+	 var now=getfulldateAndTime();
+	 item.assignmentDate=now;
+	 
+	 
+	var myJSONEvent = JSON.stringify(item); 
+	console.log("myJSONEvent "+myJSONEvent);
+	
+	
+	
+	
+	var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+
+	xmlhttp.open("POST", "/web/ambulance/assign/add");
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+
+	xmlhttp.onreadystatechange = function() {
+        if (this.status == 200) {
+        	console.log("add ok");
+        	document.getElementById(item.event_id+"row").style.display="none";
+       }
+        else
+        	{
+        	console.log("add failed");
+        	}
+	};
+	
+	xmlhttp.send(myJSONEvent);
+
+    
+}
+	
+	
+	
+	
+	
+	
+function doSmth(id,type)
+{
+	
+	
+
+	if(type=='Επείγον')
+	{
+		document.getElementById(id).style.backgroundColor="#ffd27f";
+
+	}
+else if(type=='Υπερ Επείγον')
+	{
+	document.getElementById(id).style.backgroundColor="#ff7f7f";
+
+	}
+else if(type=='Μη Επείγον')
+{
+	document.getElementById(id).style.backgroundColor="#7fbf7f";
+
+}
+
+		console.log('K');
+	}
+	
+function leave(id,type)
+{
+	
+
+	
+	console.log('left');
+	console.log(type);
+
+	
+	console.log('left');
+	console.log(type);
+	
+
+	if(type=='Επείγον')
+	{
+		document.getElementById(id).style.backgroundColor="#ffdb99";
+
+	}
+else if(type=='Υπερ Επείγον')
+	{
+	document.getElementById(id).style.backgroundColor="#ffb2b2";
+
+	}
+else if(type=='Μη Επείγον')
+{
+	document.getElementById(id).style.backgroundColor="#b2d8b2";
+
+}
+
+
+}
+
+
+
+function initThym(id,type)
+{
+	
+	console("init thym :"+id +" "+type);
+	
+	if(type=='Επείγον')
+	{
+		document.getElementById(id).style.backgroundColor="#ffdb99";
+
+	}
+else if(type=='Υπερ Επείγον')
+	{
+	document.getElementById(id).style.backgroundColor="#ffb2b2";
+
+	}
+else if(type=='Υπερ Επείγον')
+	{
+	document.getElementById(id).style.backgroundColor="#ffb2b2";
+
+	}
+else if(type=='Μη Επείγον')
+{
+	document.getElementById(id).style.backgroundColor="#b2d8b2";
+
+}
+
+	
+else if(type=='Μη Επείγον')
+{
+	document.getElementById(id).style.backgroundColor="#b2d8b2";
+
+}
+
+}
+
+</script>
+
+
+		<script>
+    function getfulldate()
+    {
+  	  var today = new Date();
+  	  var dd = String(today.getDate()).padStart(2, '0');
+  	  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  	  var yyyy = today.getFullYear();
+
+  	  today = dd + '/' + mm + '/' + yyyy;
+  	  document.getElementById("incident").innerHTML ="Περιστατικά : "+today;
+  	  return today;
+    }
+    
+    function getfulldateAndTime()
+    {
+  	  var today = new Date();
+  	  var dd = String(today.getDate()).padStart(2, '0');
+  	  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  	  var yyyy = today.getFullYear();
+  	  
+  	  var hour = today.getHours();
+  	  var minutes = today.getMinutes();
+  	  var sec = today.getSeconds();
+
+  	  today = dd + '/' + mm + '/' + yyyy +" "+hour+":"+minutes+":"+sec;
+  	 
+  	  return today;
+    }
+    
+    </script>
+
+
+		<script th:inline="javascript">
+// Initialize and add the map
+ var map;
+ var eventMarkers = new Map();
+ var aedMarkers = new Map();
+ var ambuMarkers = new Map();
+ 
+function initMap() {
+	
+	console.log(mylat + " , "+mylon);
+	 map = L.map('map').setView([mylat, mylon], 13);
+
+				
+	 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+				'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			id: 'mapbox/streets-v11',
+			tileSize: 512,
+			zoomOffset: -1
+		}).addTo(map);	 
+		
+		map.addControl(new L.Control.Fullscreen());
+		
+		var ambulanceLocation;
+		var ambulanceItem;
+	  /*<![CDATA[*/
+		/*[# th:each="ambulance : ${ambulanceByClinic}"]*/
+		
+		
+		console.log([[${ambulance}]]);
+		 
+		ambulanceLocation = L.marker([parseFloat(/*[[${ambulance.lat}]]*/), parseFloat(/*[[${ambulance.lon}]]*/)],{icon: ambulanceIcon});
+				
+		ambulanceItem = {ambulanceId:/*[[${ambulance.ambulanceId}]]*/, username:/*[[${ambulance.username}]]*/, licensePlate:/*[[${ambulance.licensePlate}]]*/, 
+				city:/*[[${ambulance.city}]]*/ };
+		
+        
+		addMarker(ambulanceLocation,map,ambulanceItem,"ambulance",'img/ambulance.png');
+		
+		
+		/*[/]*/
+			/*]]>*/
+			
+			var eventLocation;
+	var eventItem;
+	
+	
+			  /*<![CDATA[*/
+		/*[# th:each="event : ${eventsByClusterDate}"]*/
+		
+		if([[${event.assignmentDate}]]==null)
+			{
+			
+		
+			console.log([[${event}]]);
+			eventLocation = L.marker([parseFloat(/*[[${event.lat}]]*/), parseFloat(/*[[${event.lon}]]*/)],{icon: eventIcon});
+
+			
+			 eventItem = {event_id:/*[[${event.event_id}]]*/,status:/*[[${event.status}]]*/, address:/*[[${event.address}]]*/, 
+					persons:/*[[${event.persons}]]*/,creationDate:/*[[${event.creationDate}]]*/,city:/*[[${event.city}]]*/,floor:/*[[${event.floor}]]*/,doorbell:/*[[${event.doorbell}]]*/ };
+			
+	        
+			addMarker(eventLocation,map,eventItem,"event",'img/sos.png');
+			}
+		
+		/*[/]*/
+			/*]]>*/
+		
+			
+		map.addLayer(cluster);
+			
+      }
+
+function addInfoWindow(marker, message) {
+	/*
+    var infoWindow = new google.maps.InfoWindow({
+        content: message
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.open(map, marker);
+    });*/
+    marker.bindPopup(message);
+    marker.on('mouseover',function(ev) {
+    	  ev.target.openPopup();
+    	});
+}
+      
+
+	
+	  function getMap()
+	  {
+		return map;
+	  }
+	  
+	//Adds a marker to the map.
+	function addMarker(marker, map, item,kind,image) {
+	  // Add the marker at the clicked location, and add the next-available label
+	  // from the array of alphabetical characters.
+	  var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	  var labelIndex = 0;
+
+	 cluster.addLayer(marker);
+	  var contentString ;
+	  if(kind=="event")
+		  {
+		  
+		  
+		
+		  eventMarkers.set(item.event_id,marker);
+		 
+		  
+		   contentString = '<div id="content">'
+			  +'<h4 id="firstHeading" class="firstHeading">Είδος :'+item.status+'</h4>'
+			  +'<div id="bodyContent">'
+			  +'<p> <b>Διεύθυνση '+item.address+'</b><br>' 
+			  +'<b>Άτομα: '+ item.persons +'</b> <br>' 
+			  +'<b>Ημ/νια:'+ item.creationDate +'</b> <br>'
+			  +'<b>Πόλη:'+item.city+'</b> <br>' 
+			  +'<b>Κουδούνι:'+item.doorbell+'</b> <br>'
+			  +'<b>Όροφος:'+item.floor+'</b> </p> </div>'
+			  +'</div>';
+		  }
+	  
+	  
+	  
+	  if(kind=="ambulance")
+	  {
+		  
+		  ambuMarkers.set(item.ambulanceId,marker);
+	 	  contentString = '<div id="content">'
+		  +'<h4 id="firstHeading" class="firstHeading">Αριθμός Ασθενοφόρου :'+item.username+'</h4>'
+		  +'<div id="bodyContent">'
+		  +'<p> <b>Αρ. Κυκλοφορίας '+item.licensePlate+'</b><br>' 
+		  +'<b>Πόλη: '+ item.city +'</b> <br> </div>' 
+		  +'</div>';
+	  }
+
+	  
+
+	  addInfoWindow(marker,contentString);
+	}
+	function showMarkerOnEvent(id)
+	{
+		console.log("marker on event");
+		console.log("Markers: "+eventMarkers);
+		var arrayLength = eventMarkers.length;
+		console.log("Marker Clicked:  "+id+" ID");
+		
+		
+		for (const [key, value] of eventMarkers.entries()) {
+			 if(key==id)
+				 {
+				document.getElementById(key+"row").style.background="#E8E8E8";   // Get the element with id="demo"
+				document.getElementById(key+"row").style.color="#ff4c4c";   // Get the element with id="demo"
+				 var lat = value.getLatLng().lat;
+				 var lon = value.getLatLng().lng;
+				 map.setView([lat, lon], 13);
+				 value.openPopup();
+				 }else
+					 {
+					 		var temp = document.getElementById(key+"row");
+					 		if(temp!=null)
+					 			{
+					 			temp.style.background="transparent";
+					 			temp.style.color="grey";
+					 			}
+					 }
+			}
+		}
+
+	</script>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+var ambulances = [[${ambulanceByClinic}]];
+console.log("All ambulances"+ambulances);
+/*]]>*/ 
+</script>
+	
+		<script>
+
+// for(var i=0;i<ambulances.length;i++)
+// 	{
+// 	    document.getElementById("red"+ambulances[i].username).style.display="none"; 
+// 	   document.getElementById("yellow"+ambulances[i].username).style.display="none"; 
+// 	   document.getElementById("green"+ambulances[i].username).style.display="none"; 
+// 	}
+
+//  // Connect to the server
+//  	var eventSource;	
+// 	 eventSource = new EventSource("/web/events/receive/[[${loggedinUser.hospital.eventProcessor}]]");
+//  // eventsource gia na kanei update tin katastasi tou asthenoforou
+ 	
+// 	 // Receive messages
+// 	    eventSource.onmessage = function (evt) {
+		 
+// 	    	var item;
+// 	    	item = JSON.parse(evt.data);
+// 	    	if(item.event_id!= 0 ) //an to event pou irthe den einai to keep alive tou eventsource kai den exei ginei anathesi tou einai kainoyrgio opote emfanise to pop up
+// 	    	{
+// 	    		var currentAmbulance = item.ambulance;
+// 	    		if(currentAmbulance!=null)
+// 	    		{
+// 	    		document.getElementById("waiting").style.display="none"; 
+	    		
+// 	    		for(var i=0;i<ambulances.length;i++)
+// 	    		{
+// 	    			document.getElementById("red"+ambulances[i].username).style.display="none"; 
+// 	    		    document.getElementById("yellow"+ambulances[i].username).style.display="none"; 
+//  	    		   	document.getElementById("green"+ambulances[i].username).style.display="none"; 
+
+
+// 	    			if(currentAmbulance.ambulanceId==ambulances[i].ambulanceId)
+// 	    			{
+	    				
+// 	    			 	if(item.finishedDate!=null)
+// 	    				{
+// 	    	    		   document.getElementById("green"+ambulances[i].username).style.display="block"; 
+// 	    				}
+// 	    			 else if(item.receiptDate!=null)
+//     					{
+//     	    		    document.getElementById("red"+ambulances[i].username).style.display="block"; 
+//     					}
+// 	    				else if(item.assignmentDate!=null)
+//     					{
+//     	    		    document.getElementById("yellow"+ambulances[i].username).style.display="block"; 
+
+//     					}else
+//     						{
+//     	 	    		   	document.getElementById("green"+ambulances[i].username).style.display="block"; 
+//     						}
+	    				
+	    				
+// 	    			}
+// 	    		}
+// 	    	}
+// 	    	}
+
+// 	    };
+	    
+
+// 	    eventSource.onerror = function (e) {
+// 	        console.log("EventSource failed: " + e.city);
+// 	    };
+	    
+	   
+				
+
+    </script>
+
+		<script>
+	
+		eventSource = new EventSource("/web/ambulance/receive"); //eventsource pou allazei tin topothesia twn asthenoforwn
+
+    	// Receive messages
+   		eventSource.onmessage = function (evt) {
+    	var item =JSON.parse(evt.data);
+    	
+    	if(item.ambulanceId!=0)
+    		{
+    	
+    	if( [[${loggedinUser.hospital.hospital_id}]] == item.hospital.hospital_id)
+    		{
+    		//var arrayLength = markers.length;
+    		
+    		for (const [key, value] of ambuMarkers.entries()) {
+    			 if(key==item.ambulanceId)
+    				 {
+    				 var lat = item.lat;
+    				 var lon = item.lon;
+    				 var newLatLng = new L.LatLng(lat, lon);
+    				 value.setLatLng(newLatLng); 
+    				 }
+    			
+    			}
+    		
+    		}
+    		}else
+    			{
+    			console.log("Ambulance Kept-Alive");
+    			}
+    	
+    };
+    eventSource.onerror = function (e) {
+        console.log("EventSource failed: " + e);
+    };
+	
+	
+	</script>
+
+
+		<script th:inline="javascript">
+	
+eventSourceRadio = new EventSource("/web/asirmatistis/receive"); // auto einai to eventsource pou pairnei ta evens pou xaraktirizeio tilefonitis
+
+//Receive messages
+eventSourceRadio.onmessage = function (evt) {
+	
+	var item =JSON.parse (evt.data);
+	
+	if(item.event_id!=0)
+	{
+
+		var myJSON = JSON.stringify(item);
+	console.log("irthe "+myJSON);
+
+	console.log("tester "+item.hospital.hospital_id);
+	
+	if([[${loggedinUser.hospital.hospital_id}]] == item.hospital.hospital_id)
+		{
+	
+	var map = getMap();
+	var currentEventLocation = { lat: parseFloat(item.lat), lng: parseFloat(item.lon) };
+	var marker = L.marker([parseFloat(item.lat), parseFloat(item.lon)],{icon: eventIcon});
+	addMarker(marker,map,item,"event",'img/sos.png');
+	
+	console.log("xaraktirisa "+item.type);
+	var t = "";
+	var extremlyEmergent = [[#{dashboard.emergency_card_type1}]];
+	var emergent = [[#{dashboard.emergency_card_type2}]];
+	var nonEmergent = [[#{dashboard.emergency_card_type2}]];
+
+	if(item.type==extremlyEmergent )
+		{
+		var tr = "<tr onclick='showMarkerOnEvent("+item.event_id+")' style=\"background-color:#ffdb99\" onmouseover='doSmth(\""+item.event_id+"row\",\""+item.type+"\");' onmouseleave='leave(\""+item.event_id+"row\",\""+item.type+"\");' id=\""+item.event_id+"row\">";
+		
+		}
+	else if(item.type==emergent)
+		{
+		var tr = "<tr onclick='showMarkerOnEvent("+item.event_id+")' style=\"background-color:#ffb2b2\" onmouseover='doSmth(\""+item.event_id+"row\",\""+item.type+"\");' onmouseleave='leave(\""+item.event_id+"row\",\""+item.type+"\");'  id=\""+item.event_id+"row\">";
+
+		}
+	else if(item.type==nonEmergent)
+	{
+	var tr = "<tr onclick='showMarkerOnEvent("+item.event_id+")' style=\"background-color:#b2d8b2\" onmouseover='doSmth(\""+item.event_id+"row\",\""+item.type+"\");' onmouseleave='leave(\""+item.event_id+"row\",\""+item.type+"\");'  id=\""+item.event_id+"row\">";
+
+	}
+
+	
+     tr += "<td>"+item.status+"</td>";
+     tr += "<td>"+item.persons+"</td>";
+     tr += "<td>"+item.creationDate+"</td>";
+     tr += "<td>"+item.address+"</td>";
+     tr += "<td>"+item.city+"</td>";
+     tr += "<td>"+item.postalCode+"</td>";
+     tr += "<td>"+item.doorbell+"</td>";
+     tr += "<td>"+item.floor+"</td>";
+    
+     tr += "<td>"+item.ageVictim+"</td>";
+    
+     if(item.theSameUser==1)
+	 {
+	 tr += "<td><input type='checkbox' onclick='return false;' checked /> </td>";
+	 mind =  "<input type='checkbox' onclick='return false;' checked /> ";
+	 }
+ 	else
+	 {
+	 tr += "<td><input type='checkbox' onclick='return false;' /> </td>";
+	 mind =  "<input type='checkbox' onclick='return false;' /> ";
+	 }
+     
+     
+     tr += "<td>"+item.type+"</td>";
+     
+     tr += "<td>"+
+	
+	"<select class='form-control form-control-user' placeholder='Ασθενοφόρο' id=\""+item.event_id+"select\">"+
+	
+     /*<![CDATA[*/
+     /*[# th:each="ambulance : ${ambulanceByClinic}"]*/
+		"<option  value='"+[[${ambulance.ambulanceId}]]+"'>"+[[${ambulance.username}]]+"</option>"+
+		 /*[/]*/
+	     /*]]>*/ 
+
+	"</select>"+
+
+	"</td>";
+	
+	
+
+	var myJSONEvent = JSON.stringify(item);
+	tr += "<td> <button class='btn btn-outline-dark btn-lg' onclick='"+"sendAmbulance("+myJSONEvent+")'>Ανάθεση Περιστατικού"+"</button></td>";
+
+  
+     tr += "</tr>";
+     t += tr;
+      
+     document.getElementById("eventsadd").innerHTML += t;   
+ 	}
+	
+	console.log(item.event_id);
+	}else{
+		console.log("Asirmatistis Kept-Alive");
+	}
+};
+
+
+eventSourceRadio.onerror = function (e) {
+    console.log("EventSource failed: " + e);
+};
+
+
+</script>
+
+
+
+
+
+		<!-- Page level plugins -->
+		<script src="vendor/chart.js/Chart.min.js"></script>
+
+		<!-- Page level custom scripts 
+	<script src="js/demo/chart-area-demo.js"></script>-->
+
+
+
+		<script type="text/javascript"
+			src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin-2.min.js"></script>
+
+		<!-- Page level plugins -->
+		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+		<!-- Page level custom scripts -->
+		<script src="js/demo/datatables-demo.js"></script>
+
+
+
+
+		<script th:inline="javascript">
+  // Set new default font family and font color to mimic Bootstrap's default styling
+Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = '#858796';
+
+// Pie Chart Example
+var ctx = document.getElementById("myPieChart");
+var myPieChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+	  /*<![CDATA[*/
+    labels: [ [[${loggedinUser.clusterMunicipality}]], [[${loggedinUser.country}]] ],
+    datasets: [{
+    	
+      data: [ [(${eventsByClusterSize})],  [(${eventsByCountrySize})]],
+      backgroundColor: ['#4e73df', '#1cc88a'],
+      hoverBackgroundColor: ['#2e59d9', '#17a673'],
+      hoverBorderColor: "rgba(234, 236, 244, 1)",
+      /*]]>*/
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80,
+  },
+});
+  
+  
+</script>
+
+
+		<script>
+	
+	function showFilters()
+	{
+	
+	var aedCheckBox = document.getElementById('exampleCheck1');
+	var eventCheckBox = document.getElementById('exampleCheck2');
+	var ambulanceCheckBox = document.getElementById('exampleCheck3');
+
+	console.log("AED: "+aedCheckBox.checked);
+	console.log("Event: "+eventCheckBox.checked);
+	console.log("Amb: "+ambulanceCheckBox.checked);
+
+	
+	
+	
+	if(aedCheckBox.checked)
+		{
+			
+			for (const [key, value] of aedMarkers.entries()) {
+				value.setOpacity(1);
+				cluster.addLayer(value);	
+			}
+
+		
+		}else
+		{
+			for (const [key, value] of aedMarkers.entries()) {
+				value.setOpacity(0);
+				cluster.removeLayer(value);
+			}
+		}
+	
+	if(eventCheckBox.checked)
+	{
+		
+		for (const [key, value] of eventMarkers.entries()) {
+			value.setOpacity(1);
+			cluster.addLayer(value);
+		}
+
+	
+	}else
+	{
+		for (const [key, value] of eventMarkers.entries()) {
+			value.setOpacity(0);
+			cluster.removeLayer(value);
+		}
+	}
+	
+	
+
+	if(ambulanceCheckBox.checked)
+	{
+		
+		for (const [key, value] of ambuMarkers.entries()) {
+			value.setOpacity(1);
+			cluster.addLayer(value);
+
+		}
+
+	
+	}else
+	{
+		for (const [key, value] of ambuMarkers.entries()) {
+			value.setOpacity(0);
+			cluster.removeLayer(value);
+		}
+	}
+
+
+	}
+	
+	
+	
+	
+	
+	
+	</script>
+</body>
+
+</html>

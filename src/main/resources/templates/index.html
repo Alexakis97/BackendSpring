@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<style>
+.login-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.login-logo{
+    position: relative;
+    margin-left: -41.5%;
+}
+.login-logo img{
+    position: absolute;
+    width: 20%;
+    margin-top: 19%;
+    background: #282726;
+    border-radius: 4.5rem;
+    padding: 5%;
+}
+.login-form-1{
+    padding: 9%;
+    background:#282726;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-1 h3{
+    text-align: center;
+    margin-bottom:12%;
+    color:#fff;
+}
+.login-form-2{
+    padding: 9%;
+    background: #f05837;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-2 h3{
+    text-align: center;
+    margin-bottom:12%;
+    color: #fff;
+}
+.btnSubmit{
+    font-weight: 600;
+    width: 50%;
+    color: #282726;
+    background-color: #fff;
+    border: none;
+    border-radius: 1.5rem;
+    padding:2%;
+}
+.btnForgetPwd{
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+.btnForgetPwd:hover{
+    text-decoration:none;
+    color:#fff;
+}
+</style>
+
+<!-- -------------------------------TIDIO------------------------------- -->
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+		<a class="navbar-brand" href="https://foreverlifetime.com"
+			style="color: #c13b4d;" target="_blank"> 
+			<img
+			src="img/LifeTime_Brand_Logo_2.png"
+			width="30" height="30" class="d-inline-block align-top" alt="">
+			LifeTime
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<!-- <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li> -->
+			</ul>
+
+			<form class="form-inline my-2 my-lg-0">
+				<!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+       -->
+				<li class="nav-item" style="width: auto; display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}"> <img
+						th:src="@{/img/en.png}">
+				</a>
+				</li>
+
+				<li class="nav-item" style="width: auto; display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=el}"> <img
+						th:src="@{/img/el.png}">
+				</a>
+				</li>
+
+			</form>
+		</div>
+	</nav>
+<div class="container login-container">
+            <div class="row">
+                <div class="col-md-6 login-form-1">
+                   
+                    
+                    <h3>[[#{index.leftTitle}]]</h3>
+                        <div class="jumbotron">
+                     
+                     <a href="https://foreverlifetime.com/#contact" class="btn btn-primary" style="width:100%" target="_blank">
+                        [[#{index.leftBtn}]]
+                    </a>
+                    
+                     </div>
+                    
+                </div>
+                <div class="col-md-6 login-form-2">
+                    <div class="login-logo">
+                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                    </div>
+                    <h3>[[#{index.rightTitle}]]</h3>
+                     
+                     <div class="jumbotron">
+                     
+                     <a href="/login" class="btn btn-primary" style="width:100%">
+                        [[#{index.rightBtn}]]
+                    </a>
+                    
+                     </div>
+                    
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
+
+

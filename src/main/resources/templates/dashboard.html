@@ -1,0 +1,2177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>[[#{dashboard.title}]]</title>
+
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+
+	
+
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<!-- Custom styles for this page -->
+<link href="vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+
+
+
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin="" />
+
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+	integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+	crossorigin=""></script>
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+
+<script
+	src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+
+	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+
+
+<style type="text/css">
+			img[data-opt-src]:not([data-opt-lazy-loaded]) {
+				transition: .2s filter linear, .2s opacity linear, .2s border-radius linear;
+				-webkit-transition: .2s filter linear, .2s opacity linear, .2s border-radius linear;
+				-moz-transition: .2s filter linear, .2s opacity linear, .2s border-radius linear;
+				-o-transition: .2s filter linear, .2s opacity linear, .2s border-radius linear;
+			}
+			img[data-opt-src]:not([data-opt-lazy-loaded]) {
+				  opacity: .75;	 
+				  -webkit-filter: blur(8px);
+				  -moz-filter: blur(8px);
+				  -o-filter: blur(8px);
+				  -ms-filter: blur(8px);
+				  filter: blur(8px);
+				  transform: scale(1.04);
+				  animation: 0.1s ease-in;
+				  -webkit-transform: translate3d(0, 0, 0);
+			}
+			iframe[data-opt-src]:not([data-opt-lazy-loaded]) {
+				background-color: #ffffff;
+				background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHdpZHRoPSI0MHB4IiBoZWlnaHQ9IjQwcHgiIHZpZXdCb3g9IjAgMCA0MCA0MCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEuNDE0MjE7IiB4PSIwcHgiIHk9IjBweCI+CiAgICA8ZGVmcz4KICAgICAgICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWwogICAgICAgICAgICBALXdlYmtpdC1rZXlmcmFtZXMgc3BpbiB7CiAgICAgICAgICAgICAgZnJvbSB7CiAgICAgICAgICAgICAgICAtd2Via2l0LXRyYW5zZm9ybTogcm90YXRlKDBkZWcpCiAgICAgICAgICAgICAgfQogICAgICAgICAgICAgIHRvIHsKICAgICAgICAgICAgICAgIC13ZWJraXQtdHJhbnNmb3JtOiByb3RhdGUoLTM1OWRlZykKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgICAgQGtleWZyYW1lcyBzcGluIHsKICAgICAgICAgICAgICBmcm9tIHsKICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogcm90YXRlKDBkZWcpCiAgICAgICAgICAgICAgfQogICAgICAgICAgICAgIHRvIHsKICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogcm90YXRlKC0zNTlkZWcpCiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgICAgIHN2ZyB7CiAgICAgICAgICAgICAgICAtd2Via2l0LXRyYW5zZm9ybS1vcmlnaW46IDUwJSA1MCU7CiAgICAgICAgICAgICAgICAtd2Via2l0LWFuaW1hdGlvbjogc3BpbiAxLjVzIGxpbmVhciBpbmZpbml0ZTsKICAgICAgICAgICAgICAgIC13ZWJraXQtYmFja2ZhY2UtdmlzaWJpbGl0eTogaGlkZGVuOwogICAgICAgICAgICAgICAgYW5pbWF0aW9uOiBzcGluIDEuNXMgbGluZWFyIGluZmluaXRlOwogICAgICAgICAgICB9CiAgICAgICAgXV0+PC9zdHlsZT4KICAgIDwvZGVmcz4KICAgIDxnIGlkPSJvdXRlciI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0yMCwwQzIyLjIwNTgsMCAyMy45OTM5LDEuNzg4MTMgMjMuOTkzOSwzLjk5MzlDMjMuOTkzOSw2LjE5OTY4IDIyLjIwNTgsNy45ODc4MSAyMCw3Ljk4NzgxQzE3Ljc5NDIsNy45ODc4MSAxNi4wMDYxLDYuMTk5NjggMTYuMDA2MSwzLjk5MzlDMTYuMDA2MSwxLjc4ODEzIDE3Ljc5NDIsMCAyMCwwWiIgc3R5bGU9ImZpbGw6YmxhY2s7Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnPgogICAgICAgICAgICA8cGF0aCBkPSJNNS44NTc4Niw1Ljg1Nzg2QzcuNDE3NTgsNC4yOTgxNSA5Ljk0NjM4LDQuMjk4MTUgMTEuNTA2MSw1Ljg1Nzg2QzEzLjA2NTgsNy40MTc1OCAxMy4wNjU4LDkuOTQ2MzggMTEuNTA2MSwxMS41MDYxQzkuOTQ2MzgsMTMuMDY1OCA3LjQxNzU4LDEzLjA2NTggNS44NTc4NiwxMS41MDYxQzQuMjk4MTUsOS45NDYzOCA0LjI5ODE1LDcuNDE3NTggNS44NTc4Niw1Ljg1Nzg2WiIgc3R5bGU9ImZpbGw6cmdiKDIxMCwyMTAsMjEwKTsiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0yMCwzMi4wMTIyQzIyLjIwNTgsMzIuMDEyMiAyMy45OTM5LDMzLjgwMDMgMjMuOTkzOSwzNi4wMDYxQzIzLjk5MzksMzguMjExOSAyMi4yMDU4LDQwIDIwLDQwQzE3Ljc5NDIsNDAgMTYuMDA2MSwzOC4yMTE5IDE2LjAwNjEsMzYuMDA2MUMxNi4wMDYxLDMzLjgwMDMgMTcuNzk0MiwzMi4wMTIyIDIwLDMyLjAxMjJaIiBzdHlsZT0iZmlsbDpyZ2IoMTMwLDEzMCwxMzApOyIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTI4LjQ5MzksMjguNDkzOUMzMC4wNTM2LDI2LjkzNDIgMzIuNTgyNCwyNi45MzQyIDM0LjE0MjEsMjguNDkzOUMzNS43MDE5LDMwLjA1MzYgMzUuNzAxOSwzMi41ODI0IDM0LjE0MjEsMzQuMTQyMUMzMi41ODI0LDM1LjcwMTkgMzAuMDUzNiwzNS43MDE5IDI4LjQ5MzksMzQuMTQyMUMyNi45MzQyLDMyLjU4MjQgMjYuOTM0MiwzMC4wNTM2IDI4LjQ5MzksMjguNDkzOVoiIHN0eWxlPSJmaWxsOnJnYigxMDEsMTAxLDEwMSk7Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnPgogICAgICAgICAgICA8cGF0aCBkPSJNMy45OTM5LDE2LjAwNjFDNi4xOTk2OCwxNi4wMDYxIDcuOTg3ODEsMTcuNzk0MiA3Ljk4NzgxLDIwQzcuOTg3ODEsMjIuMjA1OCA2LjE5OTY4LDIzLjk5MzkgMy45OTM5LDIzLjk5MzlDMS43ODgxMywyMy45OTM5IDAsMjIuMjA1OCAwLDIwQzAsMTcuNzk0MiAxLjc4ODEzLDE2LjAwNjEgMy45OTM5LDE2LjAwNjFaIiBzdHlsZT0iZmlsbDpyZ2IoMTg3LDE4NywxODcpOyIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTUuODU3ODYsMjguNDkzOUM3LjQxNzU4LDI2LjkzNDIgOS45NDYzOCwyNi45MzQyIDExLjUwNjEsMjguNDkzOUMxMy4wNjU4LDMwLjA1MzYgMTMuMDY1OCwzMi41ODI0IDExLjUwNjEsMzQuMTQyMUM5Ljk0NjM4LDM1LjcwMTkgNy40MTc1OCwzNS43MDE5IDUuODU3ODYsMzQuMTQyMUM0LjI5ODE1LDMyLjU4MjQgNC4yOTgxNSwzMC4wNTM2IDUuODU3ODYsMjguNDkzOVoiIHN0eWxlPSJmaWxsOnJnYigxNjQsMTY0LDE2NCk7Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnPgogICAgICAgICAgICA8cGF0aCBkPSJNMzYuMDA2MSwxNi4wMDYxQzM4LjIxMTksMTYuMDA2MSA0MCwxNy43OTQyIDQwLDIwQzQwLDIyLjIwNTggMzguMjExOSwyMy45OTM5IDM2LjAwNjEsMjMuOTkzOUMzMy44MDAzLDIzLjk5MzkgMzIuMDEyMiwyMi4yMDU4IDMyLjAxMjIsMjBDMzIuMDEyMiwxNy43OTQyIDMzLjgwMDMsMTYuMDA2MSAzNi4wMDYxLDE2LjAwNjFaIiBzdHlsZT0iZmlsbDpyZ2IoNzQsNzQsNzQpOyIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTI4LjQ5MzksNS44NTc4NkMzMC4wNTM2LDQuMjk4MTUgMzIuNTgyNCw0LjI5ODE1IDM0LjE0MjEsNS44NTc4NkMzNS43MDE5LDcuNDE3NTggMzUuNzAxOSw5Ljk0NjM4IDM0LjE0MjEsMTEuNTA2MUMzMi41ODI0LDEzLjA2NTggMzAuMDUzNiwxMy4wNjU4IDI4LjQ5MzksMTEuNTA2MUMyNi45MzQyLDkuOTQ2MzggMjYuOTM0Miw3LjQxNzU4IDI4LjQ5MzksNS44NTc4NloiIHN0eWxlPSJmaWxsOnJnYig1MCw1MCw1MCk7Ii8+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K");
+				background-repeat: no-repeat;
+				background-position: 50% 50%;
+			}
+			
+		
+		</style>
+
+
+
+<!-- Test -->
+
+<style>
+#map {
+	width: 100%;
+	height: 400px;
+	background-color: grey;
+}
+
+.w3-modal {
+	z-index: 3;
+	display: none;
+	padding-top: 100px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4)
+}
+
+.w3-modal-content {
+	margin: auto;
+	background-color: #fff;
+	position: relative;
+	padding: 0;
+	outline: 0;
+	width: 600px
+}
+</style>
+
+
+</head>
+
+<body id="page-top" onload="getfulldate();loadNotif();">
+
+
+
+	<div id="wrapper">
+
+
+		<!-- Sidebar -->
+		<ul
+			class="navbar-nav  sidebar sidebar-dark accordion"
+			id="accordionSidebar" style="background-color: #c13b4d;">
+
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="/dashboard ">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-hands-helping"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">
+					[[#{dashboard.left_side_menu_title1}]] <br> <sup
+						th:text="${loggedinUser.roles}"></sup>
+
+				</div>
+			</a>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item active"><a class="nav-link"
+					href="/dashboard "> <i class="fas fa-fw fa-tachometer-alt"></i>
+						<span>[[#{dashboard.left_side_menu_item1}]]</span></a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Heading -->
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title2}]]</div>
+
+				<li class="nav-item"><a class="nav-link" href="/charts "> <i
+						class="fas fa-fw fa-chart-area"></i> <span>[[#{dashboard.left_side_menu_item2}]]</span></a></li>
+
+			</div>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+
+			<div class="sidebar-heading">[[#{dashboard.left_side_menu_title3}]]</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+				<!-- Nav Item - Tables -->
+				<li class="nav-item"><a class="nav-link" href="/manageAeds">
+					<i class="fas fa-heartbeat"></i> <span>
+							[[#{dashboard.left_side_menu_item3}]]</span>
+				</a></li>
+
+			</div>
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider d-none d-md-block">
+
+				<li class="nav-item"><a class="nav-link" href="/manageEvents">
+					<i class="fas fa-bell"></i> <span>
+							[[#{dashboard.left_side_menu_item4}]]</span>
+				</a></li>
+
+			</div>
+
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link" href="/manageReports">
+					<i class="fas fa-exclamation-triangle"></i></i> <span>
+							[[#{dashboard.left_side_menu_item5}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageAmbulance"> <i class="fas fa-ambulance"></i></i> <span>
+							[[#{dashboard.left_side_menu_item6}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageEmployees"> <i class="fas fa-user-tie"></i> <span>
+							[[#{dashboard.left_side_menu_item7}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title4}]]</div>
+				<li class="nav-item"><a class="nav-link"
+					href="/communications"> <i class="fas fa-mail-bulk"></i> <span>
+							[[#{dashboard.left_side_menu_item8}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+
+
+				<li class="nav-item"><a class="nav-link"
+					href="/employeeChatList"> <i class="fas fa-comment-dots"></i> <span>
+							[[#{dashboard.left_side_menu_item9}]]</span>
+				</a></li>
+
+            </div>
+
+            <div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+
+
+				<li class="nav-item "><a class="nav-link"
+					href="/clientChatList"> <i class="far fa-comments"></i> <span>
+							[[#{dashboard.left_side_menu_item10}]]</span>
+				</a></li>
+
+            </div>
+
+			<!-- Sidebar Toggler (Sidebar) -->
+			<div class="text-center d-none d-md-inline">
+				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+			</div>
+
+		</ul>
+		<!-- End of Sidebar -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<nav
+					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+
+					<!-- Topbar Search -->
+					<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+						<div class="input-group">
+							<input type="text" class="form-control bg-light border-0 small" th:placeholder="#{topBar.search}" aria-label="Search" aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-primary" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+
+						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+						<li class="nav-item dropdown no-arrow d-sm-none"><a
+							class="nav-link dropdown-toggle" href="/#" id="searchDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text"
+											class="form-control bg-light border-0 small"
+											th:placeholder="#{topBar.search}" aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div></li>
+
+						<!-- Nav Item - Alerts -->
+						<li class="nav-item dropdown no-arrow mx-1">
+
+							<a class="nav-link dropdown-toggle" href="#bellNotif" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+									<i class="fas fa-bell fa-fw"></i>
+									<!-- Counter - Alerts -->
+									<span class="badge badge-danger badge-counter" id="eventscounter"></span>
+							</a> 
+
+							<!-- Dropdown - Alerts -->
+							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+
+								<h6 class="dropdown-header">[[#{dashboard.notifications_title}]]</h6>
+
+								<div id="alertMenu"></div>
+
+								<a class="dropdown-item text-center small text-gray-500"
+									href="/manageEvents">
+
+									[[#{dashboard.notifications_details}]] </a>
+							</div>
+
+						</li>
+
+						<!-- Nav Item - Messages -->
+						<li class="nav-item dropdown no-arrow mx-1"><a
+							class="nav-link dropdown-toggle" href="/#" id="messagesDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i>
+
+								<!-- Counter - Messages --> <span
+								class="badge badge-danger badge-counter">7</span>
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="messagesDropdown">
+
+								<h6 class="dropdown-header">[[#{dashboard.chat}]]</h6>
+
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+
+									<div class="font-weight-bold">
+
+										<div class="text-truncate">Hi there! I am wondering if
+											you can help me with a problem I've been having.</div>
+
+										<div class="small text-gray-500">Emily Fowler · 58m</div>
+
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="dropdown-list-image mr-3">
+
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+
+										<div class="status-indicator"></div>
+									</div>
+
+									<div>
+
+										<div class="text-truncate">I have the photos that you
+											ordered last month, how would you like them sent to you?</div>
+										<div class="small text-gray-500">Jae Chun · 1d</div>
+
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+									<div class="dropdown-list-image mr-3">
+
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+
+										<div class="status-indicator bg-warning"></div>
+
+									</div>
+
+									<div>
+
+										<div class="text-truncate">Last month's report looks
+											great, I am very happy with the progress so far, keep up the
+											good work!</div>
+
+										<div class="small text-gray-500">Morgan Alvarez · 2d</div>
+
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+
+									<div>
+
+										<div class="text-truncate">Am I a good boy? The reason I
+											ask is because someone told me that people say this to all
+											dogs, even if they aren't good...</div>
+
+										<div class="small text-gray-500">Chicken the Dog · 2w</div>
+
+									</div>
+
+								</a> <a class="dropdown-item text-center small text-gray-500"
+									href="/#">[[#{dashboard.chat_details}]]</a>
+
+							</div></li>
+
+						<div class="topbar-divider d-none d-sm-block"></div>
+
+						<!-- Nav Item - User Information -->
+						<li class="nav-item dropdown no-arrow" role="presentation">
+							<div class="nav-item dropdown no-arrow">
+								<a class="dropdown-toggle nav-link" data-toggle="dropdown"
+									aria-expanded="false" href="#"><span
+									class="d-none d-lg-inline mr-2 text-gray-600 small"
+									th:text="${loggedinUser.name} + ' '+${loggedinUser.surname} ">
+								</span><img id="roundedImageProfile" th:src="@{'/profileImages/'+${loggedinUser.photo}}"
+									class="border rounded-circle img-profile"></a>
+								<div
+									class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+									role="menu">
+									<a class="dropdown-item" role="presentation" href="/profile"><i
+										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item1}]]</a>
+									<div class="dropdown-divider"></div>
+									<a href="/logout" class="dropdown-item" role="/logout"><i
+										class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item2}]]</a>
+								</div>
+							</div>
+						</li>
+
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=en}"> <img
+								th:src="@{/img/en.png}">
+						</a></li>
+
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=el}"> <img
+								th:src="@{/img/el.png}">
+						</a></li>
+					</ul>
+
+				</nav>
+				<!-- End of Topbar -->
+
+
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+				
+					<!-- Page Heading -->
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+
+
+
+						<h1 class="h3 mb-0 text-gray-800">[[#{dashboard.main_title}]]</h1>
+						<a href="/#"
+							class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+							class="fas fa-download fa-sm text-white-50"></i>
+							[[#{dashboard.report_button}]]</a>
+					</div>
+
+					<!-- Content Row -->
+					<div class="row">
+
+						<!-- Earnings (Monthly) Card Example -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+												th:text="#{dashboard.card1}  + ': ' + ${loggedinUser.clusterMunicipality}"></div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800"
+												th:text="${aedsByClusterLength}"></div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-heartbeat fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Earnings (Monthly) Card Example -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-success shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-success text-uppercase mb-1"
+												th:text="#{dashboard.card2}  + ': ' + ${loggedinUser.clusterMunicipality} "></div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800"
+												th:text=" ${usersByClusterLength}"></div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-users fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Earnings (Monthly) Card Example -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-info shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-info text-uppercase mb-1"
+												th:text="#{dashboard.card3}  + ': ' + ${loggedinUser.clusterMunicipality}"></div>
+											<div class="row no-gutters align-items-center">
+												<div class="col-auto">
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
+														th:text="${eventsByClusterDateSize}"></div>
+												</div>
+
+											</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-check fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Pending Requests Card Example -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-warning shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutte rs align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+												th:text="#{dashboard.card4}  + ': ' + ${loggedinUser.clusterMunicipality}"></div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800"
+												th:text="${notFixed}"></div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-times fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Content Row -->
+
+					<div class="row">
+
+						<!-- Area Chart -->
+						<div class="col-xl-12 col-lg-8">
+							<div class="card shadow mb-5">
+								<!-- Card Header - Dropdown -->
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">
+										[[#{dashboard.section1_title}]]</h6>
+									<div class="dropdown no-arrow">
+
+
+										<div class="dropdown" id="dropdown">
+											<button class="btn btn-secondary dropdown-toggle"
+												type="button" id="dropdownMenuButton" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">
+
+												[[#{dashboard.section1_button}]]</button>
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton">
+
+												<div class="dropdown-item">
+													<input type="checkbox" onclick="showFilters();"
+														class="form-check-input" id="exampleCheck1"> <label
+														class="form-check-label" for="exampleCheck1">
+														[[#{dashboard.section1_button_item1}]] </label>
+												</div>
+												<div class="dropdown-item">
+													<input type="checkbox" onclick="showFilters();"
+														class="form-check-input" id="exampleCheck2"> <label
+														class="form-check-label" for="exampleCheck2">
+
+														[[#{dashboard.section1_button_item2}]] </label>
+												</div>
+												<div class="dropdown-item">
+													<input type="checkbox" onclick="showFilters();"
+														class="form-check-input" id="exampleCheck3"> <label
+														class="form-check-label" for="exampleCheck3">
+
+														[[#{dashboard.section1_button_item3}]] </label>
+												</div>
+
+
+											</div>
+										</div>
+
+
+
+									</div>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+
+									<div class="chart-area" id="mapid"></div>
+									<div class="w3-modal" id="id01"></div>
+
+								</div>
+							</div>
+
+						</div>
+
+
+					</div>
+
+
+					<div class="col-lg-15 mb-3">
+
+						<!-- Illustrations -->
+						<div class="card shadow mb-3">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary " id="incident">[[#{dashboard.section2}]]</h6>
+							</div>
+							<div class="card shadow mb-3">
+								<div class="card-body" id="table">
+									<div class="table-responsive">
+										<table class="table table-bordered" id="dataTable"
+											width="100%" cellspacing="0">
+											<thead>
+												<tr>
+													<th>[[#{dashboard.section2_th1}]]</th>
+													<th>[[#{dashboard.section2_th2}]]</th>
+													<th>[[#{dashboard.section2_th3}]]</th>
+													<th>[[#{dashboard.section2_th4}]]</th>
+													<th>[[#{dashboard.section2_th5}]]</th>
+													<th>[[#{dashboard.section2_th6}]]</th>
+													<th>[[#{dashboard.section2_th7}]]</th>
+													<th>[[#{dashboard.section2_th8}]]</th>
+													<th>[[#{dashboard.section2_th9}]]</th>
+													<th>[[#{dashboard.section2_th10}]]</th>
+													<th>[[#{dashboard.section2_th11}]]</th>
+													<th>[[#{dashboard.section2_th12}]]</th>
+													<th>[[#{dashboard.section2_th13}]]</th>
+													<th>[[#{dashboard.section2_th14}]]</th>
+													<th>[[#{dashboard.section2_th15}]]</th>
+													<th>[[#{dashboard.section2_th16}]]</th>
+													<th>[[#{dashboard.section2_th17}]]</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th>[[#{dashboard.section2_th1}]]</th>
+													<th>[[#{dashboard.section2_th2}]]</th>
+													<th>[[#{dashboard.section2_th3}]]</th>
+													<th>[[#{dashboard.section2_th4}]]</th>
+													<th>[[#{dashboard.section2_th5}]]</th>
+													<th>[[#{dashboard.section2_th6}]]</th>
+													<th>[[#{dashboard.section2_th7}]]</th>
+													<th>[[#{dashboard.section2_th8}]]</th>
+													<th>[[#{dashboard.section2_th9}]]</th>
+													<th>[[#{dashboard.section2_th10}]]</th>
+													<th>[[#{dashboard.section2_th11}]]</th>
+													<th>[[#{dashboard.section2_th12}]]</th>
+													<th>[[#{dashboard.section2_th13}]]</th>
+													<th>[[#{dashboard.section2_th14}]]</th>
+													<th>[[#{dashboard.section2_th15}]]</th>
+													<th>[[#{dashboard.section2_th16}]]</th>
+													<th>[[#{dashboard.section2_th17}]]</th>
+												</tr>
+											</tfoot>
+											<tbody id="eventsadd">
+
+												<tr th:each="event : ${eventsByClusterDate}"
+													th:if="${event.assignmentDate == null && event.type==null}"
+													th:id="${event.event_id+'row'}"
+													th:onclick="showMarkerOnEvent([[${event.event_id}]])">
+													<td th:text="${event.status}"></td>
+													<td th:text="${event.persons}"></td>
+													<td th:text="${event.creationDate}"></td>
+													<td th:text="${event.address}"></td>
+													<td th:text="${event.city}"></td>
+													<td th:text="${event.postalCode}"></td>
+													<td th:text="${event.doorbell}"></td>
+													<td th:text="${event.floor}"></td>
+													<td><input type="checkbox" name="my-checkbox"
+														onclick="false;" th:checked="${event.blood}"></td>
+													<td><input type="checkbox" name="my-checkbox"
+														onclick="false;" th:checked="${event.senses}"></td>
+													<td><input type="checkbox" name="my-checkbox"
+														onclick="false;" th:checked="${event.breathe}"></td>
+
+													<td><input type="checkbox" name="my-checkbox"
+														onclick="false;" th:checked="${event.mind}"></td>
+
+
+													<td th:text="${event.ageVictim}"></td>
+
+													<td><input type="checkbox" name="my-checkbox"
+														onclick="false;" th:checked="${event.theSameUser}"></td>
+
+													<td th:text="${event.user.phoneNumber}"></td>
+
+
+
+													<td><a
+														th:href="@{/userProfile(reqIdUser=${event.user.userId})}"
+														class="btn btn btn-primary">[[#{dashboard.section2_link}]]</a></td>
+
+													<td>
+
+
+
+
+														<button th:onclick="showPopUp([[${event}]])" type="button"
+															class="btn btn-info">[[#{dashboard.section2_button}]]</button>
+													</td>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+
+
+					<!-- Content Row -->
+					<div class="row">
+
+						<!-- Content Column -->
+						<div class="col-lg-6 mb-4">
+
+							<!-- Project Card Example -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{dashboard.section3_title}]]</h6>
+								</div>
+								<div class="card-body">
+
+									<h4 class="small font-weight-bold" th:inline="text">
+
+										[[#{dashboard.section3_item1}]] <span> : </span>[[${loggedinUser.clusterMunicipality}]]
+
+										<span class="float-right"
+											th:text="${pososto_kardiakwn + ' %'}"></span>
+									</h4>
+									<div class="progress mb-4">
+										<div class="progress-bar bg-danger" role="progressbar"
+											th:style="'width: '+ ${pososto_kardiakwn}+'%'"
+											aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									<h4 class="small font-weight-bold" th:inline="text">
+										[[#{dashboard.section3_item2}]] <span> : </span>[[${loggedinUser.clusterMunicipality}]]
+										<span class="float-right"
+											th:text="${pososto_egkefaliko + ' %'}"></span>
+									</h4>
+
+									<div class="progress mb-4">
+										<div class="progress-bar bg-warning" role="progressbar"
+											th:style="'width: '+ ${pososto_egkefaliko}+'%'"
+											aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									<h4 class="small font-weight-bold" th:inline="text">
+										[[#{dashboard.section3_item3}]] <span> : </span>[[${loggedinUser.clusterMunicipality}]]
+										<span class="float-right"
+											th:text="${pososto_karkinopathis + ' %'}"></span>
+									</h4>
+
+
+									<div class="progress mb-4">
+										<div class="progress-bar" role="progressbar"
+											th:style="'width: '+ ${pososto_karkinopathis}+'%'"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									<h4 class="small font-weight-bold" th:inline="text">
+										[[#{dashboard.section3_item4}]] <span> : </span>
+										[[${loggedinUser.clusterMunicipality}]] <span class="float-right"
+											th:text="${pososto_troxaio + ' %'}"></span>
+									</h4>
+
+
+									<div class="progress mb-4">
+										<div class="progress-bar bg-info" role="progressbar"
+											th:style="'width: '+ ${pososto_troxaio}+'%'"
+											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									<h4 class="small font-weight-bold" th:inline="text">
+										[[#{dashboard.section3_item5}]] <span> : </span>
+										[[${loggedinUser.clusterMunicipality}]] <span class="float-right"
+											th:text="${pososto_katagma + ' %'}"></span>
+									</h4>
+
+
+									<div class="progress">
+										<div class="progress-bar bg-success" role="progressbar"
+											th:style="'width: '+ ${pososto_katagma}+'%'"
+											aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									<br>
+									<h4 class="small font-weight-bold" th:inline="text">
+										[[#{dashboard.section3_item6}]] <span> : </span>
+										[[${loggedinUser.clusterMunicipality}]] <span class="float-right"
+											th:text="${pososto_agnosto + ' %'}"></span>
+									</h4>
+
+
+									<div class="progress mb-4">
+										<div class="progress-bar bg-secondary" role="progressbar"
+											th:style="'width: '+ ${pososto_agnosto}+'%'"
+											aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+								</div>
+
+
+
+
+							</div>
+
+						</div>
+
+
+						<!-- Pie Chart -->
+						<div class="col-xl-6 col-lg-5">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{dashboard.section4_title}]]</h6>
+									<div class="dropdown no-arrow">
+										<a class="dropdown-toggle" href="#" role="button"
+											id="dropdownMenuLink" data-toggle="dropdown"
+											aria-haspopup="true" aria-expanded="false"> <i
+											class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+										</a>
+										<div
+											class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+											aria-labelledby="dropdownMenuLink">
+											<div class="dropdown-header">[[#{dashboard.section4_dropdown_title}]]</div>
+											<a class="dropdown-item" href="#">[[#{dashboard.section4_dropdown_item1}]]</a>
+											<a class="dropdown-item" href="#">[[#{dashboard.section4_dropdown_item2}]]</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#">[[#{dashboard.section4_dropdown_item3}]]</a>
+										</div>
+									</div>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4 pb-2">
+										<canvas id="myPieChart"></canvas>
+									</div>
+									<div class="mt-4 text-center small">
+										<span class="mr-2"> <i
+											class="fas fa-circle text-primary"></i>[[#{dashboard.section4_item1}]]
+										</span> <span class="mr-2"> <i class="fas fa-circle text-info"></i>
+											[[#{dashboard.section4_item2}]]
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+
+					<!-- Approach -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Development
+								Approach</h6>
+						</div>
+						<div class="card-body">
+							<p>SB Admin 2 makes extensive use of Bootstrap 4 utility
+								classes in order to reduce CSS bloat and poor page performance.
+								Custom CSS classes are used to create custom components and
+								custom utility classes.</p>
+							<p class="mb-0">Before working with this theme, you should
+								become familiar with the Bootstrap framework, especially the
+								utility classes.</p>
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+
+			</div>
+			<!-- End of Main Content -->
+
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy;LifeTime 2019</span>
+						
+						
+						<button onclick="playSound()" id="soundBtn">Play</button>  
+						
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="/#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="/login ">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script th:inline="javascript">
+// Initialize and add the map
+var eventIcon = new L.Icon({
+  iconUrl: '/img/sos.png',
+  iconAnchor: [12, 31],
+  popupAnchor: [1, -34]
+});
+
+var aedIcon = new L.Icon({
+	  iconUrl: '/img/myaed.png',
+	  iconAnchor: [15, 31],
+	  popupAnchor: [1, -34]
+
+	});
+	
+	
+var ambulanceIcon = new L.Icon({
+	  iconUrl: '/img/ambu.png',
+	  iconAnchor: [15, 20],
+	  popupAnchor: [1, -34]
+	  
+	});
+
+ var map;
+ var eventMarkers = new Map();
+ var aedMarkers = new Map();
+ var ambuMarkers = new Map();
+
+ var cluster = L.markerClusterGroup();
+
+ function playSound(url) {
+	  const audio = new Audio(url);
+	  audio.play();
+	}
+
+ 
+function initMap() {
+	
+	console.log(mylat + " , "+mylon);
+     
+	 map = L.map('mapid').setView([mylat, mylon], 13);
+	 
+	 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+				'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			id: 'mapbox/streets-v11',
+			tileSize: 512,
+			zoomOffset: -1
+		}).addTo(map);
+		
+		map.addControl(new L.Control.Fullscreen());
+	 
+				  
+			
+	var aedLocation;
+	var aedItem;
+	
+	var eventLocation;
+	var eventItem;
+	
+	
+	  /*<![CDATA[*/
+		/*[# th:each="aed : ${aedsByCluster}"]*/
+		
+		
+		aedLocation = L.marker([parseFloat(/*[[${aed.lat}]]*/), parseFloat(/*[[${aed.lon}]]*/)],{icon: aedIcon});
+		 //aedLocation = new google.maps.LatLng({lat: parseFloat(/*[[${aed.lat}]]*/), lng: parseFloat(/*[[${aed.lon}]]*/)});
+		
+		 aedItem = {aed_id:/*[[${aed.aed_id}]]*/,name:/*[[${aed.name}]]*/, description:/*[[${aed.description}]]*/, 
+				available:/*[[${aed.available}]]*/,address:/*[[${aed.address}]]*/,building:/*[[${aed.building}]]*/,floor:/*[[${aed.floor}]]*/,phone:/*[[${aed.phone}]]*/ };
+		
+        
+		addMarker(aedLocation,map,aedItem,"aed",'img/aedIcon.png');
+		
+		/*[/]*/
+			/*]]>*/
+			
+			
+			  /*<![CDATA[*/
+		/*[# th:each="event : ${eventsByClusterDate}"]*/
+		
+		
+		eventLocation = L.marker([parseFloat(/*[[${event.lat}]]*/), parseFloat(/*[[${event.lon}]]*/)],{icon: eventIcon});
+
+		
+		 eventItem = {event_id:/*[[${event.event_id}]]*/,status:/*[[${event.status}]]*/, address:/*[[${event.address}]]*/, 
+				persons:/*[[${event.persons}]]*/,creationDate:/*[[${event.creationDate}]]*/,city:/*[[${event.city}]]*/,floor:/*[[${event.floor}]]*/,doorbell:/*[[${event.doorbell}]]*/ };
+		
+        
+		addMarker(eventLocation,map,eventItem,"event",'img/sos.png');
+		
+		/*[/]*/
+			/*]]>*/
+			
+		 /*<![CDATA[*/
+		/*[# th:each="ambulance : ${ambulanceByCity}"]*/
+		
+		
+		 
+		ambulanceLocation = L.marker([parseFloat(/*[[${ambulance.lat}]]*/), parseFloat(/*[[${ambulance.lon}]]*/)],{icon: ambulanceIcon});
+				
+		ambulanceItem = {ambulanceId:/*[[${ambulance.ambulanceId}]]*/, username:/*[[${ambulance.username}]]*/, licensePlate:/*[[${ambulance.licensePlate}]]*/, 
+				city:/*[[${ambulance.city}]]*/ };
+		
+        
+		addMarker(ambulanceLocation,map,ambulanceItem,"ambulance",'img/ambulance.png');
+		
+		/*[/]*/
+			/*]]>*/
+			
+		
+		map.addLayer(cluster);
+
+	
+		
+      }
+
+function addInfoWindow(marker, message) {
+	/*
+    var infoWindow = new google.maps.InfoWindow({
+        content: message
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.open(map, marker);
+    });*/
+    marker.bindPopup(message);
+    marker.on('mouseover',function(ev) {
+    	  ev.target.openPopup();
+    	});
+}
+      
+	  function getMap()
+	  {
+		return map;
+	  }
+	  
+	  
+//Adds a marker to the map.
+function addMarker(marker, map, item,kind,image) {
+  // Add the marker at the clicked location, and add the next-available label
+  // from the array of alphabetical characters.
+  var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var labelIndex = 0;
+  var markerIcon ;
+
+  cluster.addLayer(marker);
+ 
+  var contentString ;
+  if(kind=="event")
+	  {
+	  
+	  
+	
+	  eventMarkers.set(item.event_id,marker);
+	 
+	  
+	   contentString = '<div id="content">'
+		  +'<h4 id="firstHeading" class="firstHeading">Είδος :'+item.status+'</h4>'
+		  +'<div id="bodyContent">'
+		  +'<p> <b>Διεύθυνση '+item.address+'</b><br>' 
+		  +'<b>Άτομα: '+ item.persons +'</b> <br>' 
+		  +'<b>Ημ/νια:'+ item.creationDate +'</b> <br>'
+		  +'<b>Πόλη:'+item.city+'</b> <br>' 
+		  +'<b>Κουδούνι:'+item.doorbell+'</b> <br>'
+		  +'<b>Όροφος:'+item.floor+'</b> </p> </div>'
+		  +'</div>';
+	  }
+  
+  if(kind=="aed")
+	  {
+	 
+	  aedMarkers.set(item.aed_id,marker);
+
+	   contentString = '<div id="content">'
+		  +'<h4 id="firstHeading" class="firstHeading">Ονομασία :'+item.name+'</h4>'
+		  +'<div id="bodyContent">'
+		  +'<img src=\"img/aed.jpg\" style=\"width:50px;height:50px;\"'
+		  +'<p><br> <b>Περιγραφή '+item.description+'</b><br>' 
+		  +'<b>Διαθεσιμότητα: '+ item.available +'</b> <br>' 
+		  +'<b>Διεύθυνση:'+ item.address +'</b> <br>'
+		  +'<b>Κτήριο:'+item.building+'</b> <br>' 
+		  +'<b>Όροφος:'+item.floor+'</b> <br>'
+		  +'<b>Τηλέφωνο:'+item.phone+'</b> </p> </div>'
+		  +'</div>';
+	  }
+  
+  if(kind=="ambulance")
+  {
+	  
+	  ambuMarkers.set(item.ambulanceId,marker);
+ 	  contentString = '<div id="content">'
+	  +'<h4 id="firstHeading" class="firstHeading">Αριθμός Ασθενοφόρου :'+item.username+'</h4>'
+	  +'<div id="bodyContent">'
+	  +'<p> <b>Αρ. Κυκλοφορίας '+item.licensePlate+'</b><br>' 
+	  +'<b>Πόλη: '+ item.city +'</b> <br> </div>' 
+	  +'</div>';
+  }
+
+  
+
+  addInfoWindow(marker,contentString);
+}
+
+
+
+function showMarkerOnEvent(id)
+{
+
+	var arrayLength = eventMarkers.length;
+	console.log("Marker Clicked:  "+id+" ID");
+	
+	
+	for (const [key, value] of eventMarkers.entries()) {
+		 if(key==id)
+			 {
+			document.getElementById(key+"row").style.background="#E8E8E8";   // Get the element with id="demo"
+			document.getElementById(key+"row").style.color="#ff4c4c";   // Get the element with id="demo"
+			 var lat = value.getLatLng().lat;
+			 var lon = value.getLatLng().lng;
+			 map.setView([lat, lon], 13);
+			 value.openPopup();
+			 }else
+				 {
+				 		var temp = document.getElementById(key+"row");
+				 		if(temp!=null)
+				 			{
+				 			temp.style.background="transparent";
+				 			temp.style.color="grey";
+				 			}
+				 }
+		}
+	
+	
+	
+	
+	}
+
+
+
+
+    </script>
+    
+    
+	<script>
+	
+	document.getElementById('exampleCheck1').checked=true;
+	 document.getElementById('exampleCheck2').checked=true;
+	document.getElementById('exampleCheck3').checked=true;
+
+var mylat;
+var mylon;
+
+if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(successFunction);
+	} else {
+	    alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
+	}
+function successFunction(position) {
+	    mylat = position.coords.latitude;
+	    mylon = position.coords.longitude;
+	    console.log('Your latitude is :'+mylat+' and longitude is '+mylon);
+	    initMap();
+	}
+
+
+</script>
+
+
+	<script>
+    function getfulldate()
+    {
+  	  var today = new Date();
+  	  var dd = String(today.getDate()).padStart(2, '0');
+  	  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  	  var yyyy = today.getFullYear();
+  	  
+  	  var hour = today.getHours();
+  	  var minutes = today.getMinutes();
+  	  var sec = today.getSeconds();
+
+  	  today = dd + '/' + mm + '/' + yyyy;
+  	  document.getElementById("incident").innerHTML ="Περιστατικά : "+today;
+  	  return today;
+    }
+    
+    function getfulldateAndTime()
+    {
+  	  var today = new Date();
+  	  var dd = String(today.getDate()).padStart(2, '0');
+  	  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  	  var yyyy = today.getFullYear();
+  	  
+  	  var hour = today.getHours();
+  	  var minutes = today.getMinutes();
+  	  var sec = today.getSeconds();
+
+  	  today = dd + '/' + mm + '/' + yyyy +" "+hour+":"+minutes+":"+sec;
+  	 
+  	  return today;
+    }
+    
+    </script>
+
+	<script th:inline="javascript" type="text/javascript">
+
+		var notifcounter=0;
+
+		
+
+		/************************* ON HTML LOAD  *********************************/
+
+		function loadNotif()
+		{
+
+		/*<![CDATA[*/
+		var eventsToday = [[${eventsByClusterDate}]];
+		/*]]>*/
+
+		for (i = 0; i < eventsToday.length; i++) {
+			
+			item = eventsToday[i];
+
+			
+
+			itemStr = JSON.stringify(item);
+			
+			
+
+			if(item.type==null&&item.assignmentDate==null)
+				{
+					
+				
+					document.getElementById("alertMenu").innerHTML +=
+					"<div id=notif"+item.event_id+">"+
+						"<a class='d-flex align-items-center dropdown-item' href='#notif"+item.event_id+"' onclick='onAlertItemClick("+itemStr+")'>"+
+							"<div class='mr-3'>"+
+								"<div class='bg-warning icon-circle'>"+
+									"<i class='fas fa-exclamation-triangle text-white'></i>" +
+								"</div>"+
+							"</div>"+
+							"<div>"+
+								"<span class='small text-black-500'><b>"+item.user.name+" "+item.user.surname+"</b></span>"+
+								"<p>Πόλη: <b>"+item.city+"</b><br>TK: <b>"+item.postalCode+"</b><br>Διεύθυνση: <b>"+item.address+"</b></p>"+
+							"</div>"+
+						"</a>"+
+					"</div>";
+	
+					
+					notifcounter++;
+
+				}
+
+			}
+
+
+
+			setNotifCounter();
+
+
+
+				
+
+			// $('a[href="#bellNotif"]').click(function(){
+			// 	updateNotifications(item.event_id);
+			// });
+		
+		}
+
+				
+
+		/************************* ON NOTIFICATION ITEM CLICK - DO SOMETHING *********************************/
+
+		function onAlertItemClick(item)
+		{	
+			
+			showPopUp(item);	
+
+			console.log("ID="+item.event_id);		
+		}
+
+
+		/************************* SET NOTIFICATIONS BELL *********************************/
+
+		function setNotifCounter()
+		{
+
+			if(notifcounter==0)
+			{
+					
+				document.getElementById('eventscounter').innerHTML=""; 
+			}
+			else
+			{
+				document.getElementById('eventscounter').innerHTML=notifcounter; 	
+			}
+
+		}
+
+
+		/************************* UPDATE NOTIFICAITONS *********************************/	
+
+		function updateNotifications(id){
+			
+			console.log("notif"+id);
+
+			document.getElementById("notif"+id).remove();
+
+			notifcounter--;
+
+			setNotifCounter();
+			
+		}
+
+
+
+
+		
+
+
+
+</script>
+
+
+
+<script type="text/javascript" th:inline="javascript">
+
+
+var allEvents = new Map();
+var AllEventsThyme = new Map();
+/*<![CDATA[*/
+var thymeUsed=false;
+var theList = [[${eventsByClusterDate}]];
+for (i = 0; i < theList.length; i++) {
+    if(theList[i].assignmentDate==null && theList[i].type==null)
+    	{
+    	thymeUsed=true;
+        AllEventsThyme.set(theList[i].event_id,theList[i]);
+    	}
+}
+
+/*]]>*/
+	
+</script>
+
+	<script>
+	var eventSource;	 	
+	
+	eventSource = new EventSource("/web/events/receive/[[${loggedinUser.hospital.eventProcessor}]]");
+	    eventSource.onmessage = function (evt) {
+		 
+
+	    	var item;
+	    	console.log("is here"+evt);
+
+	    	item = JSON.parse(evt.data);
+	    	if(item.event_id!=0 && item.assignmentDate==null ) //an to event pou irthe den einai to keep alive tou eventsource kai den exei ginei anathesi tou einai kainoyrgio opote emfanise to pop up
+	    	{
+	    		performSound();
+	    		document.getElementById('mapid').style.display = "none";
+	    		//allItems.push(item);
+	    		allEvents.set(item.event_id,item);
+	    	
+	    	var map = getMap();
+	    	var currentEventLocation = { lat: parseFloat(item.lat), lng: parseFloat(item.lon) };
+
+	    	var marker = L.marker([parseFloat(item.lat), parseFloat(item.lon)],{icon: eventIcon});
+
+	    	
+	    	addMarker(marker,map,item,"event",'img/sos.png');
+	    	
+
+	    	var t = "";
+	    	var tr = "<tr onclick='showMarkerOnEvent("+item.event_id+");'id='"+item.event_id+"row'>";
+	    	
+	         tr += "<td>"+item.status+"</td>";
+	         tr += "<td>"+item.persons+"</td>";
+	         tr += "<td>"+item.creationDate+"</td>";
+	         tr += "<td>"+item.address+"</td>";
+	         tr += "<td>"+item.city+"</td>";
+	         tr += "<td>"+item.postalCode+"</td>";
+	         tr += "<td>"+item.doorbell+"</td>";
+	         tr += "<td>"+item.floor+"</td>";
+	         tr += "<td>"+item.ageVictim+"</td>";
+	         
+	         var blood;
+	         var senses;
+	         var breathe;
+	         var mind;
+	         
+	         
+	         if(item.blood==1)
+	        {
+	         tr += "<td><input type='checkbox' onclick='return false;' checked /> </td>";
+	         blood="<input type='checkbox' onclick='return false;' checked /> ";
+	        }
+	      else
+	        {
+	        tr += "<td><input type='checkbox' onclick='return false;' /> </td>";
+	        blood = "<input type='checkbox' onclick='return false;' /> ";
+	        }
+	         if(item.senses==1)
+	    	 {
+	    	 tr += "<td><input type='checkbox' onclick='return false;' checked /> </td>";
+	    	 senses= "<input type='checkbox' onclick='return false;' checked /> ";
+	    	 }
+	     else
+	    	 {
+	    	 tr += "<td><input type='checkbox' onclick='return false;' /> </td>";
+	    	 senses="<input type='checkbox' onclick='return false;' /> ";
+	    	 }
+	         
+	         if(item.breathe==1)
+	    	 {
+	    	 tr += "<td><input type='checkbox' onclick='return false;' checked /> </td>";
+	    	 breathe = "<input type='checkbox' onclick='return false;' checked /> ";
+	    	 }
+	     else
+	    	 {
+	    	 tr += "<td><input type='checkbox' onclick='return false;' /> </td>";
+	    	 breathe = "<input type='checkbox' onclick='return false;' /> ";
+	    	 }
+	         
+	         if(item.mind==1)
+	    	 {
+	    	 tr += "<td><input type='checkbox' onclick='return false;' checked /> </td>";
+	    	 mind =  "<input type='checkbox' onclick='return false;' checked /> ";
+	    	 }
+	     else
+	    	 {
+	    	 tr += "<td><input type='checkbox' onclick='return false;' /> </td>";
+	    	 mind =  "<input type='checkbox' onclick='return false;' /> ";
+	    	 }
+	         
+	         
+	     
+	         if(item.theSameUser==1)
+	    	 {
+	    	 tr += "<td><input type='checkbox' onclick='return false;' checked /> </td>";
+	    	 mind =  "<input type='checkbox' onclick='return false;' checked /> ";
+	    	 }
+	     else
+	    	 {
+	    	 tr += "<td><input type='checkbox' onclick='return false;' /> </td>";
+	    	 mind =  "<input type='checkbox' onclick='return false;' /> ";
+	    	 }
+	        
+	         tr += "<td>"+item.user.phoneNumber+"</td>";
+
+	        
+	         
+	         tr +=
+	        	 	"<td><a th:href='@{/userProfile(reqIdUser="+item.user.userId +")}' "+
+	        		"class='btn btn btn-primary'>Χρήστης</a></td>";
+	        		
+	        	
+	        tr+= "<td> <button th:onclick='showPopUp("+item+")' type='button' class='btn btn-info'>Χαρακτηρισμός</button> </td>";
+	        	     
+	         
+	         tr += "</tr>";
+	         t += tr;
+	         
+	         document.getElementById("eventsadd").innerHTML += t;   
+	         
+	       
+	        /* document.getElementById("alertMenu").innerHTML +=
+	        	 "<a class='d-flex align-items-center dropdown-item' onclick='showMarkerOnEvent("+item.event_id+")'>"+
+				"<div class='mr-3'>"+
+					"<div class='bg-warning icon-circle'>"+
+						"<i class='fas fa-exclamation-triangle text-white'></i>" +
+					"</div>"+
+				"</div>"+
+				"<div>"+
+					"<span class='small text-black-500'><b>"+item.user.name+" "+item.user.surname+"</b></span>"+
+					"<p>Πόλη: <b>"+item.city+"</b><br>TK: <b>"+item.postalCode+"</b><br>Διεύθυνση: <b>"+item.address+"</b></p>"+
+				"</div>"+
+			"</a>";
+	    	*/
+	    	
+	    	
+	    	
+	    	 /*<![CDATA[*/
+	    		 
+	    		
+	    	    
+	    		 var emergencyTitle = "[[#{dashboard.emergency_card_title}]]";
+	    	 	 var itemBloodType = "[[#{dashboard.emergency_card_bloodType}]]";
+	    	 	 var itemDiseases = "[[#{dashboard.emergency_card_diseases}]]";
+	    	 	 
+	    	 	var itemAlergies = "[[#{dashboard.emergency_card_alergies}]]";
+	    	 	
+	    	 	var itemMedicines = "[[#{dashboard.emergency_card_medicines}]]";
+	    	 	var itemEvent = "[[#{dashboard.emergency_card_event}]]";
+	    	 	var itemAddress = "[[#{dashboard.emergency_card_address}]]";
+	    	 	var itemBleeding = "[[#{dashboard.emergency_card_bleeding}]]";
+	    	 	var itemSenses = "[[#{dashboard.emergency_card_senses}]]";
+	    	 	var itemBreathe = "[[#{dashboard.emergency_card_breathe}]]";
+	    	 	var itemConsciousness = "[[#{dashboard.emergency_card_consciousness}]]";
+	    	 	var itemType1 = "[[#{dashboard.emergency_card_type1}]]";
+	    	 	var itemType2 = "[[#{dashboard.emergency_card_type2}]]";
+	    	 	var itemType3 = "[[#{dashboard.emergency_card_type3}]]";
+	    	 	
+	    	 	var itemNow  = "[[#{dashboard.emergency_card_now}]]";
+	    	 	
+	    	 	var itemInDanger = "[[#{dashboard.emergency_card_inDanger}]]";
+	    	 	
+
+	    	 	
+	    		 
+			document.getElementById('id01').style.display='block';
+
+			 document.getElementById("id01").innerHTML +=
+			       	"<div id='"+item.event_id+"' class=\"container\">"+
+						"<div class=\"card text-center\">"+
+							"<div class=\"card-header\">"+
+								"<b>"+emergencyTitle+"</b>"+
+								
+							
+							"</div>"+
+							"<div class=\"card-body\">"+
+
+								"<p class=\"card-text\">Ο <b>"+item.user.name+" "+item.user.surname+"</b> "+itemInDanger+
+									"</p>"+
+									
+									"<b>"+itemBloodType+"</b> "+item.user.bloodType+"<br>"+
+									"<b>"+itemDiseases+"</b> "+item.user.disease+"<br>"+
+									"<b>"+itemAlergies+"</b> "+item.user.alergies+"<br>"+
+									"<b>"+itemMedicines+"</b> "+item.user.medicines+"<br>"+
+									
+									
+									"<hr><b>"+itemEvent+"</b> "+item.status+"<br>"+
+									"<b>"+itemAddress+"</b> "+item.address+"<br>"+
+									"<b>"+itemBleeding+"</b> "+blood+"<br>"+
+									"<b>"+itemSenses+"</b> "+senses+"<br>"+
+									"<b>"+itemBreathe+"</b> "+breathe+"<br>"+
+									"<b>"+itemConsciousness+"</b> "+mind+"<br>"+
+
+								"<br><br><button"+
+									" onclick=\"sendEventToRadio('"+itemType1+"',"+item.event_id+")\""+
+									"class=\"btn btn-outline-danger\">"+itemType1+"</button>"+
+									
+									
+									"  <button "+
+									"onclick=\"sendEventToRadio('"+itemType2+"',"+item.event_id+")\""+
+									"class=\"btn btn-outline-warning\">"+itemType2+"</button>"+
+									
+									
+									"       <button "+
+									"onclick=\"sendEventToRadio('"+itemType3+"',"+item.event_id+")\""+
+									"class=\"btn btn-outline-success\">"+itemType3+"</button>"+
+									
+							"</div>"+
+							"<div class=\"card-footer text-muted\">"+itemNow+"</div>"+
+						"</div>"+
+					"</div><div><br> </div>";
+					
+					
+					
+				//	setNotif("new");
+					
+			 cluster.addLayer(marker);
+			// map.addLayer(cluster);
+			
+			 /*]]>*/
+			
+	     
+	    	}else{
+		    	console.log("Event Kept-Alive");
+
+	    	}
+	    	
+	    	
+	    	
+	    };
+	    
+
+	    eventSource.onerror = function (e) {
+	        console.log("EventSource failed: " + e.city);
+	        
+	        if (confirm("Something failed please refresh")) {
+	        	window.location.reload(false); 
+	          } else {
+	          }
+	        
+	        
+	    };
+	    
+	    
+	    eventSource.onopen = function (e) {
+	    	
+	     //  alert("Ready to receive events");
+	        
+	    };
+	    
+	    
+		
+    function showPopUp(item)
+	{
+
+		 document.getElementById('mapid').style.display = "none";
+
+
+		//allItems.push(item);
+		//allEvents.set(item.event_id,item);
+		
+		
+		     var blood;
+	         var senses;
+	         var breathe;
+	         var mind;
+	         
+	         
+	         if(item.blood==1)
+	        {
+	        
+	         blood="<input type='checkbox' onclick='return false;' checked /> ";
+	        }
+	      else
+	        {
+	      
+	        blood = "<input type='checkbox' onclick='return false;' /> ";
+	        }
+	         if(item.senses==1)
+	    	 {
+	    	
+	    	 senses= "<input type='checkbox' onclick='return false;' checked /> ";
+	    	 }
+	     else
+	    	 {
+	    	
+	    	 senses="<input type='checkbox' onclick='return false;' /> ";
+	    	 }
+	         
+	         if(item.breathe==1)
+	    	 {
+	    	
+	    	 breathe = "<input type='checkbox' onclick='return false;' checked /> ";
+	    	 }
+	     else
+	    	 {
+	    	
+	    	 breathe = "<input type='checkbox' onclick='return false;' /> ";
+	    	 }
+	         
+	         if(item.mind==1)
+	    	 {
+	    	
+	    	 mind =  "<input type='checkbox' onclick='return false;' checked /> ";
+	    	 }
+	     else
+	    	 {
+	    	
+	    	 mind =  "<input type='checkbox' onclick='return false;' /> ";
+	    	 }
+	         
+	         
+	     
+	         if(item.theSameUser==1)
+	    	 {
+	    	
+	    	 mind =  "<input type='checkbox' onclick='return false;' checked /> ";
+	    	 }
+	     else
+	    	 {
+	    	
+	    	 mind =  "<input type='checkbox' onclick='return false;' /> ";
+	    	 }
+	        
+	          
+	         document.getElementById('id01').style.display='block';
+		
+		 document.getElementById("id01").innerHTML +=
+		       	"<div id='"+item.event_id+"' class=\"container\">"+
+					"<div class=\"card text-center\">"+
+						"<div class=\"card-header\">"+
+							"<b>Επείγον Περιστατικό</b>"+
+						
+						"</div>"+
+						"<div class=\"card-body\">"+
+
+							"<p class=\"card-text\">Ο <b>"+item.user.name+" "+item.user.surname+"</b> κινδυνεύει!"+
+								"</p>"+
+								
+								"<b>Ομάδα Αίματος:</b> "+item.user.bloodType+"<br>"+
+								"<b>Ασθαίνιες:</b> "+item.user.disease+"<br>"+
+								"<b>Αλεργίες:</b> "+item.user.alergies+"<br>"+
+								"<b>Φαρμακευτική Αγωγή:</b> "+item.user.medicines+"<br>"+
+								
+								
+								"<hr><b>Περιστατικό:</b> "+item.status+"<br>"+
+								"<b>Διεύθυνση:</b> "+item.address+"<br>"+
+								"<b>Αιμοραγεί:</b> "+blood+"<br>"+
+								"<b>Έχει αισθήσεις :</b> "+senses+"<br>"+
+								"<b>Αναπνέει:</b> "+breathe+"<br>"+
+								"<b>Έχει συνείδηση:</b> "+mind+"<br>"+
+
+							"<br><br><button"+
+								" onclick=\"sendEventToRadio('Υπερ Επείγον',"+item.event_id+")\""+
+								"class=\"btn btn-outline-danger\">Υπερ Επείγον</button>"+
+								
+								
+								"  <button "+
+								"onclick=\"sendEventToRadio('Επείγον',"+item.event_id+")\""+
+								"class=\"btn btn-outline-warning\">Επείγον</button>"+
+								
+								
+								"       <button "+
+								"onclick=\"sendEventToRadio('Μη Επείγον',"+item.event_id+")\""+
+								"class=\"btn btn-outline-success\">Μη Επείγον</button>"+
+								
+						"</div>"+
+						"<div class=\"card-footer text-muted\">Μόλις Τώρα</div>"+
+					"</div>"+
+				"</div><div><br> </div>";
+				
+				
+	}
+	
+    
+    
+
+    </script>
+
+	<script>
+    
+    function sendEventToRadio(priority,event_id)
+    {	
+
+    	
+    	var arrayLength = allEvents.size;	
+    	var myitem=allEvents.get(event_id);
+    	if(myitem==null)
+    		{
+    		myitem = AllEventsThyme.get(event_id);
+    		}
+	    document.getElementById(event_id+"row").style.display='none';
+	  
+	    
+
+    
+   		 myitem.type=priority;
+    
+   		var doesItemExists = document.getElementById(myitem.event_id);
+		if(doesItemExists!=null)
+			{
+			doesItemExists.style.display='none';
+			}
+    	
+
+    	  var myJSON = JSON.stringify(myitem);
+    		  
+    			var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    			xmlhttp.open("POST", "/web/asirmatistis/add");
+    			xmlhttp.setRequestHeader("Content-Type", "application/json");
+				var flag=true;
+    			xmlhttp.onreadystatechange = function() {
+    		        if (this.status == 200) {
+    		        	
+						console.log("add asiramtistis ok");
+
+						console.log("myarraylen"+arrayLength);
+
+    		        	if(arrayLength==1 || arrayLength==0 )
+    		        		{
+								console.log("ekripsa to parathiro");
+
+    						document.getElementById("id01").style.display='none';
+    						document.getElementById("mapid").style.display='block';
+    		        		}
+    		       }
+    		        else
+    		        	{
+						console.log("add failed");
+						console.log("add failed status "+this.status);
+    		        	}
+				};
+				xmlhttp.send(myJSON);
+				
+
+				var xmlhttpCompleted = new XMLHttpRequest();   // new HttpRequest instance 
+				xmlhttpCompleted.open("POST", "/web/completed/event");
+    		    xmlhttpCompleted.setRequestHeader("Content-Type", "application/json");
+    		   
+    		    xmlhttpCompleted.onreadystatechange = function() {
+    		        if (this.status == 200) {
+    		        	console.log("completed source ok");
+
+						updateNotifications(event_id);
+
+    		       }
+    		        else
+    		        	{
+						console.log("completed source failed");
+						console.log("ajax completed fail "+this.status);
+    		        	}
+				 };	
+				 
+				xmlhttpCompleted.send(myJSON);
+				
+    		   
+    }
+    
+</script>
+
+	<script>
+	var eventSourceCompleted;
+	
+		
+		 eventSourceCompleted =  new EventSource("/web/completed/receive");
+
+		
+
+	    // Receive messages
+	    eventSourceCompleted.onmessage = function (evt) {
+	    	var arrayLength = allEvents.size;	
+			var completedItem =JSON.parse(evt.data);
+
+			allEvents.delete(completedItem.event_id);
+			
+	
+	    	if(completedItem.event_id!=0)
+	    		{  
+				
+	    	if([[${loggedinUser.hospital.hospital_id}]] == completedItem.hospital.hospital_id)
+	    		{
+					document.getElementById(completedItem.event_id).style.display='none';	
+					console.log("arraylen : "+arrayLength);
+					
+					if(arrayLength==1)
+	        		{
+					document.getElementById("id01").style.display='none';
+					document.getElementById("mapid").style.display='block';
+	        		}
+					
+				
+	    		 }
+	    		}else
+	    			{
+	    			console.log("Completed Kept-Alive");
+	    			}
+	    };
+	    eventSourceCompleted.onerror = function (e) {
+	        console.log("EventSource failed: " + e);
+	    };
+	    
+	  
+		
+
+	
+	</script>
+
+
+
+	<script>
+	
+	eventSource = new EventSource("/web/ambulance/receive");
+
+    // Receive messages
+    eventSource.onmessage = function (evt) {
+    	var item =JSON.parse(evt.data);
+    	
+    	if(item.ambulanceId!=0)
+    		{
+    	
+    	if([[${loggedinUser.hospital.hospital_id}]] == item.hospital.hospital_id)
+    		{
+    		//var arrayLength = ambumarkers.length;
+    		
+    		for (const [key, value] of ambuMarkers.entries()) {
+    			 if(key==item.ambulanceId)
+    				 {
+    				 var lat = item.lat;
+    				 var lon = item.lon;
+    				 var newLatLng = new L.LatLng(lat, lon);
+    				 value.setLatLng(newLatLng); 
+    				 console.log("allakse thesi "+lat+" , "+lon);
+    				 }
+    			}
+    		
+    		}
+    		}else
+    			{
+    			console.log("Ambulance Kept-Alive");
+    			}
+    	
+    };
+    eventSource.onerror = function (e) {
+        console.log("EventSource failed: " + e);
+    };
+	
+	</script>
+
+
+
+	<!-- Page level plugins -->
+	<script src="vendor/chart.js/Chart.min.js"></script>
+
+	<!-- Page level custom scripts 
+	<script src="js/demo/chart-area-demo.js"></script>-->
+
+
+
+	<script th:inline="javascript">
+  // Set new default font family and font color to mimic Bootstrap's default styling
+Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = '#858796';
+
+// Pie Chart Example
+var ctx = document.getElementById("myPieChart");
+var myPieChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+	  /*<![CDATA[*/
+    labels: [ [[${loggedinUser.clusterMunicipality}]], [[${loggedinUser.country}]] ],
+    datasets: [{
+    	
+      data: [ [(${eventsByClusterSize})],  [(${eventsByCountrySize})]],
+      backgroundColor: ['#4e73df', '#1cc88a'],
+      hoverBackgroundColor: ['#2e59d9', '#17a673'],
+      hoverBorderColor: "rgba(234, 236, 244, 1)",
+      /*]]>*/
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80,
+  },
+});
+  
+  
+</script>
+
+
+
+
+	<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
+	<!-- Page level custom scripts -->
+	<script src="js/demo/datatables-demo.js"></script>
+
+	<script>
+	
+	function showFilters()
+	{
+	
+	var aedCheckBox = document.getElementById('exampleCheck1');
+	var eventCheckBox = document.getElementById('exampleCheck2');
+	var ambulanceCheckBox = document.getElementById('exampleCheck3');
+
+
+	if(aedCheckBox.checked)
+		{
+			for (const [key, value] of aedMarkers.entries()) {
+				value.setOpacity(1);
+				cluster.addLayer(value);	
+			}
+		}else
+		{
+			for (const [key, value] of aedMarkers.entries()) {
+				value.setOpacity(0);
+				cluster.removeLayer(value);
+			}
+		}
+	
+	if(eventCheckBox.checked)
+	{
+		
+		for (const [key, value] of eventMarkers.entries()) {
+			value.setOpacity(1);
+			cluster.addLayer(value);
+		}
+
+	
+	}else
+	{
+		for (const [key, value] of eventMarkers.entries()) {
+			value.setOpacity(0);
+			cluster.removeLayer(value);
+		}
+	}
+	
+	
+
+	if(ambulanceCheckBox.checked)
+	{
+		
+		for (const [key, value] of ambuMarkers.entries()) {
+			value.setOpacity(1);
+			cluster.addLayer(value);
+
+		}
+
+	
+	}else
+	{
+		for (const [key, value] of ambuMarkers.entries()) {
+			value.setOpacity(0);
+			cluster.removeLayer(value);
+		}
+	}
+
+	
+	
+	
+	
+	}
+	
+	
+	</script>
+
+
+<script type="text/javascript">
+
+
+
+
+
+function performSound(){
+	let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'alarm.mp3');
+	xhr.responseType = 'arraybuffer';
+	xhr.addEventListener('load', () => {
+		let playsound = (audioBuffer) => {
+			let source = audioCtx.createBufferSource();
+			source.buffer = audioBuffer;
+			source.connect(audioCtx.destination);
+			source.loop = false;
+			source.start();
+
+			
+		};
+
+		audioCtx.decodeAudioData(xhr.response).then(playsound);
+	});
+	xhr.send();
+}
+
+function playSound() {
+	console.log("Sound queue");
+	  const audio = new Audio("alarm.mp3");
+	  audio.play();
+	}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+2020-11-02 00:28:14 [HikariPool-10 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Thread starvation or clock leap detected (housekeeper delta=36m27s806ms).
+2020-11-02 01:37:11 [HikariPool-10 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Thread starvation or clock leap detected (housekeeper delta=35m25s595ms).
+2020-11-02 02:25:13 [HikariPool-10 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Thread starvation or clock leap detected (housekeeper delta=26m1s551ms).
+2020-11-02 03:00:45 [HikariPool-10 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Thread starvation or clock leap detected (housekeeper delta=33m32s105ms).
+2020-11-02 03:21:35 [HikariPool-10 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Thread starvation or clock leap detected (housekeeper delta=17m50s51ms).
+2020-11-02 04:08:47 [HikariPool-10 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Thread starvation or clock leap detected (housekeeper delta=38m36s344ms).
+2020-11-02 04:25:50 [HikariPool-10 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Thread starvation or clock leap detected (housekeeper delta=17m2s208ms).
+2020-11-02 04:34:40 [RMI TCP Connection(374)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2020-11-02 04:34:40 [RMI TCP Connection(374)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2020-11-02 04:34:40 [RMI TCP Connection(374)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-11-02 04:34:40 [RMI TCP Connection(374)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Shutdown initiated...
+2020-11-02 04:34:41 [RMI TCP Connection(374)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Shutdown completed.

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>[[#{profile.title}]]</title>
+<link rel="stylesheet"
+	href="/css/bootstrap.min.css?h=baece89ac3ac458f3d4dc1530b7d2425">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+
+
+<style type="text/css">
+#container {
+	margin: 20px;
+	width: 200px;
+	height: 200px;
+}
+
+w3-modal {
+	z-index: 3;
+	display: none;
+	padding-top: 100px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4)
+}
+
+.w3-modal-content {
+	margin: auto;
+	background-color: #fff;
+	position: relative;
+	padding: 0;
+	outline: 0;
+	width: 600px
+}
+</style>
+</head>
+
+<body id="page-top">
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<ul
+			class="navbar-nav sidebar sidebar-dark accordion"
+			id="accordionSidebar" style="background-color: #c13b4d;">
+
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="/dashboard ">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-hands-helping"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">
+					[[#{dashboard.left_side_menu_title1}]] <br> <sup
+						th:text="${loggedinUser.roles}"></sup>
+
+				</div>
+			</a>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item"><a class="nav-link"
+					href="/dashboard "> <i class="fas fa-fw fa-tachometer-alt"></i>
+						<span>[[#{dashboard.left_side_menu_item1}]]</span></a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Heading -->
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title2}]]</div>
+
+				<li class="nav-item"><a class="nav-link" href="/charts "> <i
+						class="fas fa-fw fa-chart-area"></i> <span>[[#{dashboard.left_side_menu_item2}]]</span></a></li>
+
+			</div>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+
+			<div class="sidebar-heading">[[#{dashboard.left_side_menu_title3}]]</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+				<!-- Nav Item - Tables -->
+				<li class="nav-item"><a class="nav-link" href="/manageAeds">
+					<i class="fas fa-heartbeat"></i> <span>
+							[[#{dashboard.left_side_menu_item3}]]</span>
+				</a></li>
+
+			</div>
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider d-none d-md-block">
+
+				<li class="nav-item"><a class="nav-link" href="/manageEvents">
+					<i class="fas fa-bell"></i> <span>
+							[[#{dashboard.left_side_menu_item4}]]</span>
+				</a></li>
+
+			</div>
+
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link" href="/manageReports">
+					<i class="fas fa-exclamation-triangle"></i></i> <span>
+							[[#{dashboard.left_side_menu_item5}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageAmbulance"> <i class="fas fa-ambulance"></i></i> <span>
+							[[#{dashboard.left_side_menu_item6}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageEmployees"> <i class="fas fa-user-tie"></i> <span>
+							[[#{dashboard.left_side_menu_item7}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title4}]]</div>
+				<li class="nav-item"><a class="nav-link"
+					href="/communications"> <i class="fas fa-mail-bulk"></i> <span>
+							[[#{dashboard.left_side_menu_item8}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/chats"> <i class="fas fa-comment-dots"></i> <span>
+							[[#{dashboard.left_side_menu_item9}]]</span>
+				</a></li>
+
+            </div>
+
+			<!-- Sidebar Toggler (Sidebar) -->
+			<div class="text-center d-none d-md-inline">
+				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+			</div>
+
+		</ul>
+		<!-- End of Sidebar -->
+
+
+
+
+		<div class="d-flex flex-column" id="content-wrapper">
+			<div id="content">
+				<!-- Topbar -->
+				<nav
+					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop"
+						class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+
+					<!-- Topbar Search -->
+					<form
+						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+						<div class="input-group">
+							<input type="text" class="form-control bg-light border-0 small"
+								th:placeholder="#{topBar.search}" aria-label="Search"
+								aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-primary" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+
+						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+						<li class="nav-item dropdown no-arrow d-sm-none"><a
+							class="nav-link dropdown-toggle" href="/#" id="searchDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text"
+											class="form-control bg-light border-0 small"
+											th:placeholder="#{topBar.search}" aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div></li>
+
+						<!-- Nav Item - Alerts -->
+						<li class="nav-item dropdown no-arrow mx-1"><a
+							class="nav-link dropdown-toggle" href="/#" id="alertsDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-bell fa-fw"
+								onclick="restartNotif();"></i> <!-- Counter - Alerts --> <span
+								class="badge badge-danger badge-counter">3+</span>
+						</a> <!-- Dropdown - Alerts -->
+							<div
+								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="alertsDropdown">
+
+								<h6 class="dropdown-header">[[#{dashboard.notifications_title}]]</h6>
+
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="mr-3">
+										<div class="icon-circle bg-primary">
+											<i class="fas fa-file-alt text-white"></i>
+										</div>
+									</div>
+
+									<div>
+										<div class="small text-gray-500">December 12, 2019</div>
+										<span class="font-weight-bold">A new monthly report is
+											ready to download!</span>
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="mr-3">
+										<div class="icon-circle bg-success">
+											<i class="fas fa-donate text-white"></i>
+										</div>
+									</div>
+
+									<div>
+										<div class="small text-gray-500">December 7, 2019</div>
+										$290.29 has been deposited into your account!
+									</div>
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+									<div class="mr-3">
+										<div class="icon-circle bg-warning">
+											<i class="fas fa-exclamation-triangle text-white"></i>
+										</div>
+									</div>
+									<div>
+										<div class="small text-gray-500">December 2, 2019</div>
+										Spending Alert: We've noticed unusually high spending for your
+										account.
+									</div>
+								</a> <a class="dropdown-item text-center small text-gray-500"
+									href="/manageEvents">
+
+									[[#{dashboard.notifications_details}]] </a>
+							</div></li>
+
+						<!-- Nav Item - Messages -->
+						<li class="nav-item dropdown no-arrow mx-1"><a
+							class="nav-link dropdown-toggle" href="/#" id="messagesDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i>
+
+								<!-- Counter - Messages --> <span
+								class="badge badge-danger badge-counter">7</span>
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="messagesDropdown">
+
+								<h6 class="dropdown-header">[[#{dashboard.chat}]]</h6>
+
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+
+									<div class="font-weight-bold">
+
+										<div class="text-truncate">Hi there! I am wondering if
+											you can help me with a problem I've been having.</div>
+
+										<div class="small text-gray-500">Emily Fowler · 58m</div>
+
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="dropdown-list-image mr-3">
+
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+
+										<div class="status-indicator"></div>
+									</div>
+
+									<div>
+
+										<div class="text-truncate">I have the photos that you
+											ordered last month, how would you like them sent to you?</div>
+										<div class="small text-gray-500">Jae Chun · 1d</div>
+
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+									<div class="dropdown-list-image mr-3">
+
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+
+										<div class="status-indicator bg-warning"></div>
+
+									</div>
+
+									<div>
+
+										<div class="text-truncate">Last month's report looks
+											great, I am very happy with the progress so far, keep up the
+											good work!</div>
+
+										<div class="small text-gray-500">Morgan Alvarez · 2d</div>
+
+									</div>
+
+								</a> <a class="dropdown-item d-flex align-items-center" href="/#">
+
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+
+									<div>
+
+										<div class="text-truncate">Am I a good boy? The reason I
+											ask is because someone told me that people say this to all
+											dogs, even if they aren't good...</div>
+
+										<div class="small text-gray-500">Chicken the Dog · 2w</div>
+
+									</div>
+
+								</a> <a class="dropdown-item text-center small text-gray-500"
+									href="/#">[[#{dashboard.chat_details}]]</a>
+
+							</div></li>
+
+						<div class="topbar-divider d-none d-sm-block"></div>
+
+						<!-- Nav Item - User Information -->
+						<li class="nav-item dropdown no-arrow" role="presentation">
+							<div class="nav-item dropdown no-arrow">
+								<a class="dropdown-toggle nav-link" data-toggle="dropdown"
+									aria-expanded="false" href="#"><span
+									class="d-none d-lg-inline mr-2 text-gray-600 small"
+									th:text="${loggedinUser.name} + ' '+${loggedinUser.surname} ">
+								</span><img id="roundedImageProfile"
+									th:src="@{'/profileImages/'+${loggedinUser.photo}}"
+									class="border rounded-circle img-profile"></a>
+								<div
+									class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+									role="menu">
+									<a class="dropdown-item" role="presentation" href="/profile"><i
+										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item1}]]</a>
+									<div class="dropdown-divider"></div>
+									<a href="/logout" class="dropdown-item" role="/logout"><i
+										class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item2}]]</a>
+								</div>
+							</div>
+						</li>
+
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=en}"> <img
+								th:src="@{/img/en.png}">
+						</a></li>
+
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=el}"> <img
+								th:src="@{/img/el.png}">
+						</a></li>
+					</ul>
+
+				</nav>
+				<!-- End of Topbar -->
+
+
+				<div class="container-fluid">
+
+					<div class="row mb-3">
+						<div class="col-lg-2"></div>
+						<div class="col-lg-8">
+							<div class="row mb-3 d-none">
+								<div class="col">
+									<div class="card text-white bg-primary shadow">
+										<div class="card-body">
+
+											<div class="row mb-2">
+												<div class="col">
+													<p class="m-0">Peformance</p>
+													<p class="m-0">
+														<strong>65.2%</strong>
+													</p>
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-rocket fa-2x"></i>
+												</div>
+											</div>
+											<p class="text-white-50 small m-0">
+												<i class="fas fa-arrow-up"></i>&nbsp;5% since last month
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="card text-white bg-success shadow">
+										<div class="card-body">
+											<div class="row mb-2">
+												<div class="col">
+													<p class="m-0">Peformance</p>
+													<p class="m-0">
+														<strong>65.2%</strong>
+													</p>
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-rocket fa-2x"></i>
+												</div>
+											</div>
+											<p class="text-white-50 small m-0">
+												<i class="fas fa-arrow-up"></i>&nbsp;5% since last month
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div claprss="row">
+
+								<div class="col">
+									<h3 class="text-dark mb-4">[[#{profile.main}]]</h3>
+									<div class="card mb-4">
+										<div class="card-body text-center shadow">
+											<img class="rounded-circle mb-3 mt-4"
+												th:src="@{'/profileImages/'+${loggedinUser.photo}}"
+												width="160" height="160" id="myImg">
+											<div class="mb-3">
+												<form id="singleUploadForm" name="singleUploadForm">
+												<div class="p-1 bg-primary text-white " style="width:50%;margin:0 auto;" >
+													<input id="singleFileUploadInput" accept="image/*" type="file" name="file"
+														class="file-input" required />
+													<button type="submit" class="btn btn-light">Upload</button>
+													</div>
+												</form>
+												<div class="upload-response">
+													<div id="singleFileUploadError"></div>
+													<div id="singleFileUploadSuccess"></div>
+												</div>
+												<div class="w3-modal" id="id01">
+													<br> <br>
+													<div id="container" style="margin: 0 auto;"></div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="card shadow mb-3">
+										<div class="card-header py-3">
+											<p class="text-primary m-0 font-weight-bold">[[#{profile.section1_title}]]</p>
+										</div>
+										<div class="card-body">
+											<form>
+												<div class="form-row">
+													<div class="col">
+														<div class="form-group">
+															<label for="username"><strong>[[#{profile.section1_label1}]]</strong></label><label
+																class="form-control" type="text"
+																th:text="${loggedinUser.username}" name="username"></label>
+														</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+															<label for="email"><strong>
+																	[[#{profile.section1_label2}]] </strong></label><label
+																class="form-control" type="email"
+																th:text="${loggedinUser.email}" name="email"></label>
+														</div>
+													</div>
+
+												</div>
+												<div class="form-row">
+													<div class="col">
+														<div class="form-group">
+															<label for="first_name"><strong>[[#{profile.section1_label3}]]</strong></label><label
+																class="form-control" th:text="${loggedinUser.name}"
+																type="text" placeholder="John" name="first_name"></label>
+														</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+															<label for="last_name"><strong>[[#{profile.section1_label4}]]</strong></label><label
+																class="form-control" th:text="${loggedinUser.surname}"
+																type="text" placeholder="Doe" name="last_name"></label>
+														</div>
+													</div>
+
+												</div>
+												<div class="form-row">
+													<div class="col">
+														<div class="form-group">
+															<label for="first_name"><strong>[[#{profile.section1_label5}]]</strong></label><label
+																class="form-control"
+																th:text="${loggedinUser.phoneNumber}" type="text"
+																placeholder="John" name="first_name"></label>
+														</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+															<label for="last_name"><strong>[[#{profile.section1_label6}]]</strong></label><label
+																class="form-control" th:text="${loggedinUser.roles}"
+																type="text" placeholder="Doe" name="last_name"></label>
+														</div>
+													</div>
+												</div>
+
+											</form>
+										</div>
+									</div>
+									<div class="card shadow">
+										<div class="card-header py-3">
+											<p class="text-primary m-0 font-weight-bold">[[#{profile.section1_label7}]]</p>
+										</div>
+										<div class="card-body">
+											<form>
+
+												<div class="form-row">
+													<div class="col">
+														<div class="form-group">
+															<label for="first_name"><strong>[[#{profile.section1_label8}]]</strong></label><label
+																class="form-control" th:text="${loggedinUser.country}"
+																type="text" placeholder="John" name="first_name"></label>
+														</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+															<label for="last_name"><strong>[[#{profile.section1_label9}]]</strong></label><label
+																class="form-control" th:text="${loggedinUser.city}"
+																type="text" placeholder="Doe" name="last_name"></label>
+														</div>
+													</div>
+												</div>
+
+											</form>
+										</div>
+									</div>
+
+									<br>
+									<div class="card shadow mb-4" th:each="aed : ${userAed}">
+
+										<div class="card-header py-3">
+											<h6 class="text-primary font-weight-bold m-0"
+												th:text="${aed.name}"></h6>
+											<div class="form-row">
+												<div class="col">
+													<div class="form-group">
+														<label style="word-wrap: break-word;" for="username"><strong>[[#{profile.section1_label10}]]</strong></label><label
+															class="form-control" type="text"
+															th:text="${aed.description}" name="username"
+															style="
+															word-wrap: break-word;
+													        word-break: break-all;
+													        height: 400px;
+													        "
+															></label>
+													</div>
+												</div>
+												<div class="col">
+													<div class="form-group">
+														<label style="word-wrap: break-word;" for="email"><strong>[[#{profile.section1_label11}]]</strong></label><label
+															class="form-control" type="email" th:text="${aed.city}"
+															name="email"
+															style="
+															word-wrap: break-word;
+													        word-break: break-all;
+													        height: 100px;
+													        "
+															></label>
+													</div>
+												</div>
+
+											</div>
+											<div class="form-row">
+												<div class="col">
+													<div class="form-group">
+														<label  for="username"><strong>[[#{profile.section1_label12}]]</strong></label>
+														<p  class="form-control" type="text"
+															th:text="${aed.address}" name="username"
+															style="
+															word-wrap: break-word;
+													        word-break: break-all;
+													        height: 100px;
+													        "
+															></p>
+													</div>
+												</div>
+												<div class="col">
+													<div class="form-group">
+														<label for="email"><strong>[[#{profile.section1_label13}]]</strong></label><label
+															class="form-control" type="email"   
+															th:text="${aed.building}+', Όροφος:'+${aed.floor}"
+															name="email"
+															style="
+															word-wrap: break-word;
+													        word-break: break-all;
+													        height: 100px;
+													        "
+															></label>
+													</div>
+												</div>
+
+											</div>
+											<div class="form-row">
+												<div class="col">
+													<div class="form-group">
+														<label for="username"><strong>[[#{profile.section1_label14}]]</strong></label><label
+															class="form-control" type="text" th:text="${aed.brand}" 
+															name="username"
+															style="
+															word-wrap: break-word;
+													        word-break: break-all;
+													        height: 100px;
+													        "
+															></label>
+													</div>
+												</div>
+												<div class="col">
+													<div  class="form-group">
+														<label for="email"><strong>[[#{profile.section1_label15}]]</strong></label><label
+															class="form-control" type="email"  th:text="${aed.type}"
+															name="email"
+															style="
+															word-wrap: break-word;
+													        word-break: break-all;
+													        height: 100px;
+													        "
+															></label>
+													</div>
+												</div>
+
+											</div>
+										</div>
+										
+										<div class="card-body"></div>
+										<div class="card shadow mb-4">
+											<div class="card-header py-3">
+												<h6 class="text-primary font-weight-bold m-0"
+													th:text="#{profile.section2_title}+ ' ' +${aed.name}"></h6>
+											</div>
+											<div class="card-body">
+												<h4 class="small font-weight-bold">
+													Server migration<span class="float-right">20%</span>
+												</h4>
+												<div class="progress progress-sm mb-3">
+													<div class="progress-bar bg-danger" aria-valuenow="20"
+														aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+														<span class="sr-only">20%</span>
+													</div>
+												</div>
+												<h4 class="small font-weight-bold">
+													Sales tracking<span class="float-right">40%</span>
+												</h4>
+												<div class="progress progress-sm mb-3">
+													<div class="progress-bar bg-warning" aria-valuenow="40"
+														aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+														<span class="sr-only">40%</span>
+													</div>
+												</div>
+												<h4 class="small font-weight-bold">
+													Customer Database<span class="float-right">60%</span>
+												</h4>
+												<div class="progress progress-sm mb-3">
+													<div class="progress-bar bg-primary" aria-valuenow="60"
+														aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+														<span class="sr-only">60%</span>
+													</div>
+												</div>
+												<h4 class="small font-weight-bold">
+													Payout Details<span class="float-right">80%</span>
+												</h4>
+												<div class="progress progress-sm mb-3">
+													<div class="progress-bar bg-info" aria-valuenow="80"
+														aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+														<span class="sr-only">80%</span>
+													</div>
+												</div>
+												<h4 class="small font-weight-bold">
+													Account setup<span class="float-right">Complete!</span>
+												</h4>
+												<div class="progress progress-sm mb-3">
+													<div class="progress-bar bg-success" aria-valuenow="100"
+														aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+														<span class="sr-only">100%</span>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+			<footer class="bg-white sticky-footer">
+				<div class="container my-auto">
+					<div class="text-center my-auto copyright">
+						<span>Copyright © LifeTime 2020</span>
+					</div>
+				</div>
+			</footer>
+		</div>
+		<a class="border rounded d-inline scroll-to-top" href="#page-top"><i
+			class="fas fa-angle-up"></i></a>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+	<script
+		src="/assets/js/script.min.js?h=9af5f655239f5ce4fa692ca1c1513d50"></script>
+
+	<script type="text/javascript" src="js/progressbar.js">
+
+
+</script>
+	<script>
+	
+	
+	document.getElementById("id01").style.display='none';
+	
+
+	var bar = new ProgressBar.Circle(container, {
+		  color: '#FFEA82',
+		  trailColor: '#eee',
+		  trailWidth: 1,
+		  duration: 1400,
+		  easing: 'bounce',
+		  strokeWidth: 6,
+		  from: {color: '#FFEA82', a:0},
+		  to: {color: '#ED6A5A', a:1},
+		  // Set default step function for all animate calls
+		  step: function(state, circle) {
+		    circle.path.setAttribute('stroke', state.color);
+		  }
+		});
+
+			
+		</script>
+		
+		
+		
+		<script>
+		
+		'use strict';
+
+		var singleUploadForm = document.querySelector('#singleUploadForm');
+		var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+		var singleFileUploadError = document.querySelector('#singleFileUploadError');
+		var singleFileUploadSuccess = document.querySelector('#singleFileUploadSuccess');
+
+
+		function uploadSingleFile(file) {
+		
+			
+		    var formData = new FormData();
+		    formData.append("file", file);
+
+		    var xhr = new XMLHttpRequest();
+		    xhr.open("POST", "/web/uploadFile");
+
+		    xhr.onload = function() {
+		        console.log(xhr.responseText);
+		        var response = JSON.parse(xhr.responseText);
+		        if(xhr.status == 200) {
+		            singleFileUploadError.style.display = "none";
+		            singleFileUploadSuccess.innerHTML = "<p>File Uploaded Successfully.</p>";
+		            singleFileUploadSuccess.style.display = "block";
+		            
+		            document.getElementById("id01").style.display='block';
+		        	bar.animate(1.0);
+		        	
+		        	  /*<![CDATA[*/
+					 var myuser= { 
+						"userId":[[${loggedinUser.userId}]],
+		         "name": "[[${loggedinUser.name}]]",
+		         "surname": "[[${loggedinUser.surname}]]",
+		         "email": "[[${loggedinUser.email}]]",
+		         "password": "[[${loggedinUser.password}]]", 
+		         "city": "[[${loggedinUser.city}]]",
+		         "country": "[[${loggedinUser.country}]]",
+		         "phone": "[[${loggedinUser.phone}]]",
+		         "roles":"[[${loggedinUser.roles}]]",
+		         "username": "[[${loggedinUser.username}]]",
+		         "isActive": [[${loggedinUser.isActive}]],
+		         "registrationDate": "[[${loggedinUser.registrationDate}]]",
+		         "firebaseToken": "[[${loggedinUser.firebaseToken}]]",
+		         "bloodType": "[[${loggedinUser.bloodType}]]",
+		         "disease": "[[${loggedinUser.disease}]]",
+		         "alergies": "[[${loggedinUser.alergies}]]",
+		         "medicines": "[[${loggedinUser.medicines}]]",
+		         "counterContacts":[[${loggedinUser.counterContacts}]],
+		         "counterIncidents": [[${loggedinUser.counterIncidents}]],
+				 "counterDirections": [[${loggedinUser.counterDirections}]],
+				"photo":"/profileImages/"+"[[${loggedinUser.username}]].png",
+				"phoneNumber":"[[${loggedinUser.phoneNumber}]]",
+				"periphery":"[[${loggedinUser.periphery}]]",
+				"department":"[[${loggedinUser.department}]]",
+				"municipality":"[[${loggedinUser.municipality}]]",
+				"lat":[[${loggedinUser.lat}]],
+				"lon":[[${loggedinUser.lon}]],
+				"age":[[${loggedinUser.age}]],
+				"gender":"[[${loggedinUser.gender}]]",
+				 "clusterMunicipality":"[[${loggedinUser.clusterMunicipality}]]",
+				 "dateOfBirth":"[[${loggedinUser.dateOfBirth}]]",
+				 
+				 hospital : { 
+				   "hospital_id":[[${loggedinUser.hospital.hospital_id}]],
+				   "name":"[[${loggedinUser.hospital.name}]]",
+				   "lat":[[${loggedinUser.hospital.lat}]],
+				   "lon":[[${loggedinUser.hospital.lon}]],
+				   "address":"[[${loggedinUser.hospital.address}]]",
+				   "phone":"[[${loggedinUser.hospital.phone}]]",
+				   "clusterMunicipality":"[[${loggedinUser.hospital.clusterMunicipality}]]",
+				   "eventProcessor":"[[${loggedinUser.hospital.eventProcessor}]]"
+		       
+				}
+					  	  };
+					 /*]]>*/
+					  var userJSON = JSON.stringify(myuser);
+					  var xmlhttp2 = new XMLHttpRequest();   // new HttpRequest instance 
+					   xmlhttp2.open("POST", "/web/users/add");
+					xmlhttp2.setRequestHeader("Content-Type", "application/json");
+				
+					xmlhttp2.send(userJSON);
+				    
+					 
+					setTimeout(function () { location.reload(true); }, 3000);
+					
+		  		  
+		        	
+		            
+		        } else {
+		            singleFileUploadSuccess.style.display = "none";
+		            singleFileUploadError.innerHTML = (response && response.message) || "Some Error Occurred";
+		        }
+		    }
+
+		    xhr.send(formData);
+		    
+		  
+			
+			
+
+		}
+		singleUploadForm.addEventListener('submit', function(event){
+		    var files = singleFileUploadInput.files;
+		    if(files.length === 0) {
+		        singleFileUploadError.innerHTML = "Please select a file";
+		        singleFileUploadError.style.display = "block";
+		    }
+		    
+		    var file = files[0];
+		    var blob = file.slice(0, file.size, 'image/png');
+			/*<![CDATA[*/
+
+		    var newFile = new File([blob],"[[${loggedinUser.username}]].png" , {type: 'image/png'});
+			 /*]]>*/
+
+		    uploadSingleFile(newFile);
+		    event.preventDefault();
+		}, true);
+
+		</script>
+
+</body>
+
+</html>

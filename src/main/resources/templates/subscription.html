@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Subscription</title>
+<!--Bootstrap 4 CSS-->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!--Bootstrap 4 JavaScript-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!--Stripe JavaScript Library-->
+<script src="https://js.stripe.com/v3/"></script>
+
+
+<style>
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+#circlude {
+   width: 100px;
+   height: 100px;
+   background-color: red;
+   border-radius: 50%;
+   color: white;
+   font-weight: bold;
+   text-align: center;
+   font-size: 72px;
+   font-family: calibri; /* Pick the font that works for you */
+   line-height: 100px;
+   border: solid 4px white;
+ }
+
+</style>
+</head>
+
+<body >
+  
+
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-white">
+		<a class="navbar-brand" href="https://foreverlifetime.com"
+			style="color: #c13b4d;" target="_blank"> <img
+			src="img/LifeTime_Brand_Logo_2.png"
+			width="30" height="30" class="d-inline-block align-top" alt="">
+			LifeTime
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<!-- <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li> -->
+      </ul>
+      
+
+
+			<form class="form-inline my-2 my-lg-0">
+				<!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+       -->
+				<li class="nav-item" style="width: auto; display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=en}"> <img
+						th:src="@{/img/en.png}">
+				</a>
+				</li>
+
+				<li class="nav-item" style="width: auto; display: inline-block;">
+					<a class="nav-link" th:href="@{?lang=el}"> <img
+						th:src="@{/img/el.png}">
+				</a>
+				</li>
+
+			</form>
+		</div>
+	</nav>
+
+					
+
+	<!--hero section-->
+	<section class="py-5">
+	
+		<div class="container">
+
+      <div class="card-deck mb-3 text-center">
+
+        <div class="card mb-4 box-shadow">
+
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Ambulance Licenses</h4>
+          </div>
+
+          <div class="card-body">
+            
+            <h1 class="card-title pricing-card-title">€[[${ambPriceStr}]] <small class="text-muted">/ mo</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>[[${ambNumber}]] Ambulance licenses included</li>
+              <li>€[[${licensePerAmbPriceStr}]]/ mo per Ambulance License</li>
+              <li>[[${yearsNumber}]] Years of Subscription</li>
+              <li>24/7 Email support</li>
+              <li>24/7 Call Center support</li>
+            </ul>
+            <!-- <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button> -->
+          
+          </div>
+
+        </div>
+
+        <div class="card mb-4 box-shadow">
+
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">User Licenses</h4>
+          </div>
+
+          <div class="card-body">
+
+            <h1 class="card-title pricing-card-title">€[[${usersPriceStr}]] <small class="text-muted">/ mo</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>[[${userNumber}]] User licenses included</li>
+              <li>€[[${licensePerUserPriceStr}]]/ mo per User License</li>
+              <li>[[${yearsNumber}]] Years of Subscription</li>
+               <li>24/7 Email support</li>
+              <li>24/7 Call Center support</li>
+            </ul>
+            <!-- <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button> -->
+          </div>
+
+        </div>
+
+        <div class="card mb-4 box-shadow">
+
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Admin Licenses</h4>
+          </div>
+
+          <div class="card-body">
+
+            <h1 class="card-title pricing-card-title">€[[${adminsPriceStr}]] <small class="text-muted">/ mo</small></h1>
+            
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>[[${adminNumber}]] Admin licenses included</li>
+              <li>€[[${licensePerAdminPriceStr}]]/ mo per Admin License</li>
+              <li>[[${yearsNumber}]] Years of Subscription</li>
+               <li>24/7 Email support</li>
+              <li>24/7 Call Center support</li>
+              
+            </ul>
+            <!-- <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button> -->
+          </div>
+          
+        </div>
+
+      </div>
+	
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-8 col-12 my-auto mx-auto">
+				
+					<h1>Recurring Subscription to LifeTime</h1>
+					
+	
+					
+					<p class="lead mb-4">Please fill the form below to complete the payment</p>
+						
+					<h5 class="mb-2">Choose your payment plan</h5>
+					
+					<p class="text-muted">10% OFF when you upgrade to annual plan.</p>
+					
+					<div class="py-2">
+
+
+						<div class="custom-control custom-radio">
+						
+							<input class="custom-control-input" id="monthlyPlan" name="lifetimePlan" type="radio" th:value="${totalMonthlyPrice}" onclick="document.getElementById('annualPlan').checked = false" />
+							
+							<label class="custom-control-label" for="monthlyPlan">
+							
+							<strong>Monthly €[[${totalMonthlyPriceStr}]]</strong>
+							
+							<br/> 
+							
+							<small class="text-muted"> Pay €[[${totalMonthlyPriceStr}]] every month and get access to all premium features.</small>
+							
+              </label>
+              
+              
+
+						</div>
+
+						<div class="custom-control custom-radio mt-3">
+						
+							<input checked="" class="custom-control-input" id="annualPlan" name="lifetimePlan" type="radio" th:value="${discountedYearlyPrice}"  onclick="document.getElementById('monthlyPlan').checked = false"/>
+								
+							<label class="custom-control-label" for="annualPlan">
+
+								<strong>Yearly €[[${discountedYearlyPriceStr}]]</strong> 
+								
+								<span class="badge badge-primary ml-1">10% OFF</span>
+								
+								<br/> 
+                <small class="text-muted">Yearly Payment Before Discount €[[${totalYearlyPriceStr}]]</small> 
+                <br>
+								<small class="text-muted"> Pay €[[${discountedYearlyPriceStr}]] every year and <strong>SAVE</strong> €[[${discountStr}]] to get access to all premium features </small>
+							</label>
+							
+						</div>
+
+          </div>
+          
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+          
+
+					<form action="#" name="payment-form" id="payment-form" method="post">
+
+						<input id="api-key" type="hidden" th:value="${stripePublicKey}">
+
+						<input id="amb-number" type="hidden" th:value="${ambNumber}">
+						<input id="user-number" type="hidden" th:value="${userNumber}">
+						<input id="admin-number" type="hidden" th:value="${adminNumber}">
+						<input id="years-number" type="hidden" th:value="${yearsNumber}">
+
+
+
+
+						<div class="form-group">
+
+							<label class="font-weight-medium" for="card-element">
+                Enter credit or debit card below </label>
+                
+							<div class="w-100" id="card-element">
+								<!-- A Stripe Element will be inserted here. -->
+							</div>
+            </div>
+            
+						<div class="form-group">
+							<input class="form-control" id="email" name="email"
+								placeholder="Email Address" type="email" required>
+            </div>
+            
+						<div class="form-group">
+							<input class="form-control" id="coupon" name="coupon"
+								placeholder="Coupon code (optional)" type="text">
+            </div>
+            
+						<!-- Used to display Element errors. -->
+						<div class="text-danger w-100" id="card-errors" role="alert"></div>
+						<div class="form-group pt-2">
+
+							<button class="btn btn-primary btn-block" id="submitButton"
+                type="submit">Pay With Your Card</button>
+                
+                <!-- --------------PROCCESS MODAL-------------- -->
+                <button type="button" id="btnProccessTrigger" data-toggle="modal" data-target="#exampleModalCenter" style="display:none;">
+                  Launch proccessing modal
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="margin: auto;">LifeTime Health Software Solutions</h5>
+                        
+                      </div>
+
+
+                      <div class="modal-body" id="processing-img">
+                        
+                          <div class="loader" id="loader" style="margin: auto;"></div>
+                          <h3 style="text-align: center;">Processing...</h3>
+                        
+                      </div>
+
+                      <div class="modal-body" id="error-img">
+                        
+                        <div id="circlude" style="margin: auto;"> X </div><!-- End Circlude -->
+                        <h3 style="text-align: center;">Something went wrong...</h3>
+                      
+                    </div>
+
+                      <div class="modal-footer" id="processing-footer">
+                        Your payment is being processed please wait a few seconds...
+                        <br>
+                        This may take a while...
+                      </div>
+
+                      <div class="modal-footer" id="error-footer">
+                        Your card has not sufficient funds for this transaction...
+                        <br>
+                        Please try with a different card...
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+               
+                
+                <!-- --------------PRIVACY POLICY-------------- -->
+
+							<div class="small text-muted mt-2">
+								Pay securely with Stripe. By clicking the button above, you
+								agree to our <a target="_blank" href="#">Terms of Service</a>, <a
+									target="_blank" href="#">Privacy</a> and <a target="_blank"
+									href="#">Refund</a> policies.
+
+							</div>
+						</div>
+
+            
+					</form>
+					<p class="mt-5 text-muted">
+
+						</small>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+  <script type="text/javascript">
+  
+                            
+  $(document).ready(function(){
+
+   
+
+    
+
+  });//document ready
+
+    
+
+
+	</script>
+
+	<!--custom javascript for handling subscription-->
+	<script>
+    $(function () {
+        var API_KEY = $('#api-key').val();
+        // Create a Stripe client.
+        var stripe = Stripe(API_KEY);
+
+        // Create an instance of Elements.
+        var elements = stripe.elements();
+
+        // Create an instance of the card Element.
+        var card = elements.create('card');
+
+        // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#card-element');
+
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function (event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission.
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            //validate coupon if any
+            var code = $('#coupon').val().trim();
+            if (code.length > 0) {
+                $.post(
+                    "/coupon-validator",
+                    {code: code},
+                    function (data) {
+                        if (data.status) {
+                          /*********************************PREVENT DOUBLE FORM SUBMISSION*************************************/
+                          $('#submitButton').prop('disabled', true);
+                          $('#btnProccessTrigger').click();
+
+                          /*********SHOW PROCESSING IN MODAL************/
+                          $("#processing-img").show();
+                          $("#processing-footer").show();
+
+                          /*********HIDE ERROR IN MODAL************/
+                          $("#error-img").hide();
+                          $("#error-footer").hide();
+
+                          handlePayments();
+                            handlePayments();
+                        } else {
+                            alert(data.details);
+                        }
+                    }, 'json');
+            } else {
+
+                /*********************************PREVENT DOUBLE FORM SUBMISSION*************************************/
+                $('#submitButton').prop('disabled', true);
+                $('#btnProccessTrigger').click();
+
+                /*********SHOW PROCESSING IN MODAL************/
+                $("#processing-img").show();
+                $("#processing-footer").show();
+
+                /*********HIDE ERROR IN MODAL************/
+                $("#error-img").hide();
+                $("#error-footer").hide();
+
+
+                handlePayments();
+                
+            }
+        });
+
+        //handle card submission
+        function handlePayments() {
+
+            stripe.createToken(card).then(function (result) {
+       
+    
+
+         
+    
+              
+              if (result.error) {
+                    // Inform the user if there was an error.
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+
+                    
+                } 
+                
+                else {
+
+
+                            var annualChecked = document.getElementById('annualPlan').checked;
+                            var monthlyChecked = document.getElementById('monthlyPlan').checked;
+                            var planAmount;
+
+                          
+                            console.log("annual: "+ annualChecked);
+                            console.log("monthly: "+monthlyChecked);
+
+                            if(annualChecked)
+                            {
+
+                              annualChecked = true;
+                              console.log("annual: "+ annualChecked);
+
+                              planAmount = annualPlan.value;
+                              console.log("annual plan amount: "+ planAmount);
+                              
+
+
+                              
+                            }
+
+                            if(monthlyChecked)
+                            {
+
+                              monthlyChecked = true;
+                              console.log("monthly: "+monthlyChecked);
+
+                              planAmount = monthlyPlan.value;
+                              console.log("monthly plan amount: "+ planAmount);
+                              
+                            }
+
+                            annualPlan.addEventListener("change",function(){
+                              
+                              annualChecked = true;
+                              console.log("annual: "+ annualChecked);
+
+                              planAmount = annualPlan.value;
+                              console.log("annual plan amount: "+ planAmount);
+
+                            });
+
+                            monthlyPlan.addEventListener("change",function(){
+
+                              monthlyChecked = true;
+                              console.log("monthly: "+monthlyChecked);
+
+                              planAmount = monthlyPlan.value;
+                              console.log("monthly plan amount: "+ planAmount);
+                            });
+
+                            
+
+                            
+                            
+                            var interval;
+
+                            
+                            if(annualChecked)
+                            {
+                              interval = "year";
+                            }
+                            if(monthlyChecked)
+                            {
+                              interval = "month";
+                            }
+                            
+                            var token = result.token.id;
+                            var email = $('#email').val();
+                            var coupon = $('#coupon').val();
+
+
+                            
+
+                            var ambNumber = [[${ambNumber}]];
+                            var licensePerAmbPrice = [[${licensePerAmbPrice}]];
+                            var ambPrice = [[${ambPrice}]];
+
+                            var userNumber = [[${userNumber}]];
+                            var licensePerUserPrice = [[${licensePerUserPrice}]];
+                            var usersPrice = [[${usersPrice}]];
+
+                            var adminNumber = [[${adminNumber}]];
+                            var licensePerAdminPrice = [[${licensePerAdminPrice}]];
+                            var adminsPrice = [[${adminsPrice}]];
+
+                            var yearsNumber = [[${yearsNumber}]];
+
+                            
+                            
+
+                            // alert(
+                                  
+                            //       "plan amount: " + planAmount +
+                            //       " interval: " + interval +
+                            //       " token: " + token + 
+                            //       " email: " + email +
+                            //       " coupon: " + coupon +
+
+                            //       " ambNumber: " + ambNumber +
+                            //       " licensePerAmbPrice: " + licensePerAmbPrice +
+                            //       " ambPrice: " + ambPrice +
+                                  
+                            //       " userNumber: " + userNumber +
+                            //       " licensePerUserPrice: " + licensePerUserPrice +
+                            //       " userPrice: " + usersPrice +
+
+                            //       " adminNumber: " + adminNumber +
+                            //       " licensePerAdminPrice: " + licensePerAdminPrice +
+                            //       " adminPrice: " + adminsPrice +
+
+                            //       " yearsNumber: " + yearsNumber 
+
+                            //       );
+                          
+
+                    $.post(
+                        "/create-subscription",
+                        {
+                          email: email, 
+                          interval: interval,
+                          token: token, 
+                          planAmount: planAmount, 
+                          coupon: coupon,
+
+                          ambNumber: ambNumber,
+                          licensePerAmbPrice: licensePerAmbPrice,
+                          ambPrice: ambPrice,
+
+                          userNumber: userNumber,
+                          licensePerUserPrice: licensePerUserPrice,
+                          usersPrice: usersPrice,
+
+                          adminNumber: adminNumber,
+                          licensePerAdminPrice: licensePerAdminPrice,
+                          adminsPrice: adminsPrice,
+
+                          yearsNumber: yearsNumber,
+                        },
+
+                        function (data) {
+
+                            if(data.details=="OK")
+                            {
+
+                              
+
+                              // alert(data.details);
+
+                               window.location.href = "/success"+
+                               "?ambNumber="+ambNumber+
+                               "&licensePerAmbPrice="+licensePerAmbPrice +
+                               "&ambPrice="+ambPrice +
+                               "&userNumber="+userNumber +
+                               "&licensePerUserPrice="+licensePerUserPrice +
+                               "&usersPrice="+usersPrice +
+                               "&adminNumber="+adminNumber +
+                               "&licensePerAdminPrice="+licensePerAdminPrice +
+                               "&adminsPrice="+adminsPrice +
+                               "&yearsNumber="+yearsNumber +
+                               "&planAmount="+planAmount +
+                               "&interval="+interval;
+
+                            }
+
+                            else{
+
+                              /*********SHOW PROCESSING IN MODAL************/
+                              // $("#processing-img").show();
+                              // $("#processing-footer").show();
+
+                              /*********HIDE PROCESSING IN MODAL************/
+                              $("#processing-img").hide();
+                              $("#processing-footer").hide();
+                                              
+                              /*********SHOW ERROR IN MODAL************/
+                              $("#error-img").show();
+                              $("#error-footer").show();
+
+                              /*********HIDE ERROR IN MODAL************/
+                              // $("#error-img").hide();
+                              // $("#error-footer").hide();
+                                
+
+                            }
+
+                        }, 'json');
+
+                }
+
+
+            });
+
+        }
+    });
+
+
+</script>
+</body>
+</html>

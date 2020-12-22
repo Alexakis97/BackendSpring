@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>[[#{charts.title}]]</title>
+
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<!-- Custom styles for this page -->
+<link href="vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+
+
+
+
+
+</head>
+
+<body id="page-top" class="sidebar-toggled">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<ul
+			class="navbar-nav  sidebar sidebar-dark accordion"
+			id="accordionSidebar" style="background-color: #c13b4d;">
+
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="/dashboard ">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-hands-helping"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">
+					[[#{dashboard.left_side_menu_title1}]] <br> <sup
+						th:text="${loggedinUser.roles}"></sup>
+
+				</div>
+			</a>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item "><a class="nav-link"
+					href="/dashboard "> <i class="fas fa-fw fa-tachometer-alt"></i>
+						<span>[[#{dashboard.left_side_menu_item1}]]</span></a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Heading -->
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title2}]]</div>
+
+				<li class="nav-item active"><a class="nav-link" href="/charts "> <i
+						class="fas fa-fw fa-chart-area"></i> <span>[[#{dashboard.left_side_menu_item2}]]</span></a></li>
+
+			</div>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+
+			<div class="sidebar-heading">[[#{dashboard.left_side_menu_title3}]]</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+				<!-- Nav Item - Tables -->
+				<li class="nav-item"><a class="nav-link" href="/manageAeds">
+					<i class="fas fa-heartbeat"></i> <span>
+							[[#{dashboard.left_side_menu_item3}]]</span>
+				</a></li>
+
+			</div>
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider d-none d-md-block">
+
+				<li class="nav-item"><a class="nav-link" href="/manageEvents">
+					<i class="fas fa-bell"></i> <span>
+							[[#{dashboard.left_side_menu_item4}]]</span>
+				</a></li>
+
+			</div>
+
+
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'} or ${loggedinUser.roles=='TILEFONITIS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link" href="/manageReports">
+					<i class="fas fa-exclamation-triangle"></i></i> <span>
+							[[#{dashboard.left_side_menu_item5}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageAmbulance"> <i class="fas fa-ambulance"></i></i> <span>
+							[[#{dashboard.left_side_menu_item6}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<li class="nav-item"><a class="nav-link"
+					href="/manageEmployees"> <i class="fas fa-user-tie"></i> <span>
+							[[#{dashboard.left_side_menu_item7}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+				<div class="sidebar-heading">[[#{dashboard.left_side_menu_title4}]]</div>
+				<li class="nav-item"><a class="nav-link"
+					href="/communications"> <i class="fas fa-mail-bulk"></i> <span>
+							[[#{dashboard.left_side_menu_item8}]]</span>
+				</a></li>
+
+			</div>
+
+			<div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+
+
+				<li class="nav-item"><a class="nav-link"
+					href="/employeeChatList"> <i class="fas fa-comment-dots"></i> <span>
+							[[#{dashboard.left_side_menu_item9}]]</span>
+				</a></li>
+
+            </div>
+
+            <div
+				th:if="${loggedinUser.roles=='ADMIN'} or ${loggedinUser.roles=='STELEXOS'}">
+
+				<hr class="sidebar-divider d-none d-md-block">
+
+
+				<li class="nav-item "><a class="nav-link"
+					href="/clientChatList"> <i class="far fa-comments"></i> <span>
+							[[#{dashboard.left_side_menu_item10}]]</span>
+				</a></li>
+
+            </div>
+
+			<!-- Sidebar Toggler (Sidebar) -->
+			<div class="text-center d-none d-md-inline">
+				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+			</div>
+
+		</ul>
+		<!-- End of Sidebar -->
+
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop"
+						class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+
+					<!-- Topbar Search -->
+					<form
+						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+						<div class="input-group">
+							<input type="text" class="form-control bg-light border-0 small"
+								th:placeholder="#{topBar.search}"  aria-label="Search"
+								aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-primary" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+
+						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+						<li class="nav-item dropdown no-arrow d-sm-none">
+							<a class="nav-link dropdown-toggle" href="/#" id="searchDropdown"
+								role="button" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								
+								<i class="fas fa-search fa-fw"></i>
+								
+							</a> 
+						
+						
+						<!-- Dropdown - Messages -->
+							<div
+								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text"
+											class="form-control bg-light border-0 small"
+											th:placeholder="#{topBar.search}" aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</li>
+
+						<!-- Nav Item - Alerts -->
+						<li class="nav-item dropdown no-arrow mx-1">
+						
+							<a  class="nav-link dropdown-toggle"
+							    href="/#"
+							    id="alertsDropdown"
+								role="button"
+								data-toggle="dropdown" 
+								aria-haspopup="true"
+								aria-expanded="false">
+								
+								 <i class="fas fa-bell fa-fw" onclick="restartNotif();"></i>
+								 
+								  <!-- Counter - Alerts -->
+								<span class="badge badge-danger badge-counter">3+</span>
+							</a>
+							
+							 <!-- Dropdown - Alerts -->
+							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								 aria-labelledby="alertsDropdown">
+								 
+								<h6 class="dropdown-header">[[#{dashboard.notifications_title}]]</h6>
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+											
+											<div class="mr-3">
+												<div class="icon-circle bg-primary">
+													<i class="fas fa-file-alt text-white"></i>
+												</div>
+											</div>
+											
+											<div>
+												<div class="small text-gray-500">December 12, 2019</div>
+												<span class="font-weight-bold">A new monthly report is
+													ready to download!</span>
+											</div>
+											
+								</a>
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+											
+											<div class="mr-3">
+												<div class="icon-circle bg-success">
+													<i class="fas fa-donate text-white"></i>
+												</div>
+											</div>
+											
+											<div>
+												<div class="small text-gray-500">December 7, 2019</div>
+												$290.29 has been deposited into your account!
+											</div>
+								</a> 
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+											<div class="mr-3">
+												<div class="icon-circle bg-warning">
+													<i class="fas fa-exclamation-triangle text-white"></i>
+												</div>
+											</div>
+											<div>
+												<div class="small text-gray-500">December 2, 2019</div>
+												Spending Alert: We've noticed unusually high spending for your
+												account.
+											</div>
+								</a>
+								
+								<a class="dropdown-item text-center small text-gray-500"
+								   href="/manageEvents">
+								   
+								   [[#{dashboard.notifications_details}]]
+								   
+								</a>
+							</div>
+							
+						</li>
+
+						<!-- Nav Item - Messages -->
+						<li class="nav-item dropdown no-arrow mx-1"><a
+							class="nav-link dropdown-toggle" href="/#" id="messagesDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">
+							
+							 <i class="fas fa-envelope fa-fw"></i>
+								
+								<!-- Counter - Messages -->
+								 <span class="badge badge-danger badge-counter">7</span>
+						</a>
+						
+						 <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="messagesDropdown">
+								
+								<h6 class="dropdown-header">[[#{dashboard.chat}]]</h6>
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+								
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+									
+									<div class="font-weight-bold">
+									
+										<div class="text-truncate">Hi there! I am wondering if
+											you can help me with a problem I've been having.</div>
+											
+										<div class="small text-gray-500">Emily Fowler · 58m</div>
+										
+									</div>
+									
+								</a> 
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+								
+									<div class="dropdown-list-image mr-3">
+									
+										<img class="rounded-circle"
+											 src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+											 
+										<div class="status-indicator"></div>
+									</div>
+									
+									<div>
+									
+										<div class="text-truncate">I have the photos that you
+											ordered last month, how would you like them sent to you?</div>
+										<div class="small text-gray-500">Jae Chun · 1d</div>
+										
+									</div>
+									
+								</a>
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+									<div class="dropdown-list-image mr-3">
+									
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+											
+										<div class="status-indicator bg-warning"></div>
+										
+									</div>
+									
+									<div>
+									
+										<div class="text-truncate">Last month's report looks
+											great, I am very happy with the progress so far, keep up the
+											good work!</div>
+											
+										<div class="small text-gray-500">Morgan Alvarez · 2d</div>
+										
+									</div>
+									
+								</a> 
+								
+								<a class="dropdown-item d-flex align-items-center" href="/#">
+								
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle"
+											src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+										<div class="status-indicator bg-success"></div>
+									</div>
+									
+									<div>
+									
+										<div class="text-truncate">Am I a good boy? The reason I
+											ask is because someone told me that people say this to all
+											dogs, even if they aren't good...</div>
+											
+										<div class="small text-gray-500">Chicken the Dog · 2w</div>
+										
+									</div>
+									
+								</a> 
+								
+								<a class="dropdown-item text-center small text-gray-500"
+									href="/#">[[#{dashboard.chat_details}]]</a>
+									
+							</div>
+							
+						</li>
+
+						<div class="topbar-divider d-none d-sm-block"></div>
+
+						<!-- Nav Item - User Information -->
+						<li class="nav-item dropdown no-arrow" role="presentation">
+							<div class="nav-item dropdown no-arrow">
+								<a class="dropdown-toggle nav-link" data-toggle="dropdown"
+									aria-expanded="false" href="#"><span
+									class="d-none d-lg-inline mr-2 text-gray-600 small"
+									th:text="${loggedinUser.name} + ' '+${loggedinUser.surname} ">
+								</span><img id="roundedImageProfile" th:src="@{'/profileImages/'+${loggedinUser.photo}}"
+									class="border rounded-circle img-profile"></a>
+								<div
+									class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+									role="menu">
+									<a class="dropdown-item" role="presentation" href="/profile"><i
+										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item1}]]</a>
+									<div class="dropdown-divider"></div>
+									<a href="/logout" class="dropdown-item" role="/logout"><i
+										class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;[[#{dashboard.profile_item2}]]</a>
+								</div>
+							</div>
+						</li>
+						
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=en}"> <img
+								th:src="@{/img/en.png}">
+						</a></li>
+
+						<li class="nav-item" style="width: auto; display: inline-block;"><a
+							class="nav-link" th:href="@{?lang=el}"> <img
+								th:src="@{/img/el.png}">
+						</a></li>
+					</ul>
+
+				</nav>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<h4 class="h3 mb-4 text-gray-800">[[#{charts.main_title}]]</h4>
+
+
+
+
+
+					<div class="row">
+
+						<!-- Area Chart -->
+						<div class="col-xl-8 col-lg-7">
+							<div class="card shadow mb-4">
+
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{charts.section1_title}]]</h6>
+									<div class="dropdown no-arrow">
+
+
+										<div class="dropdown" id="dropdown">
+											<button class="btn btn-secondary dropdown-toggle"
+												type="button" id="dropdownMenuButton" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">[[#{charts.section1_button}]]</button>
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton">
+
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<div class="input-group-text">[[#{charts.section1_inputLabel}]]</div>
+													</div>
+													<input type="text" class="form-control" id="input"
+														aria-label="Text input with radio button">
+												</div>
+
+
+
+											</div>
+										</div>
+
+
+
+
+
+									</div>
+
+
+
+								</div>
+								<div class="card-body">
+									<div class="container">
+										<canvas id="myAreaChart"></canvas>
+									</div>
+									<hr>
+									[[#{charts.section1_cardText1}]]
+									<br>
+									<hr>
+									<code>
+									[[#{charts.section1_cardText2}]]
+									</code>
+
+								</div>
+							</div>
+
+
+
+
+							<!-- Bar Chart -->
+
+
+
+
+
+						</div>
+
+						<!-- Donut Chart -->
+						<div class="col-xl-4 col-lg-5">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{charts.section2_title}]]</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="pie"></canvas>
+									</div>
+
+
+
+
+								</div>
+							</div>
+
+
+
+							
+						</div>
+
+
+
+
+
+						<!-- Donut Chart -->
+
+					</div>
+
+
+					<div class="row">
+						<div class="col-xl-6 col-lg-5">
+
+							<!-- Area Chart -->
+
+
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{charts.section4_title}]]</h6>
+								</div>
+								<div class="card-body">
+									<div class="container">
+										<canvas id="myChart"></canvas>
+									</div>
+									<hr>
+									[[#{charts.section4_cardTitle}]]
+									
+									<code>[[#{charts.section4_cardBody}]]</code>
+
+								</div>
+							</div>
+
+						</div>
+						<div class="col-xl-6 col-lg-5">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{charts.section5_title}]]</h6>
+								</div>
+								<div class="card-body">
+									<div class="container">
+										<canvas id="myChartReceipt"></canvas>
+									</div>
+
+									<hr>
+									[[#{charts.section5_cardTitle}]]
+									
+									<code>
+									[[#{charts.section4_cardBody}]]
+									 </code>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xl-6 col-lg-6 ">
+
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary"> [[#{charts.section6_title}]]</h6>
+								</div>
+
+								<div class="card-body">
+
+									<div class="container">
+
+										<canvas id="myChartFinished"></canvas>
+									</div>
+									<hr>
+
+									[[#{charts.section6_cardTitle}]]
+									
+									<code> 
+									[[#{charts.section6_cardBody}]]
+									</code>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-xl-6 col-lg-6 ">
+
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{charts.section7_title}]]</h6>
+								</div>
+
+								<div class="card-body">
+
+									<div class="container">
+
+										<canvas id="eventsByTime"></canvas>
+									</div>
+									<hr>
+
+
+								</div>
+							</div>
+						</div>
+
+						<!-- 
+						<div class="col-xl-5 col-lg-5">
+
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary"></h6>
+								</div>
+
+								<div class="card-body">
+
+									<div class="container">
+										<div class="alert alert-success" role="alert">
+											<h4 class="alert-heading">Well done!</h4>
+											<p>Aww yeah, you successfully read this important alert
+												message. This example text is going to run a bit longer so
+												that you can see how spacing within an alert works with this
+												kind of content.</p>
+											<hr>
+											<p class="mb-0">Whenever you need to, be sure to use
+												margin utilities to keep things nice and tidy.</p>
+										</div>
+
+									</div>
+									<hr>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					 -->
+
+
+
+
+					</div>
+
+
+					<div class="row">
+						<div class="col-xl-6 col-lg-6 ">
+
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{charts.section8_title}]]</h6>
+								</div>
+
+								<div class="card-body">
+
+									<div class="container">
+
+										<canvas id="userChart"></canvas>
+									</div>
+									<hr>
+
+
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-6 col-lg-6 ">
+
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{charts.section9_title}]]</h6>
+								</div>
+
+								<div class="card-body">
+
+									<div class="container">
+
+										<canvas id="userChartAlerg"></canvas>
+									</div>
+									<hr>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+
+
+
+						<div class="col-xl-6 col-lg-6 ">
+
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{charts.section10_title}]]</h6>
+								</div>
+
+								<div class="card-body">
+
+									<div class="container">
+
+										<canvas id="userChartAmbu"></canvas>
+									</div>
+									<hr>
+
+
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-6 col-lg-6 ">
+
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">[[#{charts.section11_title}]]</h6>
+								</div>
+
+								<div class="card-body">
+
+									<div class="container">
+
+										<canvas id="userChartFarmaka"></canvas>
+									</div>
+									<hr>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="row">
+					
+					<div class="card shadow mb-4" id="modal">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary"></h6>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close" onclick="closeModal('modal');">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+
+								<div class="card-body">
+
+									<div class="container">
+
+										<div class="alert alert-warning" role="alert">
+
+											<h4 class="alert-heading">[[#{charts.section3_title}]]</h4>
+											<p>
+												[[#{charts.section3_text1}]]
+												<a href="#">[[#{charts.section3_text2}]]</a>
+											</p>
+											<hr>
+											<p class="mb-0">
+												[[#{charts.section3_text3}]] <a
+													href="#">[[#{charts.section3_text4}]]</a>
+											</p>
+										</div>
+
+									</div>
+									<hr>
+
+								</div>
+							</div>
+					
+					</div>
+					<!-- /.container-fluid -->
+
+				</div>
+				<!-- End of Main Content -->
+
+				<!-- Footer -->
+				<footer class="sticky-footer bg-white">
+					<div class="container my-auto">
+						<div class="copyright text-center my-auto">
+							<span>Copyright &copy; LifeTime 2020</span>
+						</div>
+					</div>
+				</footer>
+				<!-- End of Footer -->
+
+			</div>
+			<!-- End of Content Wrapper -->
+
+		</div>
+		<!-- End of Page Wrapper -->
+
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="/#page-top"> <i
+			class="fas fa-angle-up"></i>
+		</a>
+
+		<!-- Logout Modal-->
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to
+							Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Select "Logout" below if you are
+						ready to end your current session.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button"
+							data-dismiss="modal">Cancel</button>
+						<a class="btn btn-primary" href="/login">Logout</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin-2.min.js"></script>
+
+		<!-- Page level plugins -->
+		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+		<!-- Page level custom scripts -->
+		<script src="js/demo/datatables-demo.js"></script>
+
+
+		<script>
+
+function closeModal(modal){
+	document.getElementById(modal).style.display='none';
+	console.log("ok closed" );
+}
+
+
+</script>
+
+
+
+
+		<script type="text/javascript" th:inline="javascript">
+	
+	var ctx = document.getElementById('pie').getContext('2d');
+	
+	
+	var chart1 = [[#{charts.chart1_title}]];
+	var chart2 = [[#{charts.chart2_title}]];
+	var chart3 = [[#{charts.chart3_title}]];
+	var chart4 = [[#{charts.chart4_title}]];
+	var chart5 = [[#{charts.chart5_title}]];
+	var chart6 = [[#{charts.chart6_title}]];
+	var chart7 = [[#{charts.chart7_title}]];
+	var chart8 = [[#{charts.chart8_title}]];
+	var chart9 = [[#{charts.chart9_title}]];
+	var chart10 = [[#{charts.chart10_title}]];
+	
+	var chart = new Chart(ctx, {
+	    // The type of chart we want to create
+	     type: 'doughnut',
+
+	    // The data for our dataset
+	    data: {
+	        labels: [
+	      	  /*<![CDATA[*/
+	      		  
+	      		  
+				
+	  		   /*[# th:each="i : ${#numbers.sequence( 0, clustersSize-1)}"]*/
+
+	  		   [# th:if="${i<clustersSize-1}"]
+	        	[[${allClusters[i]}]] ,
+	        	[/]
+	      	  [# th:unless="${i<clustersSize-1}"]
+	      		[[${allClusters[i]}]]
+	      	  
+	      	  [/]
+	      	    /*[/]*/     
+	            
+	            /*]]>*/
+				
+	              
+	            
+
+	        ],
+	        datasets: [{
+	            label: chart1,
+	            hoverBackgroundColor: 'rgb(20, 70, 155)',
+	            backgroundColor: [
+	            	  /*<![CDATA[*/
+
+		       		   /*[# th:each="i : ${#numbers.sequence( 0, clustersSize-1)}"]*/
+	            	
+	            	[# th:if="${i<clustersSize-1}"]
+	            	'rgb('+[[${colors[i]}]]+',100,170)',
+		        	[/]
+		      	  [# th:unless="${i<clustersSize-1}"]
+		      	'rgb('+[[${colors[i]}]]+',100,255)'
+		      	  
+		      	  [/]
+	            	/*[/]*/     
+	                
+	                 /*]]>*/
+	            	],
+	            borderColor: 'rgb(255, 99, 132)',
+	            data: [ 
+	            	
+	            	  /*<![CDATA[*/
+
+	       		   /*[# th:each="i : ${#numbers.sequence( 0, clustersSize-1)}"]*/
+
+	            [# th:if="${i<clustersSize-1}"]
+	        	[[${allCounters[i]}]] ,
+	        	[/]
+	      	  [# th:unless="${i<clustersSize-1}"]
+	      		[[${allCounters[i]}]]
+	      	  
+	      	  [/]
+	             	
+	                 /*[/]*/     
+	                
+	                 /*]]>*/
+	            ]
+	        }]
+	    },
+
+	    // Configuration options go here
+	    options: {}
+	});
+	
+	
+</script>
+
+		<script type="text/javascript" th:inline="javascript">
+	var ctx = document.getElementById('myChart').getContext('2d');
+	var chart = new Chart(ctx, {
+    // The type of chart we want to create
+     type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: [
+      	  /*<![CDATA[*/
+      		  
+      		  
+			
+  		   /*[# th:each="i : ${#numbers.sequence( 0, userClustersSize-1)}"]*/
+
+  		   [# th:if="${i<userClustersSize-1}"]
+        	[[${userClusters[i]}]] ,
+        	[/]
+      	  [# th:unless="${i<userClustersSize-1}"]
+      		[[${userClusters[i]}]]
+      	  
+      	  [/]
+      	    /*[/]*/     
+            
+            /*]]>*/
+			
+              
+            
+
+        ],
+        datasets: [{
+            label: chart2,
+            hoverBackgroundColor: 'rgb(20, 70, 155)',
+            backgroundColor: 'rgb(20, 99, 155)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [ 
+            	
+            	  /*<![CDATA[*/
+
+       		   /*[# th:each="i : ${#numbers.sequence( 0, userClustersSize-1)}"]*/
+
+            [# th:if="${i<userClustersSize-1}"]
+        	[[${userAmbulanceAssignTime[i]}]] ,
+        	[/]
+      	  [# th:unless="${i<userClustersSize-1}"]
+      		[[${userAmbulanceAssignTime[i]}]]
+      	  
+      	  [/]
+             	
+                 /*[/]*/     
+                
+                 /*]]>*/
+            ]
+        }]
+    },
+
+    // Configuration options go here
+    options:  {
+    	scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    }
+});
+
+</script>
+
+		<script type="text/javascript" th:inline="javascript">
+	var ctx = document.getElementById('myChartReceipt').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+     type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: [
+      	  /*<![CDATA[*/
+      		  
+      		  
+			
+  		   /*[# th:each="i : ${#numbers.sequence( 0, userClustersSize-1)}"]*/
+
+  		   [# th:if="${i<userClustersSize-1}"]
+        	[[${userClusters[i]}]] ,
+        	[/]
+      	  [# th:unless="${i<userClustersSize-1}"]
+      		[[${userClusters[i]}]]
+      	  
+      	  [/]
+      	    /*[/]*/     
+            
+            /*]]>*/
+			
+              
+            
+
+        ],
+        datasets: [{
+            label: chart3,
+            hoverBackgroundColor: 'rgb(175, 70, 155)',
+            backgroundColor: 'rgb(255, 99, 155)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [ 
+            	
+            	  /*<![CDATA[*/
+
+       		   /*[# th:each="i : ${#numbers.sequence( 0, userClustersSize-1)}"]*/
+
+            [# th:if="${i<userClustersSize-1}"]
+        	[[${userAmbulanceReceiptTime[i]}]] ,
+        	[/]
+      	  [# th:unless="${i<userClustersSize-1}"]
+      		[[${userAmbulanceReceiptTime[i]}]]
+      	  
+      	  [/]
+             	
+                 /*[/]*/     
+                
+                 /*]]>*/
+            ]
+        }]
+    },
+
+    // Configuration options go here
+    options:  {
+    	scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    }
+});
+
+</script>
+
+
+
+		<script type="text/javascript" th:inline="javascript">
+	var ctx = document.getElementById('myChartFinished').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+     type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: [
+      	  /*<![CDATA[*/
+      		  
+      		  
+			
+  		   /*[# th:each="i : ${#numbers.sequence( 0, userClustersSize-1)}"]*/
+
+  		   [# th:if="${i<userClustersSize-1}"]
+        	[[${userClusters[i]}]] ,
+        	[/]
+      	  [# th:unless="${i<userClustersSize-1}"]
+      		[[${userClusters[i]}]]
+      	  
+      	  [/]
+      	    /*[/]*/     
+            
+            /*]]>*/
+			
+              
+            
+
+        ],
+        datasets: [{
+            label: chart4,
+            hoverBackgroundColor: 'rgb(200, 100, 70)',
+            backgroundColor: 'rgb(255, 155, 70)',
+            borderColor: 'rgb(255, 155, 70)',
+            data: [ 
+            	
+            	  /*<![CDATA[*/
+
+       		   /*[# th:each="i : ${#numbers.sequence( 0, userClustersSize-1)}"]*/
+
+            [# th:if="${i<userClustersSize-1}"]
+        	[[${userAmbulanceFinishedTime[i]}]] ,
+        	[/]
+      	  [# th:unless="${i<userClustersSize-1}"]
+      		[[${userAmbulanceFinishedTime[i]}]]
+      	  
+      	  [/]
+             	
+                 /*[/]*/     
+                
+                 /*]]>*/
+            ]
+        }]
+    },
+
+    // Configuration options go here
+    options:  {
+    	scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    }
+});
+
+</script>
+
+
+
+
+
+
+
+		<script type="text/javascript" th:inline="javascript">
+  
+	var inp = document.getElementById('input');
+	inp.value="2020";
+	inp.addEventListener('input', function (evt) {
+	  var year = evt.target.value;
+	  makeChart(year);
+	  
+	});
+	
+
+  
+function makeChart(year)
+{
+	
+
+	  /*<![CDATA[*/
+var events = [[${eventByMonthAndYear}]];
+  console.log(events[year]);
+		if(events[year]!=null)
+			{
+			var ev = events[year];
+			  
+			  
+			  // Area Chart Example
+			  var ctx = document.getElementById("myAreaChart");
+			  var chart = new Chart(ctx, {
+				    // The type of chart we want to create
+				    type: 'line',
+
+				    // The data for our dataset
+				    data: {
+				        labels: ["[(${name01})]", "[(${name02})]", "[(${name03})]", "[(${name04})]","[(${name05})]", "[(${name06})]","[(${name07})]","[(${name08})]","[(${name09})]","[(${name10})]","[(${name11})]","[(${name12})]"],
+				        datasets: [{
+				            label: 'Περιστατικά '+year,
+				            backgroundColor: 'rgb(255, 99, 132)',
+				            borderColor: 'rgb(255, 99, 132)',
+				            data: [
+				            	
+				            	ev["01"] , ev["02"],ev["03"],ev["04"],ev["05"],ev["06"],ev["07"],ev["08"],ev["09"],ev["10"],ev["11"],ev["12"]
+				            	   
+				            	
+				            	
+				            ]
+				        }]
+				    },
+
+				    // Configuration options go here
+				    options: {}
+				});
+			
+			}
+  
+  /*]]>*/
+	
+}
+
+
+var events = [[${eventByMonthAndYear}]];
+var ev = events['2020'];
+
+
+
+var chartAlert = [[#{charts.chart_alert}]];
+
+// Area Chart Example
+if(ev!=null){
+var ctx = document.getElementById("myAreaChart");
+var chart = new Chart(ctx, {
+	    // The type of chart we want to create
+	    type: 'line',
+
+	    // The data for our dataset
+	    data: {
+	        labels: ["[(${name01})]", "[(${name02})]", "[(${name03})]", "[(${name04})]","[(${name05})]", "[(${name06})]","[(${name07})]","[(${name08})]","[(${name09})]","[(${name10})]","[(${name11})]","[(${name12})]"],
+	        datasets: [{
+	            label: chart5,
+	            backgroundColor: 'rgb(255, 99, 132)',
+	            borderColor: 'rgb(255, 99, 132)',
+	            data: [
+	            	
+	            	ev["01"] , ev["02"],ev["03"],ev["04"],ev["05"],ev["06"],ev["07"],ev["08"],ev["09"],ev["10"],ev["11"],ev["12"]
+	            	   
+	            	
+	            	
+	            ]
+	        }]
+	    },
+
+	    // Configuration options go here
+	    options: {}
+	});
+}
+else
+	{
+	 alert(chartAlert);
+	}
+  
+  </script>
+
+
+
+
+
+		<script type="text/javascript" th:inline="javascript">
+
+var byTime = [[${eventByHour}]];
+var myArray = [ "00:00 - 00:59", 
+	 "01:00 - 01:59", 
+	 "02:00 - 02:59", 
+	 "03:00 - 03:59", 
+	 "04:00 - 04:59", 
+	 "05:00 - 05:59", 
+	 "06:00 - 06:59", 
+	 "07:00 - 07:59", 
+	 "08:00 - 08:59", 
+	 "09:00 - 09:59", 
+	 "10:00 - 10:59", 
+	 "11:00 - 11:59", 
+	 "12:00 - 12:59", 
+	 "13:00 - 13:59", 
+	 "14:00 - 14:59", 
+	 "15:00 - 15:59", 
+	 "16:00 - 16:59", 
+	 "17:00 - 17:59", 
+	 "18:00 - 18:59", 
+	 "19:00 - 19:59", 
+	 "20:00 - 20:59", 
+	 "21:00 - 21:59", 
+	 "22:00 - 22:59", 
+	 "23:00 - 23:59"]
+console.log(byTime[myArray[0]]);
+	
+var ctx = document.getElementById('eventsByTime').getContext('2d');
+
+	var chart = new Chart(ctx, {
+    // The type of chart we want to create
+     type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: [
+        	     	   	
+			myArray[0],myArray[1],myArray[2],myArray[3],myArray[4],myArray[5],myArray[6],myArray[7],myArray[8],myArray[9],myArray[10],myArray[11],
+			myArray[12],myArray[13],myArray[14],myArray[15],myArray[16],myArray[17],myArray[18],myArray[19],myArray[20],myArray[21],myArray[22],myArray[23]
+            
+
+        ],
+        datasets: [{
+            label: chart6,
+            hoverBackgroundColor: 'rgb(20, 70, 155)',
+            backgroundColor: 'rgb(120, 110, 155)',
+            borderColor: 'rgb(255, 99, 233)',
+            data: [ 
+            	
+            	byTime[myArray[0]],byTime[myArray[1]],byTime[myArray[2]],byTime[myArray[3]],byTime[myArray[4]],byTime[myArray[5]],byTime[myArray[6]],byTime[myArray[7]],byTime[myArray[8]],byTime[myArray[9]],byTime[myArray[10]],byTime[myArray[11]],
+    			byTime[myArray[12]],byTime[myArray[13]],byTime[myArray[14]],byTime[myArray[15]],byTime[myArray[16]],byTime[myArray[17]],byTime[myArray[18]],byTime[myArray[19]],byTime[myArray[20]],byTime[myArray[21]],byTime[myArray[22]],byTime[myArray[23]]
+                
+            ]
+        }]
+    },
+
+    // Configuration options go here
+    options:  {
+    	scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    }
+});
+
+</script>
+
+
+
+
+		<script type="text/javascript" th:inline="javascript">
+
+
+var bloodtypes = [[${userBloodTypes}]];
+var ctx = document.getElementById('userChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+     type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: [
+      		
+            "A+","B+","AB+","O+","A-","B-","AB-","O-"  
+            
+
+        ],
+        datasets: [{
+            label: chart7,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 39, 164, 0.2)',
+                'rgba(225, 102, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 39, 164, 1)',
+                'rgba(225, 102, 64, 1)'
+
+            ],
+            data: [   	
+            	bloodtypes["A+"],bloodtypes["B+"],bloodtypes["AB+"],bloodtypes["O+"],bloodtypes["A-"],bloodtypes["B-"],bloodtypes["AB-"],bloodtypes["O-"]
+            ]
+        }]
+    },
+
+    // Configuration options go here
+    options:  {
+    	scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    }
+});
+
+</script>
+
+
+
+		</script>
+
+
+
+
+		<script type="text/javascript" th:inline="javascript">
+
+
+
+var ctx = document.getElementById('userChartAlerg').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+     type: 'polarArea',
+
+    // The data for our dataset
+    data: {
+        labels: [
+      		
+        	  /*<![CDATA[*/
+
+    		   /*[# th:each="i : ${namesAlergies}"]*/
+			
+        [[${i}]],
+          	
+              /*[/]*/     
+             
+              /*]]>*/
+            
+
+        ],
+        datasets: [{
+            label: chart8,
+            backgroundColor: [
+            	 /*<![CDATA[*/
+
+      		   /*[# th:each="i : ${rgbArrayList}"]*/
+  			
+          [[${i}]],
+            	
+                /*[/]*/     
+               
+                /*]]>*/
+            ],
+            borderColor: [
+            	 /*<![CDATA[*/
+
+       		   /*[# th:each="i : ${rgbArrayList}"]*/
+   			
+           [[${i}]],
+             	
+                 /*[/]*/     
+                
+                 /*]]>*/
+            ],
+            data: [   	
+            	 /*<![CDATA[*/
+
+     		   /*[# th:each="i : ${alergiesCounter}"]*/
+ 			
+         [[${i}]],
+           	
+               /*[/]*/     
+              
+               /*]]>*/
+                         ]
+        }]
+    },
+
+    // Configuration options go here
+    options:  {
+    	scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    }
+});
+
+</script>
+
+		<script type="text/javascript" th:inline="javascript">
+
+
+
+var ctx = document.getElementById('userChartFarmaka').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+     type: 'polarArea',
+
+    // The data for our dataset
+    data: {
+        labels: [
+      		
+        	  /*<![CDATA[*/
+
+    		   /*[# th:each="i : ${namesFarmaka}"]*/
+			
+        [[${i}]],
+          	
+              /*[/]*/     
+             
+              /*]]>*/
+            
+
+        ],
+        datasets: [{
+            label: chart9,
+            backgroundColor: [
+            	 /*<![CDATA[*/
+
+      		   /*[# th:each="i : ${rgbArrayListFarmaka}"]*/
+  			
+          [[${i}]],
+            	
+                /*[/]*/     
+               
+                /*]]>*/
+            ],
+            borderColor: [
+            	 /*<![CDATA[*/
+
+       		   /*[# th:each="i : ${rgbArrayListFarmaka}"]*/
+   			
+           [[${i}]],
+             	
+                 /*[/]*/     
+                
+                 /*]]>*/
+            ],
+            data: [   	
+            	 /*<![CDATA[*/
+
+     		   /*[# th:each="i : ${farmakaCounter}"]*/
+ 			
+         [[${i}]],
+           	
+               /*[/]*/     
+              
+               /*]]>*/
+                         ]
+        }]
+    },
+
+    // Configuration options go here
+    options:  {
+    	scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    }
+});
+
+</script>
+
+
+
+		<script type="text/javascript" th:inline="javascript">
+
+
+
+var ctx = document.getElementById('userChartAmbu').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+     type: 'doughnut',
+
+    // The data for our dataset
+    data: {
+        labels: [
+      		
+        	  /*<![CDATA[*/
+
+    		   /*[# th:each="i : ${ambulanceCity}"]*/
+			
+        [[${i}]],
+          	
+              /*[/]*/     
+             
+              /*]]>*/
+            
+
+        ],
+        datasets: [{
+            label: chart10,
+            backgroundColor: [
+            	 /*<![CDATA[*/
+
+      		   /*[# th:each="i : ${rgbArrayListAmbulance}"]*/
+  			
+          [[${i}]],
+            	
+                /*[/]*/     
+               
+                /*]]>*/
+            ],
+            borderColor: [
+            	 /*<![CDATA[*/
+
+       		   /*[# th:each="i : ${rgbArrayListAmbulance}"]*/
+   			
+           [[${i}]],
+             	
+                 /*[/]*/     
+                
+                 /*]]>*/
+            ],
+            data: [   	
+            	 /*<![CDATA[*/
+
+     		   /*[# th:each="i : ${ambulanceCityCounter}"]*/
+ 			
+         [[${i}]],
+           	
+               /*[/]*/     
+              
+               /*]]>*/
+                         ]
+        }]
+    },
+
+    // Configuration options go here
+    options:  {
+    	scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    }
+});
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,203 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+  <!--Bootstrap 4 CSS-->
+<link rel="stylesheet"
+href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!--Bootstrap 4 JavaScript-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!--Stripe JavaScript Library-->
+<script src="https://js.stripe.com/v3/"></script>
+
+  
+  </head>
+    <style>
+      body {
+        text-align: center;
+        background: #EBF0F5;
+      }
+        h1 {
+          color: #88B04B;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-weight: 900;
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+        p {
+          color: #404F5E;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-size:20px;
+          margin: 0;
+        }
+      i {
+        color: #9ABC66;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left:-15px;
+      }
+      .card {
+        background: white;
+        
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+      }
+    </style>
+    <body>
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <a class="navbar-brand" href="https://foreverlifetime.com"
+          style="color: #c13b4d;"> 
+          <img
+          src="img/LifeTime_Brand_Logo_2.png"
+          width="30" height="30" class="d-inline-block align-top" alt="">
+          LifeTime
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <!-- <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li> -->
+          </ul>
+    
+          <form class="form-inline my-2 my-lg-0">
+            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+           -->
+            <li class="nav-item" style="width: auto; display: inline-block;">
+              <a class="nav-link" th:href="@{?lang=en}"> <img
+                th:src="@{/img/en.png}">
+            </a>
+            </li>
+    
+            <li class="nav-item" style="width: auto; display: inline-block;">
+              <a class="nav-link" th:href="@{?lang=el}"> <img
+                th:src="@{/img/el.png}">
+            </a>
+            </li>
+    
+          </form>
+        </div>
+      </nav>
+      
+
+      <div class="card" style="margin-top: 10px;">
+      <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+        <i class="checkmark">β�“</i>
+      </div>
+        <h1>Success </h1> 
+        <p>We received your purchase request;<br/> we'll be in touch shortly!</p>
+
+        <p>Total subscription amount β‚¬[[${planAmount}]] / [[${interval}]] for [[${yearsNumber}]] years</p>
+      </div>
+
+
+      <div style="margin:50px;">
+
+        <div class="card-deck mb-3 text-center">
+
+          <!-- --------------------------first card-------------------------- -->
+          <div class="card mb-4 box-shadow" style="margin:10px;">
+  
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Ambulance Licenses</h4>
+            </div>
+  
+            <div class="card-body">
+  
+              <h1 class="card-title pricing-card-title">β‚¬[[${ambPrice}]] <small class="text-muted">/ mo</small></h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>[[${ambNumber}]] Ambulance licenses included</li>
+                <li>β‚¬[[${licensePerAmbPrice}]]/ mo per Ambulance License</li>
+                <li>[[${yearsNumber}]] Years of Subscription</li>
+                <li>24/7 Email support</li>
+                <li>24/7 Call Center support</li>
+              </ul>
+              <!-- <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button> -->
+            </div>
+  
+          </div>
+  
+           <!-- --------------------------second card-------------------------- -->
+          <div class="card mb-4 box-shadow" style="margin:10px;">
+  
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">User Licenses</h4>
+            </div>
+  
+            <div class="card-body">
+  
+              <h1 class="card-title pricing-card-title">β‚¬[[${usersPrice}]] <small class="text-muted">/ mo</small></h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>[[${userNumber}]] User licenses included</li>
+                <li>β‚¬[[${licensePerUserPrice}]]/ mo per User License</li>
+                <li>[[${yearsNumber}]] Years of Subscription</li>
+                 <li>24/7 Email support</li>
+                <li>24/7 Call Center support</li>
+              </ul>
+              <!-- <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button> -->
+            </div>
+  
+          </div>
+
+          <!-- --------------------------third card-------------------------- -->
+  
+          <div class="card mb-4 box-shadow" style="margin:10px;">
+  
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Admin Licenses</h4>
+            </div>
+  
+            <div class="card-body">
+  
+              <h1 class="card-title pricing-card-title">β‚¬[[${adminsPrice}]] <small class="text-muted">/ mo</small></h1>
+              
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>[[${adminNumber}]] Admin licenses included</li>
+                <li>β‚¬[[${licensePerAdminPrice}]]/ mo per Admin License</li>
+                <li>[[${yearsNumber}]] Years of Subscription</li>
+                 <li>24/7 Email support</li>
+                <li>24/7 Call Center support</li>
+                
+              </ul>
+              <!-- <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button> -->
+            </div>
+            
+          </div>
+  
+        </div>
+        
+      </div>
+
+    </body>
+</html>

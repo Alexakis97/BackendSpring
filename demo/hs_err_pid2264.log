@@ -1,0 +1,196 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007fff37214e49, pid=2264, tid=12708
+#
+# JRE version:  (11.0.3+12) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (11.0.3+12-LTS, mixed mode, aot, sharing, tiered, compressed oops, g1 gc, windows-amd64)
+# Problematic frame:
+# V  [jvm.dll+0x1e4e49]
+#
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dmaven.multiModuleProjectDirectory=c:\Users\xdfg\Documents\workspace-sts-3.9.11.RELEASE\aedproject\demo org.apache.maven.wrapper.MavenWrapperMain help:effective-pom -Doutput=c:\Users\xdfg\AppData\Roaming\Code\User\workspaceStorage\1397b4e6abe76a8ab1d506dfda37c77d\vscjava.vscode-maven\4e1fdca3a16b8cc79897e06052cfe121 -f c:\Users\xdfg\Documents\workspace-sts-3.9.11.RELEASE\aedproject\demo\pom.xml
+
+Host: Intel(R) Core(TM) i5-3337U CPU @ 1.80GHz, 4 cores, 9G,  Windows 10 , 64 bit Build 18362 (10.0.18362.1110)
+Time: Fri Nov  6 11:02:45 2020 GTB Standard Time elapsed time: 0 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000027a75206800):  JavaThread "Unknown thread" [_thread_in_vm, id=12708, stack(0x000000e635e00000,0x000000e635f00000)]
+
+Stack: [0x000000e635e00000,0x000000e635f00000],  sp=0x000000e635eff2c0,  free space=1020k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x1e4e49]
+V  [jvm.dll+0x1e32d3]
+V  [jvm.dll+0x37349b]
+V  [jvm.dll+0x732f09]
+V  [jvm.dll+0x3e291d]
+V  [jvm.dll+0x3e4cb1]
+C  [java.exe+0x3607]
+C  [java.exe+0x178dc]
+C  [KERNEL32.DLL+0x17c24]
+C  [ntdll.dll+0x6cea1]
+
+
+siginfo: EXCEPTION_ACCESS_VIOLATION (0xc0000005), reading address 0x0000000000000000
+
+
+Registers:
+RAX=0x0000b60f746b738a, RBX=0x0000000000000000, RCX=0x0000000000000000, RDX=0x0000000000000006
+RSP=0x000000e635eff2c0, RBP=0x0000000000000000, RSI=0x0000027a75206800, RDI=0x0000000000000000
+R8 =0x0000000000000006, R9 =0x0000000000000006, R10=0x0000000000000006, R11=0x000000e635efeb30
+R12=0x0000000000000000, R13=0x00007fff37610550, R14=0x0000027a73109738, R15=0x000000e635effd18
+RIP=0x00007fff37214e49, EFLAGS=0x0000000000010256
+
+Top of Stack: (sp=0x000000e635eff2c0)
+0x000000e635eff2c0:   0000027a73110710 00007fff87577170
+0x000000e635eff2d0:   000000e635effd18 0000027a73109738
+0x000000e635eff2e0:   0000000000000000 0000000000000400
+0x000000e635eff2f0:   000098d8c5d934fe 00007fff37610550
+0x000000e635eff300:   0000000000000000 000000e635effd18
+0x000000e635eff310:   0000027a73109738 00007fff37610550
+0x000000e635eff320:   0000000000000000 00007fff6cce0000
+0x000000e635eff330:   00007fff37890728 0000000000000000
+0x000000e635eff340:   00007fff37213177 00007fff8753aeac
+0x000000e635eff350:   0000000000000000 00007fff3768dbed
+0x000000e635eff360:   0000b60f746b738a 0000027a73109738
+0x000000e635eff370:   00007fff00000000 00007fff37610550
+0x000000e635eff380:   0000027a75206800 000000e635eff4a0
+0x000000e635eff390:   0000000000000000 00007fff372132d3
+0x000000e635eff3a0:   00007fff7da00000 00007fff6cced088
+0x000000e635eff3b0:   000000e635eff4a0 0000027a75206800 
+
+Instructions: (pc=0x00007fff37214e49)
+0x00007fff37214e29:   b8 00 00 00 48 8b 05 9c 0e 84 00 48 33 c4 48 89
+0x00007fff37214e39:   84 24 a0 00 00 00 48 8b e9 48 83 cb ff 48 ff c3
+0x00007fff37214e49:   80 3c 0b 00 75 f7 33 f6 c6 44 24 30 01 40 38 35
+0x00007fff37214e59:   12 15 87 00 74 17 40 38 35 12 7c 86 00 75 0e 33 
+
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x0000027a73109120, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007fff37767cad]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+
+[error occurred during error reporting (printing compressed oops mode), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007fff3777d627]
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff6d0ef0000 - 0x00007ff6d0f37000 	C:\Program Files\Java\jdk-11.0.3\bin\java.exe
+0x00007fff8a2e0000 - 0x00007fff8a4d0000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007fff89b20000 - 0x00007fff89bd2000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007fff87520000 - 0x00007fff877c5000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007fff896d0000 - 0x00007fff89773000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007fff87d30000 - 0x00007fff87dce000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007fff89a70000 - 0x00007fff89b07000 	C:\WINDOWS\System32\sechost.dll
+0x00007fff8a180000 - 0x00007fff8a2a0000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007fff89c60000 - 0x00007fff89df4000 	C:\WINDOWS\System32\USER32.dll
+0x00007fff87880000 - 0x00007fff878a1000 	C:\WINDOWS\System32\win32u.dll
+0x00007fff87a30000 - 0x00007fff87a56000 	C:\WINDOWS\System32\GDI32.dll
+0x00007fff868e0000 - 0x00007fff86a76000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007fff87900000 - 0x00007fff8799e000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007fff87420000 - 0x00007fff8751a000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007fff77e60000 - 0x00007fff780e4000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.18362.1139_none_9e7bf2d3e4605ac6\COMCTL32.dll
+0x00007fff88530000 - 0x00007fff88865000 	C:\WINDOWS\System32\combase.dll
+0x00007fff87350000 - 0x00007fff873d0000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007fff7df90000 - 0x00007fff7df9a000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007fff89a40000 - 0x00007fff89a6e000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007fff83460000 - 0x00007fff83476000 	C:\Program Files\Java\jdk-11.0.3\bin\vcruntime140.dll
+0x00007fff5b0b0000 - 0x00007fff5b15a000 	C:\Program Files\Java\jdk-11.0.3\bin\msvcp140.dll
+0x00007fff37030000 - 0x00007fff37b57000 	C:\Program Files\Java\jdk-11.0.3\bin\server\jvm.dll
+0x00007fff89b10000 - 0x00007fff89b18000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007fff77c30000 - 0x00007fff77c39000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007fff884c0000 - 0x00007fff8852f000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007fff79ed0000 - 0x00007fff79ef4000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007fff76ad0000 - 0x00007fff76afd000 	C:\WINDOWS\SYSTEM32\WINMMBASE.dll
+0x00007fff878b0000 - 0x00007fff878fa000 	C:\WINDOWS\System32\cfgmgr32.dll
+0x00007fff86890000 - 0x00007fff868a1000 	C:\WINDOWS\System32\kernel.appcore.dll
+0x00007fff7da40000 - 0x00007fff7da51000 	C:\Program Files\Java\jdk-11.0.3\bin\verify.dll
+0x00007fff79590000 - 0x00007fff79784000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007fff77780000 - 0x00007fff777aa000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007fff6cce0000 - 0x00007fff6cd09000 	C:\Program Files\Java\jdk-11.0.3\bin\java.dll
+0x00007fff7da00000 - 0x00007fff7da16000 	C:\Program Files\Java\jdk-11.0.3\bin\zip.dll
+0x00007fff81b90000 - 0x00007fff81b9a000 	C:\Program Files\Java\jdk-11.0.3\bin\jimage.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\Java\jdk-11.0.3\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.18362.1139_none_9e7bf2d3e4605ac6;C:\Program Files\Java\jdk-11.0.3\bin\server
+
+VM Arguments:
+jvm_args: -Dmaven.multiModuleProjectDirectory=c:\Users\xdfg\Documents\workspace-sts-3.9.11.RELEASE\aedproject\demo 
+java_command: org.apache.maven.wrapper.MavenWrapperMain help:effective-pom -Doutput=c:\Users\xdfg\AppData\Roaming\Code\User\workspaceStorage\1397b4e6abe76a8ab1d506dfda37c77d\vscjava.vscode-maven\4e1fdca3a16b8cc79897e06052cfe121 -f c:\Users\xdfg\Documents\workspace-sts-3.9.11.RELEASE\aedproject\demo\pom.xml
+java_class_path (initial): c:\Users\xdfg\Documents\workspace-sts-3.9.11.RELEASE\aedproject\demo\.mvn\wrapper\maven-wrapper.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     uint G1ConcRefinementThreads                  = 4                                         {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 166038144                                 {product} {ergonomic}
+   size_t MaxHeapSize                              = 2656610304                                {product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     bool UseCompressedClassPointers               = true                                 {lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                                 {lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk-11.0.3
+CLASSPATH=C:\Users\xdfg;C:\Users\xdfg\Desktop\javalib\antlr-4.7-complete.jar;C:\Program Files\Android\Android Studio;C:\Users\xdfg\.m2\repository\org\bouncycastle\bcprov-jdk15on\1.49\bcprov-jdk15on-1.49.jar;C:\Users\xdfg\Desktop\PdfSign\src\log4j.properties;C:\Program Files\Java\jdk-11.0.3;
+PATH=C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Toshiba\Bluetooth Toshiba Stack\sys\;C:\Program Files (x86)\Toshiba\Bluetooth Toshiba Stack\sys\x64\;C:\Program Files\Java\jdk-11.0.3;C:\Program Files\MATLAB\MATLAB Production Server\R2015a\runtime\win64;C:\Program Files\MATLAB\MATLAB Production Server\R2015a\bin;C:\Program Files\MATLAB\MATLAB Production Server\R2015a\polyspace\bin;C:\Program Files\Java\jdk1.8.0_101\bin;C:\Program Files\Git\cmd;C:\Program Files\apache-maven-3.6.0\bin;C:\Program Files\IBM\SPSS\Statistics\SubscriptionNew\resources\stats_backend\backend\JRE\bin;C:\Program Files\IBM\SPSS\Statistics\25\JRE\bin;C:\Program Files\MATLAB\MATLAB Runtime\v95\runtime\win64;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\SafeNet\Authentication\SAC\x64;C:\Program Files\SafeNet\Authentication\SAC\x32;C:\Program Files\PuTTY\;C:\Users\xdfg;C:\Program Files\apache-maven-3.6.0\bin;C:\Users\xdfg\AppData\Local\Microsoft\WindowsApps;C:\Users\xdfg\AppData\Roaming\npm;C:\Users\xdfg\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\heroku\bin
+USERNAME=xdfg
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 58 Stepping 9, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10 , 64 bit Build 18362 (10.0.18362.1110)
+
+CPU:total 4 (initial active 4) 
+
+Memory: 4k page, system-wide physical 10134M (4068M free)
+TotalPageFile size 20374M (AvailPageFile size 13195M)
+current process WorkingSet (physical memory assigned to process): 8M, peak: 8M
+current process commit charge ("private bytes"): 3M, peak: 3M
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (11.0.3+12-LTS) for windows-amd64 JRE (11.0.3+12-LTS), built on Apr  2 2019 12:43:09 by "mach5one" with MS VC++ 15.5 (VS2017)
+
+END.
